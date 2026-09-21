@@ -1,13 +1,13 @@
 ---
 title: 'FOLDR'
-summary: 'A cross-platform file automation tool that watches folders, previews planned changes, and keeps an undo trail when automation inevitably gets ideas.'
+summary: 'A cross-platform file automation tool that makes cleanup reversible, previewable, and boring enough to trust.'
 type: open-source
 status: shipped
 year: 2026
 featured: true
 order: 20
 role: 'Creator / maintainer'
-tags: [Python, CLI, Automation, Open Source, Filesystem]
+tags: [Python, CLI, automation, open source, filesystem]
 links:
   - label: 'GitHub'
     url: 'https://github.com/qasimio/foldr'
@@ -18,31 +18,34 @@ links:
 stats:
   - value: '7.3k+'
     label: 'downloads'
-  - value: '100+'
-    label: 'stars'
+  - value: '100-star'
+    label: 'milestone'
   - value: '30+'
     label: 'categories'
 pullQuote: 'People have better things to do than sort files manually.'
+visual: foldr
 ---
 
 ## The annoyance
 
-Manual file cleanup is one of those problems people accept because the alternative usually feels more dangerous than the mess.
+I got tired of sorting files.
 
-FOLDR is built around making automation reversible.
+Not because it is difficult. Because doing the same stupid thing over and over is a good way to waste an afternoon.
 
-## What it does
+The problem with automation is that people get nervous the moment a script can touch their files.
 
-It can organize files by type, preview a planned operation before execution, watch directories in the background, detect duplicates, and retain enough history to undo changes.
+So FOLDR is built around a simple promise: show me what you are about to do, and let me undo it.
 
-The watcher is built around native filesystem events through the cross-platform watchdog layer instead of endlessly polling folders.
+## What shipped
 
-## What changed after shipping
+FOLDR can classify and organize files, preview planned operations, watch directories in the background, detect duplicates, and keep a history of changes for rollback.
 
-The project moved beyond being a local experiment. It was published to PyPI, accumulated real downloads and stars, and began getting used by people who had no reason to care about the implementation details.
+The watcher uses filesystem events rather than hammering the disk with constant polling. The package is published to PyPI and intended to work across Windows, macOS, and Linux.
 
-That is the important transition: once someone else relies on the software, packaging, documentation, reversibility, and boring edge cases become product work.
+## What shipping changed
 
-## What it taught me
+Code being correct is only the beginning.
 
-A useful open-source project is partly code and partly distribution. The difference between "works on my machine" and "another person can trust installing this" is much bigger than it looks from inside the repository.
+Once strangers install the package, documentation, packaging, compatibility, error messages, and boring edge cases become part of the product.
+
+That transition is probably the most useful thing FOLDR has taught me.

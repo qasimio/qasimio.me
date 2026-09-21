@@ -1,33 +1,47 @@
 ---
 title: 'SlotFinder'
-summary: 'A timetable search tool for Sukkur IBA built to replace the ritual of opening page after page to find one class.'
+summary: 'A timetable search tool for Sukkur IBA that turns a pile of pages into a quick answer.'
 type: product
 status: shipped
 year: 2026
 featured: false
 order: 30
 role: 'Co-creator'
-tags: [Next.js, Python, SQLite, SIBA, Product]
+tags: [Next.js, Python, SQLite, SIBA, product]
 links:
   - label: 'Live'
     url: 'https://sibatt.vercel.app'
   - label: 'GitHub'
     url: 'https://github.com/AbdulGhaffarcs/slot-finder'
+stats:
+  - value: '1'
+    label: 'question'
+  - value: 'many'
+    label: 'timetable pages'
+  - value: 'one'
+    label: 'search box'
 pullQuote: 'If finding a class takes ninety pages, the interface is the problem.'
+visual: slotfinder
 ---
 
-## The problem
+## Why it exists
 
-Finding one course, section, or room in a university timetable meant navigating large institutional PDFs and manually searching through pages.
+Finding a class in the university timetable used to mean opening page after page and manually hunting for a course, section, or room.
 
-SlotFinder turns that search into one interface.
+That is not really a scheduling problem. It is a search problem.
+
+Abdul and I built SlotFinder to make the answer take seconds instead of a small act of endurance.
 
 ## The product
 
-The system combines PDF-powered timetable extraction with a lightweight search experience filtering by section, course, and room. The frontend is designed for quick phone checks between classes.
+The system turns institutional timetable PDFs into searchable data and gives students a simple interface around section, course, and room filters.
 
-## Why I kept it
+It is deliberately lightweight because the useful part is not the architecture. It is being able to check a class on a phone between two lectures.
 
-It is not the technically most complicated thing I have built. That is exactly why it matters.
+## Why I like this one
 
-A useful product does not need an impressive architecture diagram. It needs to remove an annoyance that somebody actually experiences.
+It is not the most complicated thing I have made.
+
+That is exactly why I like it.
+
+A product does not have to be technically exotic to be worth building. Sometimes the right move is noticing that everyone has accepted a terrible workflow as normal.

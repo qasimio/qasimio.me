@@ -12,19 +12,12 @@ const date = entry.data.publishedAt.toLocaleDateString('en-US', {
 });
 ---
 
-<a
-  class:list={['note-row', { featured }]}
-  href={`/journal/notes/${entry.id}/`}
-  data-note-item
-  data-type={entry.data.type}
->
+<a class:list={['note-row', { featured }]} href={`/journal/notes/${entry.id}/`}>
   <time datetime={entry.data.publishedAt.toISOString()}>{date}</time>
-  <div class="note-row__main">
+  <div class="note-main">
     <span>{entry.data.type}</span>
     <h3>{entry.data.title}</h3>
-    {entry.data.tags.length > 0 && (
-      <p>{entry.data.tags.map((tag: string) => `#${tag}`).join('  ')}</p>
-    )}
+    <p>{entry.data.excerpt}</p>
   </div>
-  <span class="note-row__arrow">↗</span>
+  <b>↗</b>
 </a>

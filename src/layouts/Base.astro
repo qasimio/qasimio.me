@@ -5,14 +5,26 @@ import SiteFooter from '../components/SiteFooter.astro';
 import CommandPalette from '../components/CommandPalette.astro';
 import Seo from '../components/Seo.astro';
 import '../styles/global.css';
-
 interface Props {
   title?: string;
   description?: string;
   noIndex?: boolean;
 }
-
 const { title, description, noIndex = false } = Astro.props;
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: 'Qasim Sethar',
+  alternateName: 'qasimio',
+  url: 'https://qasimio.me',
+  email: 'mailto:hello@qasimio.me',
+  sameAs: [
+    'https://github.com/qasimio',
+    'https://linkedin.com/in/qasimio',
+    'https://x.com/qasimiohq',
+    'https://www.youtube.com/@qasimiohq',
+  ],
+};
 ---
 
 <!doctype html>
@@ -21,132 +33,283 @@ const { title, description, noIndex = false } = Astro.props;
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="generator" content={Astro.generator} />
-    <meta name="theme-color" content="#0b0c0f" />
+    <meta name="theme-color" content="#0b1011" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <link rel="alternate icon" href="/favicon.ico" />
     <link rel="manifest" href="/site.webmanifest" />
     <script is:inline>
       (() => {
         try {
           const stored = localStorage.getItem('qasim-theme');
-          const theme = stored === 'light' || stored === 'dark' ? stored : 'dark';
-          document.documentElement.dataset.theme = theme;
+          const systemLight = window.matchMedia('(prefers-color-scheme: light)').matches;
+          document.documentElement.dataset.theme =
+            stored === 'light' || stored === 'dark' ? stored : systemLight ? 'light' : 'dark';
         } catch {
           document.documentElement.dataset.theme = 'dark';
         }
       })();
     </script>
-    <ClientRouter />
+    <ClientRouter fallback="animate" />
     <Seo title={title} description={description} noIndex={noIndex} />
+    <script type="application/ld+json" set:html={JSON.stringify(jsonLd)}></script>
   </head>
   <body>
     <a class="skip-link" href="#main-content">
       Skip to content
     </a>
-    <div class="scroll-bar" data-scroll-progress></div>
+    <div class="scroll-progress" data-scroll-progress></div>
+    <div class="cursor-dot" data-cursor-dot></div>
+    <div class="cursor-ring" data-cursor-ring></div>
     <SiteHeader />
     <main id="main-content" class="page-frame">
       <slot />
     </main>
     <SiteFooter />
     <CommandPalette />
-
     <script is:inline>
-      const bindSite = () => {
-        const doc = document.documentElement;
-
-        const updateScrollProgress = () => {
-          const max = document.documentElement.scrollHeight - window.innerHeight;
-          const progress = max > 0 ? window.scrollY / max : 0;
-          const bar = document.querySelector('[data-scroll-progress]');
-          if (bar) bar.style.width = `${Math.min(100, Math.max(0, progress * 100))}%`;
-          const header = document.querySelector('[data-site-header]');
-          if (header) header.classList.toggle('is-scrolled', window.scrollY > 12);
-        };
-
-        if (!window.__qasimScrollBound) {
-          window.__qasimScrollBound = true;
-          window.addEventListener('scroll', updateScrollProgress, { passive: true });
-        }
-        updateScrollProgress();
-
-        document.querySelectorAll('[data-reveal]:not([data-bound])').forEach((element) => {
-          element.dataset.bound = 'true';
-          if (!('IntersectionObserver' in window)) {
-            element.classList.add('is-visible');
-            return;
+      (() => {
+        let scrollBound = false;
+        let cursorBound = false;
+        const bind = () => {
+          const root = document.documentElement;
+          const updateScroll = () => {
+            const max = root.scrollHeight - innerHeight;
+            const pct = max > 0 ? Math.max(0, Math.min(100, (scrollY / max) * 100)) : 0;
+            document.querySelector('[data-scroll-progress]')?.style.setProperty('width', `${pct}%`);
+            document
+              .querySelector('[data-site-header]')
+              ?.classList.toggle('is-scrolled', scrollY > 10);
+          };
+          if (!scrollBound) {
+            scrollBound = true;
+            addEventListener('scroll', updateScroll, { passive: true });
           }
-          const observer = new IntersectionObserver(
-            (entries, currentObserver) => {
-              entries.forEach((entry) => {
-                if (!entry.isIntersecting) return;
-                entry.target.classList.add('is-visible');
-                currentObserver.unobserve(entry.target);
-              });
-            },
-            { threshold: 0.12, rootMargin: '0px 0px -7% 0px' },
-          );
-          observer.observe(element);
-        });
+          updateScroll();
 
-        document.querySelectorAll('[data-theme-toggle]:not([data-bound])').forEach((button) => {
-          button.dataset.bound = 'true';
-          button.addEventListener('click', () => {
-            const next = doc.dataset.theme === 'light' ? 'dark' : 'light';
-            doc.dataset.theme = next;
-            try {
-              localStorage.setItem('qasim-theme', next);
-            } catch {
-              // Theme still changes for the current session when storage is unavailable.
+          document.querySelectorAll('[data-reveal]:not([data-bound])').forEach((el) => {
+            el.setAttribute('data-bound', '');
+            if (!('IntersectionObserver' in window)) {
+              el.classList.add('is-visible');
+              return;
             }
-            const meta = document.querySelector('meta[name="theme-color"]');
-            if (meta) meta.setAttribute('content', next === 'light' ? '#f5f3ed' : '#0b0c0f');
-            document.querySelectorAll('[data-theme-label]').forEach((label) => {
-              label.textContent = next === 'light' ? 'Dark' : 'Light';
+            const observer = new IntersectionObserver(
+              (entries) =>
+                entries.forEach((entry) => {
+                  if (!entry.isIntersecting) return;
+                  entry.target.classList.add('is-visible');
+                  observer.unobserve(entry.target);
+                }),
+              { threshold: 0.08, rootMargin: '0px 0px -8% 0px' },
+            );
+            observer.observe(el);
+          });
+
+          document.querySelectorAll('[data-theme-toggle]:not([data-bound])').forEach((button) => {
+            button.setAttribute('data-bound', '');
+            button.addEventListener('click', () => {
+              const next = root.dataset.theme === 'light' ? 'dark' : 'light';
+              const apply = () => {
+                root.dataset.theme = next;
+                try {
+                  localStorage.setItem('qasim-theme', next);
+                } catch {}
+                document
+                  .querySelector('meta[name="theme-color"]')
+                  ?.setAttribute('content', next === 'light' ? '#f4f1e8' : '#0b1011');
+              };
+              if (document.startViewTransition) document.startViewTransition(apply);
+              else apply();
             });
           });
-        });
 
-        document.querySelectorAll('[data-menu-toggle]:not([data-bound])').forEach((button) => {
-          button.dataset.bound = 'true';
-          const mobileNav = document.querySelector('[data-mobile-nav]');
-          button.addEventListener('click', () => {
-            if (!mobileNav) return;
-            const open = button.getAttribute('aria-expanded') === 'true';
-            button.setAttribute('aria-expanded', String(!open));
-            if (open) mobileNav.setAttribute('hidden', '');
-            else mobileNav.removeAttribute('hidden');
-            doc.classList.toggle('nav-open', !open);
-          });
-          mobileNav?.querySelectorAll('a').forEach((link) =>
-            link.addEventListener('click', () => {
-              button.setAttribute('aria-expanded', 'false');
-              mobileNav.setAttribute('hidden', '');
-              doc.classList.remove('nav-open');
-            }),
-          );
-        });
-
-        const contactForm = document.querySelector('[data-contact-form]');
-        if (contactForm && !contactForm.dataset.bound) {
-          contactForm.dataset.bound = 'true';
-          contactForm.addEventListener('submit', (event) => {
-            event.preventDefault();
-            const form = new FormData(contactForm);
-            const name = String(form.get('name') ?? '').trim();
-            const email = String(form.get('email') ?? '').trim();
-            const message = String(form.get('message') ?? '').trim();
-            const subject = encodeURIComponent(`Hello Qasim${name ? ` — ${name}` : ''}`);
-            const body = encodeURIComponent(
-              `${message}\n\nFrom: ${name || 'Unknown'}\nEmail: ${email || 'Not provided'}`,
+          document.querySelectorAll('[data-menu-toggle]:not([data-bound])').forEach((button) => {
+            button.setAttribute('data-bound', '');
+            const nav = document.querySelector('[data-mobile-nav]');
+            button.addEventListener('click', () => {
+              if (!nav) return;
+              const open = button.getAttribute('aria-expanded') === 'true';
+              button.setAttribute('aria-expanded', String(!open));
+              open ? nav.setAttribute('hidden', '') : nav.removeAttribute('hidden');
+              root.classList.toggle('nav-open', !open);
+            });
+            nav?.querySelectorAll('a').forEach((link) =>
+              link.addEventListener('click', () => {
+                button.setAttribute('aria-expanded', 'false');
+                nav.setAttribute('hidden', '');
+                root.classList.remove('nav-open');
+              }),
             );
-            window.location.href = `mailto:hello@qasimio.me?subject=${subject}&body=${body}`;
           });
-        }
-      };
 
-      document.addEventListener('astro:page-load', bindSite);
-      bindSite();
+          const form = document.querySelector('[data-contact-form]');
+          if (form && !form.dataset.bound) {
+            form.dataset.bound = 'true';
+            form.addEventListener('submit', (event) => {
+              event.preventDefault();
+              const data = new FormData(form);
+              const name = String(data.get('name') || '').trim();
+              const email = String(data.get('email') || '').trim();
+              const message = String(data.get('message') || '').trim();
+              const subject = encodeURIComponent(`Hello Qasim${name ? ` — ${name}` : ''}`);
+              const body = encodeURIComponent(`${message}
+
+From: ${name || 'Unknown'}
+Email: ${email || 'Not provided'}`);
+              window.location.href = `mailto:hello@qasimio.me?subject=${subject}&body=${body}`;
+            });
+          }
+
+          document.querySelectorAll('[data-copy-email]:not([data-bound])').forEach((button) => {
+            button.setAttribute('data-bound', '');
+            button.addEventListener('click', async () => {
+              try {
+                await navigator.clipboard.writeText('hello@qasimio.me');
+                const original = 'Copy email';
+                button.textContent = 'Copied';
+                setTimeout(() => (button.textContent = original), 1500);
+              } catch {}
+            });
+          });
+
+          const commandOverlay = document.querySelector('[data-command-overlay]');
+          const commandInput = document.querySelector('[data-command-input]');
+          const commandItems = [...document.querySelectorAll('[data-command-item]')];
+          let commandIndex = 0;
+          const visibleCommands = () => commandItems.filter((item) => !item.hidden);
+          const highlightCommand = () => {
+            const items = visibleCommands();
+            items.forEach((item, index) =>
+              item.classList.toggle('is-active', index === commandIndex),
+            );
+            items[commandIndex]?.scrollIntoView({ block: 'nearest' });
+          };
+          const closeCommand = () => {
+            if (!commandOverlay) return;
+            commandOverlay.hidden = true;
+            document.body.classList.remove('command-open');
+          };
+          const openCommand = () => {
+            if (!commandOverlay) return;
+            commandOverlay.hidden = false;
+            document.body.classList.add('command-open');
+            commandIndex = 0;
+            if (commandInput instanceof HTMLInputElement) {
+              commandInput.value = '';
+              commandItems.forEach((item) => {
+                item.hidden = false;
+              });
+              commandInput.focus();
+            }
+            highlightCommand();
+          };
+          document
+            .querySelectorAll('[data-command-open]:not([data-command-bound])')
+            .forEach((button) => {
+              button.setAttribute('data-command-bound', '');
+              button.addEventListener('click', openCommand);
+            });
+          document
+            .querySelectorAll('[data-command-close]:not([data-command-bound])')
+            .forEach((button) => {
+              button.setAttribute('data-command-bound', '');
+              button.addEventListener('click', closeCommand);
+            });
+          if (commandInput && !commandInput.dataset.bound) {
+            commandInput.dataset.bound = 'true';
+            commandInput.addEventListener('input', () => {
+              const query = commandInput.value.trim().toLowerCase();
+              commandItems.forEach((item) => {
+                item.hidden = !String(item.dataset.commandSearch || '')
+                  .toLowerCase()
+                  .includes(query);
+              });
+              commandIndex = 0;
+              highlightCommand();
+            });
+            commandInput.addEventListener('keydown', (event) => {
+              const items = visibleCommands();
+              if (event.key === 'ArrowDown') {
+                event.preventDefault();
+                commandIndex = items.length ? (commandIndex + 1) % items.length : 0;
+                highlightCommand();
+              }
+              if (event.key === 'ArrowUp') {
+                event.preventDefault();
+                commandIndex = items.length ? (commandIndex - 1 + items.length) % items.length : 0;
+                highlightCommand();
+              }
+              if (event.key === 'Enter') {
+                event.preventDefault();
+                items[commandIndex]?.click();
+              }
+              if (event.key === 'Escape') {
+                event.preventDefault();
+                closeCommand();
+              }
+            });
+          }
+          const commandGlobal = '__qasimCommandGlobal';
+          if (!window[commandGlobal]) {
+            window[commandGlobal] = true;
+            addEventListener('keydown', (event) => {
+              if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === 'k') {
+                event.preventDefault();
+                openCommand();
+              }
+              if (event.key === 'Escape') closeCommand();
+            });
+          }
+
+          document.querySelectorAll('.magnetic:not([data-magnetic-bound])').forEach((el) => {
+            if (!(el instanceof HTMLElement) || !matchMedia('(pointer:fine)').matches) return;
+            el.setAttribute('data-magnetic-bound', '');
+            el.addEventListener('pointermove', (event) => {
+              const r = el.getBoundingClientRect();
+              const x = ((event.clientX - r.left) / r.width - 0.5) * 10;
+              const y = ((event.clientY - r.top) / r.height - 0.5) * 10;
+              el.style.setProperty('--mag-x', `${x}px`);
+              el.style.setProperty('--mag-y', `${y}px`);
+            });
+            el.addEventListener('pointerleave', () => {
+              el.style.setProperty('--mag-x', '0px');
+              el.style.setProperty('--mag-y', '0px');
+            });
+          });
+
+          if (!cursorBound && matchMedia('(pointer:fine)').matches) {
+            cursorBound = true;
+            const dot = document.querySelector('[data-cursor-dot]');
+            const ring = document.querySelector('[data-cursor-ring]');
+            let x = innerWidth / 2,
+              y = innerHeight / 2,
+              tx = x,
+              ty = y;
+            addEventListener('pointermove', (e) => {
+              tx = e.clientX;
+              ty = e.clientY;
+            });
+            const frame = () => {
+              x += (tx - x) * 0.2;
+              y += (ty - y) * 0.2;
+              dot?.style.setProperty('transform', `translate3d(${tx}px,${ty}px,0)`);
+              ring?.style.setProperty('transform', `translate3d(${x}px,${y}px,0)`);
+              requestAnimationFrame(frame);
+            };
+            frame();
+            document.addEventListener('mouseover', (e) => {
+              const t = e.target;
+              if (t instanceof Element && t.closest('a,button,[data-cursor-hover]'))
+                document.body.classList.add('cursor-hover');
+            });
+            document.addEventListener('mouseout', (e) => {
+              const t = e.target;
+              if (t instanceof Element && t.closest('a,button,[data-cursor-hover]'))
+                document.body.classList.remove('cursor-hover');
+            });
+          }
+        };
+        document.addEventListener('astro:page-load', bind);
+        bind();
+      })();
     </script>
   </body>
 </html>

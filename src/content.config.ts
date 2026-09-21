@@ -2,26 +2,16 @@ import { defineCollection } from 'astro:content';
 import { glob } from 'astro/loaders';
 import { z } from 'astro/zod';
 
-const linkSchema = z.object({
-  label: z.string(),
-  url: z.string().url(),
-});
-
-const statSchema = z.object({
-  value: z.string(),
-  label: z.string(),
-});
+const linkSchema = z.object({ label: z.string(), url: z.string().url() });
+const statSchema = z.object({ value: z.string(), label: z.string() });
 
 const projects = defineCollection({
-  loader: glob({
-    pattern: '**/*.{md,mdx}',
-    base: './src/data/projects',
-  }),
+  loader: glob({ pattern: '**/*.{md,mdx}', base: './src/data/projects' }),
   schema: z.object({
     title: z.string(),
     summary: z.string(),
     type: z.enum(['product', 'open-source', 'system', 'community', 'experiment']),
-    status: z.enum(['active', 'shipped', 'paused', 'archived']),
+    status: z.enum(['active', 'shipped', 'ongoing', 'archived']),
     year: z.number().int(),
     featured: z.boolean().default(false),
     order: z.number().int().default(0),
@@ -30,18 +20,25 @@ const projects = defineCollection({
     links: z.array(linkSchema).default([]),
     stats: z.array(statSchema).default([]),
     pullQuote: z.string().optional(),
+    visual: z.enum([
+      'engram',
+      'operon',
+      'foldr',
+      'slotfinder',
+      'launchpad',
+      'devshelf',
+      'mqnotebook',
+    ]),
   }),
 });
 
 const notes = defineCollection({
-  loader: glob({
-    pattern: '**/*.{md,mdx}',
-    base: './src/data/notes',
-  }),
+  loader: glob({ pattern: '**/*.{md,mdx}', base: './src/data/notes' }),
   schema: z.object({
     title: z.string(),
+    excerpt: z.string(),
     publishedAt: z.coerce.date(),
-    type: z.enum(['update', 'achievement', 'observation', 'build', 'link']),
+    type: z.enum(['update', 'achievement', 'build', 'observation', 'link']),
     tags: z.array(z.string()).default([]),
     draft: z.boolean().default(false),
     externalUrl: z.string().url().optional(),
@@ -49,10 +46,7 @@ const notes = defineCollection({
 });
 
 const essays = defineCollection({
-  loader: glob({
-    pattern: '**/*.{md,mdx}',
-    base: './src/data/essays',
-  }),
+  loader: glob({ pattern: '**/*.{md,mdx}', base: './src/data/essays' }),
   schema: z.object({
     title: z.string(),
     description: z.string(),
@@ -62,8 +56,4 @@ const essays = defineCollection({
   }),
 });
 
-export const collections = {
-  projects,
-  notes,
-  essays,
-};
+export const collections = { projects, notes, essays };

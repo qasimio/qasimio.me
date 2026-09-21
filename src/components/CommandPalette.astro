@@ -4,44 +4,35 @@ import { commandItems } from '../data/site';
 
 <div class="command-overlay" data-command-overlay hidden>
   <div class="command-backdrop" data-command-close></div>
-  <section
-    class="command-palette"
-    role="dialog"
-    aria-modal="true"
-    aria-label="Command menu"
-    data-command-palette
-  >
-    <div class="command-search-row">
-      <span class="command-symbol">⌕</span>
+  <section class="command-panel" role="dialog" aria-modal="true" aria-label="Command palette">
+    <div class="command-search">
+      <span>⌕</span>
       <input
-        type="text"
-        placeholder="Go somewhere…"
+        type="search"
+        data-command-input
+        placeholder="Jump to…"
         aria-label="Search commands"
         autocomplete="off"
-        data-command-input
       />
       <kbd>ESC</kbd>
     </div>
     <div class="command-results" data-command-results>
-      {commandItems.map((item, index) => (
+      {commandItems.map((item) => (
         <a
-          href={item.href}
           class="command-item"
           data-command-item
           data-command-search={`${item.label} ${item.group}`}
-          data-index={index}
+          href={item.href}
           {...(item.external ? { target: '_blank', rel: 'noreferrer' } : {})}
         >
           <span>
             <small>{item.group}</small>
             {item.label}
           </span>
-          <span>↗</span>
+          <b>↗</b>
         </a>
       ))}
     </div>
-    <div class="command-hint">
-      <span>↑↓</span> navigate <span>↵</span> open <span>Esc</span> close
-    </div>
+    <div class="command-footer">↑ ↓ move &nbsp; · &nbsp; ↵ open &nbsp; · &nbsp; Esc close</div>
   </section>
 </div>

@@ -2,15 +2,14 @@ export const site = {
   name: 'Qasim Sethar',
   handle: 'qasimio',
   email: 'hello@qasimio.me',
-  description:
-    'Qasim Sethar builds software, products, systems, and communities. A living record of what gets built, shipped, learned, and kept.',
+  location: 'Sukkur, Pakistan',
   social: [
     { label: 'GitHub', href: 'https://github.com/qasimio' },
     { label: 'LinkedIn', href: 'https://linkedin.com/in/qasimio' },
     { label: 'X', href: 'https://x.com/qasimiohq' },
     { label: 'YouTube', href: 'https://www.youtube.com/@qasimiohq' },
   ],
-  elsewhere: [
+  secondary: [
     { label: 'Dev.to', href: 'https://dev.to/qasimio' },
     { label: 'Peerlist', href: 'https://peerlist.io/qasimio/' },
     { label: 'Medium', href: 'https://medium.com/@qasimio' },
@@ -23,172 +22,167 @@ export const site = {
   ],
 };
 
-export const current = [
-  {
-    number: '01',
-    label: 'Building',
-    title: 'Engram',
-    detail: 'A knowledge system around retrieval, persistent context, and grounded answers.',
-    href: 'https://github.com/qasimio/Engram',
-  },
-  {
-    number: '02',
-    label: 'Building',
-    title: 'Operon',
-    detail: 'A terminal-native coding agent that treats filesystem state as the source of truth.',
-    href: 'https://github.com/qasimio/Operon',
-  },
-  {
-    number: '03',
-    label: 'Growing',
-    title: 'SIBA Launchpad',
-    detail:
-      'A project ecosystem making student work easier to publish, discover, and collaborate around.',
-    href: 'https://iba-launchpad.vercel.app',
-  },
-];
-
-export const evidence = [
-  { value: '7.3k+', label: 'FOLDR downloads' },
-  { value: '100+', label: 'FOLDR stars' },
-  { value: '60+', label: 'projects reviewed' },
-  { value: '35+', label: 'students guided' },
-  { value: '24h', label: 'Sibathon’26' },
-];
-
-export const evidenceRows = [
+export const proof = [
   {
     value: '7.3k+',
     label: 'FOLDR downloads',
-    detail: 'Published cross-platform file automation utility.',
+    detail: 'People installed it, used it, and started telling me where it fell short.',
   },
   {
-    value: '100+',
-    label: 'FOLDR stars',
-    detail: 'Public open-source traction around a small developer tool.',
+    value: '100-star',
+    label: 'FOLDR milestone',
+    detail: 'The number is not huge. I still liked seeing strangers care about something I made.',
   },
   {
     value: '60+',
     label: 'projects reviewed',
-    detail: 'Student software reviewed for technical quality and finishing decisions.',
+    detail:
+      'Usually the part where a project is almost working and somebody needs another pair of eyes.',
   },
   {
     value: '35+',
-    label: 'students guided',
-    detail: 'Technical guidance, debugging, project direction, and feedback.',
+    label: 'people guided',
+    detail: 'Students and peers who were stuck, unsure, or just wanted a second opinion.',
+  },
+];
+
+export const current = [
+  {
+    label: 'building',
+    title: 'Engram',
+    detail:
+      'A knowledge system I am still building because memory is easy to claim and hard to make trustworthy.',
+    href: '/work/engram/',
   },
   {
-    value: '2',
-    label: 'GitHub organizations',
-    detail: 'FOLDR and IBA Launchpad maintained as public ecosystems.',
+    label: 'building',
+    title: 'Operon',
+    detail: 'A coding agent I am building around a simple rule: the files get the final vote.',
+    href: '/work/operon/',
+  },
+  {
+    label: 'growing',
+    title: 'SIBA Launchpad',
+    detail:
+      'A place for SIBA students to put their work in front of other people before it disappears after grading.',
+    href: '/work/siba-launchpad/',
   },
 ];
 
 export const timeline = [
   {
-    year: '2025',
+    period: '2025',
     title: 'Started building beyond coursework.',
-    detail:
-      'Search, retrieval, scripting, and systems work became projects worth keeping after class.',
+    body: 'I started making things outside class because the assignments stopped being enough.',
   },
   {
-    year: '2025–26',
+    period: '2025 → 26',
     title: 'Moved closer to people as well as code.',
-    detail:
-      'CS Society work, project reviews, peer guidance, event organizing, and the early shape of SIBA Launchpad.',
+    body: 'I ended up doing more around people too: reviewing projects, helping friends debug things, organizing an event, and starting Launchpad.',
   },
   {
-    year: '2026',
+    period: '2026',
     title: 'Started shipping into the real world.',
-    detail:
-      'FOLDR became a public package people install. SlotFinder became an institutional utility around an actual campus problem.',
+    body: 'FOLDR left my machine and found actual users. SlotFinder fixed a timetable problem I was tired of having.',
   },
   {
-    year: 'Now',
-    title: 'Building deeper systems and learning distribution.',
+    period: 'now',
+    title: 'Building deeper systems.',
+    body: 'Engram and Operon are taking most of my attention. I am also trying to get better at the part after code: shipping, talking to people, and seeing what sticks.',
+  },
+];
+
+export const people = [
+  {
+    metric: '60+',
+    title: 'Projects reviewed',
     detail:
-      'Engram and Operon remain in development while open-source, community, and professional work keep expanding the surface area.',
+      'Student software reviewed for architecture, debugging, finish, and technical decisions.',
+  },
+  {
+    metric: '35+',
+    title: 'People guided',
+    detail:
+      'Project direction, debugging, feedback, and the last stretch before something gets shipped.',
+  },
+  {
+    metric: '24h',
+    title: 'Sibathon’26',
+    detail: 'A student hackathon organized through the CS Society with AI tools allowed.',
+  },
+  {
+    metric: '2',
+    title: 'GitHub organizations',
+    detail: 'FOLDR and IBA Launchpad, maintained as public places for software and people.',
+  },
+];
+
+export const recognition = [
+  {
+    label: 'GitHub Maintainer Community',
+    detail: 'Invited to GitHub’s Maintainer Community after spending a lot of time in open source.',
+  },
+  {
+    label: 'GitHub Developer Program',
+    detail:
+      'Used the GitHub API in Launchpad so projects could pull real GitHub data instead of asking students to type it all again.',
+  },
+  { label: 'Google AI Professional Certificate', detail: 'Google AI Professional Certificate.' },
+];
+
+export const professional = [
+  {
+    company: 'FlyRank',
+    role: 'Backend / AI engineering',
+    detail: 'Backend and AI engineering internship work.',
+  },
+  {
+    company: 'Arch Technologies',
+    role: 'Machine learning engineering',
+    detail:
+      'Machine-learning engineering work around NLP models, preprocessing, and local inference.',
+  },
+  {
+    company: 'CS Society, Sukkur IBA',
+    role: 'Executive member · 2025–2026',
+    detail:
+      'Technical activities, project reviews, and organizing Sibathon’26, a 24-hour student hackathon.',
   },
 ];
 
 export const workStyle = [
-  ['Environment', 'Arch Linux · daily for ~2 years'],
-  ['Editor', 'VS Code + Vim'],
-  ['Input', 'Keyboard-first · shortcuts before mouse'],
-  ['Automation', 'Shell + Python scripting'],
-  ['Databases', 'PostgreSQL · SQL · DBMS fundamentals'],
+  { key: 'environment', value: 'Arch Linux' },
+  { key: 'editor', value: 'VS Code + Vim' },
+  { key: 'input', value: 'Keyboard-first' },
+  { key: 'automation', value: 'Shell + Python' },
+  { key: 'data', value: 'PostgreSQL + SQL' },
 ];
 
-export const programs = [
+export const patterns = [
   {
-    title: 'GitHub Maintainer Community',
-    detail: 'Invited into GitHub’s maintainer community after building and contributing in public.',
+    title: 'Use the source of truth.',
+    detail: 'If the file says one thing and the model says another, I trust the file.',
   },
   {
-    title: 'GitHub Developer Program',
-    detail:
-      'Built GitHub API-powered workflows for SIBA Launchpad, including contributor data and direct GitHub actions.',
+    title: 'Make scary actions reversible.',
+    detail: 'Anything that can damage a user’s files should show its work and have a way back.',
   },
   {
-    title: 'Google AI Professional Certificate',
-    detail: 'Completed professional AI coursework and certification.',
-  },
-];
-
-export const experience = [
-  {
-    title: 'FlyRank',
-    role: 'Backend / AI engineering',
-    detail: 'Production-oriented backend and AI engineering work during an internship.',
-  },
-  {
-    title: 'Arch Technologies',
-    role: 'Machine learning engineering',
-    detail: 'NLP model fine-tuning, preprocessing, and local inference engineering.',
-  },
-  {
-    title: 'Sukkur IBA CS Society',
-    role: 'Executive member · 2025–2026',
-    detail:
-      'Helped organize technical activities and Sibathon’26, a 24-hour student hackathon where AI tools were allowed.',
-  },
-];
-
-export const peopleWork = [
-  {
-    title: '60+ projects reviewed',
-    detail:
-      'Student software reviewed for technical quality, architecture, debugging, and finishing decisions.',
-  },
-  {
-    title: '35+ students guided',
-    detail: 'Technical counseling and peer guidance around projects, debugging, and next steps.',
-  },
-  { title: 'Sibathon’26', detail: 'A 24-hour student hackathon organized through the CS Society.' },
-  {
-    title: 'SIBA Launchpad',
-    detail: 'A public project ecosystem for students to showcase, discover, and collaborate.',
+    title: 'Keep expensive work off the critical path.',
+    detail: 'The expensive work can happen in the background. The user should not have to.',
   },
 ];
 
 export const commandItems = [
-  { label: 'Go to work', href: '/work/', group: 'Navigate' },
-  { label: 'Open the journal', href: '/journal/', group: 'Navigate' },
-  { label: 'About Qasim', href: '/about/', group: 'Navigate' },
+  { label: 'Work', href: '/work/', group: 'Navigate' },
+  { label: 'Journal', href: '/journal/', group: 'Navigate' },
+  { label: 'About', href: '/about/', group: 'Navigate' },
   { label: 'Contact', href: '/contact/', group: 'Navigate' },
-  { label: 'Resume', href: '/resume.pdf', group: 'Navigate', external: true },
-  { label: 'GitHub', href: 'https://github.com/qasimio', group: 'Elsewhere', external: true },
-  {
-    label: 'LinkedIn',
-    href: 'https://linkedin.com/in/qasimio',
+  { label: 'Résumé', href: '/resume.pdf', group: 'Navigate', external: true },
+  ...site.social.map((item) => ({
+    label: item.label,
+    href: item.href,
     group: 'Elsewhere',
     external: true,
-  },
-  { label: 'X', href: 'https://x.com/qasimiohq', group: 'Elsewhere', external: true },
-  {
-    label: 'YouTube',
-    href: 'https://www.youtube.com/@qasimiohq',
-    group: 'Elsewhere',
-    external: true,
-  },
+  })),
 ];

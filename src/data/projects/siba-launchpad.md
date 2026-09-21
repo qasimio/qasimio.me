@@ -1,33 +1,45 @@
 ---
 title: 'SIBA Launchpad'
-summary: 'A student project ecosystem built to move good work out of private chats and semester folders and into public view.'
+summary: 'A student project ecosystem built to make good work easier to publish, discover, and build on.'
 type: community
-status: active
+status: ongoing
 year: 2026
 featured: false
 order: 40
 role: 'Creator / maintainer'
-tags: [Community, SIBA, Open Source, GitHub, Students]
+tags: [community, SIBA, GitHub, students]
 links:
   - label: 'Website'
     url: 'https://iba-launchpad.vercel.app'
   - label: 'GitHub org'
     url: 'https://github.com/iba-launchpad'
-pullQuote: 'Student work deserves a place to exist after grading.'
+stats:
+  - value: '60+'
+    label: 'projects reviewed'
+  - value: '35+'
+    label: 'people guided'
+  - value: '2'
+    label: 'public orgs'
+pullQuote: 'A good student project should not disappear when the grade is posted.'
+visual: launchpad
 ---
 
-## The problem
+## The problem is social
 
-University project work often disappears once the grade is recorded. Repositories exist, but people rarely see the thing itself, who built it, or what happened afterward.
+University projects often disappear after grading. The repository exists, the demo exists, maybe a few friends know about it, and then everyone moves on.
 
-Launchpad is an attempt to change that at SIBA.
+The harder part is that publishing unfinished work feels risky. People worry about being judged before they have the confidence to show what they made.
+
+Launchpad is my attempt to lower that friction.
 
 ## What I built around it
 
-The community centers on showcasing deployed or nearly-finished work, encouraging people to publish what they built, and creating room for project collaboration without turning the showcase into a generic chat group.
+The community focuses on project showcases, discovery, and a place for builders to find other builders. GitHub data is used where it helps people understand who made something and how to find the project.
 
-The ecosystem also uses GitHub data to make project and contributor information easier to discover.
+The website is only one layer. The real product is a culture where showing your work becomes normal.
 
-## The harder part
+## The part I did not expect
 
-The difficult problem is not the website. It is lowering the social cost of publishing your work when you know other students are going to see it.
+The difficult problem was never the code.
+
+It was getting people to press **publish**.

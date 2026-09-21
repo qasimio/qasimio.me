@@ -11,22 +11,23 @@ const { entry, featured = false } = Astro.props;
 <a
   class:list={['project-card', { featured }]}
   href={`/work/${entry.id}/`}
-  transition:name={`project-${entry.id}`}
   data-project-card
   data-type={entry.data.type}
 >
-  <ProjectVisual slug={entry.id} compact={!featured} />
-  <div class="project-card__body">
-    <div class="project-card__meta">
-      <span>{String(entry.data.year)}</span>
+  <div class="project-card-visual">
+    <ProjectVisual slug={entry.data.visual} />
+  </div>
+  <div class="project-card-body">
+    <div class="project-card-meta">
+      <span>{entry.data.year}</span>
       <span>{entry.data.type.replace('-', ' ')}</span>
       <span>{entry.data.status}</span>
     </div>
     <h3>{entry.data.title}</h3>
     <p>{entry.data.summary}</p>
-    <div class="project-card__foot">
+    <div class="project-card-foot">
       <span>{entry.data.tags.slice(0, 4).join(' · ')}</span>
-      <span class="project-card__arrow">↗</span>
+      <b>↗</b>
     </div>
   </div>
 </a>

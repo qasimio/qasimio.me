@@ -1,10 +1,15 @@
 ---
-title: 'Most of my time is spent building software.'
+title: 'I keep coming back to the same reason for building.'
+excerpt: 'Usually I build something after I get annoyed enough with the way things currently work.'
 publishedAt: 2026-09-10
 type: observation
 tags: [building, work]
 ---
 
-I still think the best thing about software is getting to make the machine you wish existed.
+Most of my projects start with some version of: why is this so annoying?
 
-The hard part is learning when to stop making the machine and actually put it in somebody else's hands.
+Sometimes the answer is that the problem is genuinely hard.
+
+Sometimes the answer is that nobody cared enough to make the boring part better.
+
+I like the second category.

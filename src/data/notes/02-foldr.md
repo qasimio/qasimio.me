@@ -1,12 +1,15 @@
 ---
-title: 'FOLDR crossed another line.'
+title: 'FOLDR crossed the 100-star mark.'
+excerpt: 'The number is small. The fact that strangers cared is the part I keep thinking about.'
 publishedAt: 2026-09-16
 type: achievement
-tags: [foldr, opensource, python]
+tags: [foldr, open-source, python]
 ---
 
-At some point a project stops being something you can casually break without thinking about anyone else.
+100 stars is not a massive number on the internet.
 
-People install FOLDR, use it, open issues, and ask for things. That changes the job.
+I still like it.
 
-Packaging, docs, reversibility, compatibility, and boring edge cases become part of the product.
+The interesting part is not the count. It is the moment a project stops being completely mine. Someone installs it, finds something annoying, opens an issue, asks for a feature, or tells a friend about it.
+
+That changes how you build. You start caring about the boring edges because another person is standing on the other side of them.

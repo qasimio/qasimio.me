@@ -1,38 +1,28 @@
 ---
-import { site } from '../data/site';
 interface Props {
   title?: string;
   description?: string;
   noIndex?: boolean;
 }
-const { title = site.name, description = site.description, noIndex = false } = Astro.props;
-const siteUrl = 'https://qasimio.me';
-const canonical = new URL(Astro.url.pathname, siteUrl);
-const pageTitle = title === site.name ? title : `${title} · ${site.name}`;
+const {
+  title = 'Qasim Sethar — qasimio',
+  description = 'Qasim Sethar builds software, products, systems, and communities.',
+  noIndex = false,
+} = Astro.props;
+const canonical = Astro.url.href;
+const image = new URL('/og.png', Astro.site ?? Astro.url).href;
 ---
 
-<title>{pageTitle}</title>
+<title>{title}</title>
 <meta name="description" content={description} />
-<link rel="canonical" href={canonical.href} />
+<link rel="canonical" href={canonical} />
 <meta property="og:type" content="website" />
-<meta property="og:site_name" content={site.name} />
-<meta property="og:title" content={pageTitle} />
+<meta property="og:url" content={canonical} />
+<meta property="og:title" content={title} />
 <meta property="og:description" content={description} />
-<meta property="og:url" content={canonical.href} />
-<meta property="og:image" content={`${siteUrl}/og.png`} />
+<meta property="og:image" content={image} />
 <meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:title" content={pageTitle} />
+<meta name="twitter:title" content={title} />
 <meta name="twitter:description" content={description} />
-<meta name="twitter:image" content={`${siteUrl}/og.png`} />
-<meta name="author" content={site.name} />
-{noIndex && <meta name="robots" content="noindex,nofollow" />}
-<script
-  type="application/ld+json"
-  set:html={JSON.stringify({
-    '@context': 'https://schema.org',
-    '@type': 'Person',
-    name: site.name,
-    url: siteUrl,
-    sameAs: site.social.map((item) => item.href),
-  })}
-></script>
+<meta name="twitter:image" content={image} />
+{noIndex && <meta name="robots" content="noindex, nofollow" />}

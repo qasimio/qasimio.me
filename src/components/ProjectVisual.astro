@@ -1,169 +1,149 @@
 ---
 interface Props {
   slug: string;
-  compact?: boolean;
+  mode?: 'card' | 'hero';
 }
-const { slug, compact = false } = Astro.props;
+const { slug, mode = 'card' } = Astro.props;
 ---
 
-<div class:list={['project-art', `project-art--${slug}`, { compact }]} aria-hidden="true">
+<div
+  class:list={['project-visual', `project-visual--${slug}`, `project-visual--${mode}`]}
+  aria-hidden="true"
+>
+  {slug === 'engram' && (
+    <div class="visual-engram">
+      <div class="engram-orb">E</div>
+      <i class="engram-ring r1"></i>
+      <i class="engram-ring r2"></i>
+      <i class="engram-ring r3"></i>
+      <span class="v-tag t1">retrieval</span>
+      <span class="v-tag t2">evidence</span>
+      <span class="v-tag t3">context</span>
+      <span class="v-tag t4">agent</span>
+      <span class="v-path p1"></span>
+      <span class="v-path p2"></span>
+    </div>
+  )}
+  {slug === 'operon' && (
+    <div class="visual-operon">
+      <div class="op-top">
+        <span>OPERON / VERIFY</span>
+        <b>DISK = TRUTH</b>
+      </div>
+      <div class="op-code">
+        <span>rename_symbol("old_name")</span>
+        <em>→</em>
+        <strong>rename_symbol("new_name")</strong>
+      </div>
+      <div class="op-checks">
+        <div>
+          <small>01 / AST</small>
+          <b>VERIFIED</b>
+        </div>
+        <div>
+          <small>02 / DISK</small>
+          <b>SNAPSHOT MATCH</b>
+        </div>
+        <div>
+          <small>03 / HUMAN</small>
+          <b>APPROVAL GATE</b>
+        </div>
+      </div>
+    </div>
+  )}
   {slug === 'foldr' && (
-    <div class="art-foldr">
-      <div class="art-window">
-        <div class="art-window-bar">
-          <i></i>
-          <i></i>
-          <i></i>
-          <b>FOLDR / PREVIEW</b>
+    <div class="visual-foldr">
+      <div class="foldr-ui">
+        <div class="foldr-head">
+          <span>FOLDR / PREVIEW</span>
+          <b>READY</b>
         </div>
-        <div class="art-file-list">
-          <div class="art-file-row">
-            <span>01</span>
-            <span>screenshots</span>
-            <span>READY</span>
+        {['screenshots', 'documents', 'invoices', 'duplicates'].map((item, i) => (
+          <div class="foldr-row">
+            <span>0{i + 1}</span>
+            <b>{item}</b>
+            <small>{i === 3 ? 'REVIEW' : 'READY'}</small>
           </div>
-          <div class="art-file-row">
-            <span>02</span>
-            <span>documents</span>
-            <span>READY</span>
-          </div>
-          <div class="art-file-row">
-            <span>03</span>
-            <span>invoices</span>
-            <span>READY</span>
-          </div>
-          <div class="art-file-row">
-            <span>04</span>
-            <span>duplicates</span>
-            <span>REVIEW</span>
-          </div>
-        </div>
-        <div class="art-window-foot">
+        ))}
+        <div class="foldr-foot">
           <span>12 planned operations</span>
           <strong>UNDO READY</strong>
         </div>
       </div>
     </div>
   )}
-
-  {slug === 'engram' && (
-    <div class="art-engram">
-      <div class="art-ring art-ring--one"></div>
-      <div class="art-ring art-ring--two"></div>
-      <div class="art-core">E</div>
-      <span class="node n1">memory</span>
-      <span class="node n2">retrieval</span>
-      <span class="node n3">evidence</span>
-      <span class="node n4">agent</span>
-      <span class="node n5">workspace</span>
-      <div class="art-connector c1"></div>
-      <div class="art-connector c2"></div>
-      <div class="art-connector c3"></div>
-      <div class="art-connector c4"></div>
-    </div>
-  )}
-
-  {slug === 'operon' && (
-    <div class="art-operon">
-      <div class="art-code">
-        <div class="art-code-head">
-          <span>OPERON / REVIEW</span>
-          <span>DISK = TRUTH</span>
-        </div>
-        <div class="code-row is-del">
-          <b>-</b>
-          <span>rename_symbol("old_name")</span>
-        </div>
-        <div class="code-row is-add">
-          <b>+</b>
-          <span>rename_symbol("new_name")</span>
-        </div>
-        <div class="verify-grid">
-          <div class="verify-card">
-            <span>01 / AST</span>
-            <strong>VERIFIED</strong>
-          </div>
-          <div class="verify-card">
-            <span>02 / DISK</span>
-            <strong>SNAPSHOT MATCH</strong>
-          </div>
-          <div class="verify-card">
-            <span>03 / HUMAN</span>
-            <strong>APPROVAL GATE</strong>
-          </div>
-        </div>
+  {slug === 'slotfinder' && (
+    <div class="visual-slot">
+      <div class="slot-head">
+        <span>SLOT FINDER</span>
+        <b>FALL 2026</b>
+      </div>
+      <div class="slot-input">
+        Search course, section, room <span>⌕</span>
+      </div>
+      <div class="slot-grid">
+        {['MON', 'TUE', 'WED', 'THU', 'FRI'].map((d) => (
+          <span>{d}</span>
+        ))}
+      </div>
+      <div class="slot-result">
+        <b>CS-301</b>
+        <span>10:00 · Lab 2</span>
+      </div>
+      <div class="slot-result">
+        <b>SE-302</b>
+        <span>13:00 · Room 14</span>
       </div>
     </div>
   )}
-
-  {slug === 'slot-finder' && (
-    <div class="art-slotfinder">
-      <div class="slot-shell">
-        <div class="slot-head">
-          <span>SIBA / FALL</span>
-          <span>SEARCH RESULT</span>
-        </div>
-        <div class="slot-table">
-          {Array.from({ length: 40 }).map((_, index) => (
-            <span
-              class:list={['slot-cell', { active: [3, 4, 11, 19, 20, 27, 35].includes(index) }]}
-            ></span>
-          ))}
-        </div>
-        <div class="slot-meta">
-          <span>CS-302 / SECTION A</span>
-          <strong>ROOM 12 · 11:00</strong>
-        </div>
+  {slug === 'launchpad' && (
+    <div class="visual-launchpad">
+      <div class="lp-head">
+        <span>IBA LAUNCHPAD</span>
+        <b>PUBLIC</b>
+      </div>
+      <div class="lp-center">
+        <i>LP</i>
+        <span class="a">projects</span>
+        <span class="b">people</span>
+        <span class="c">github</span>
+        <span class="d">feedback</span>
+      </div>
+      <div class="lp-foot">
+        <strong>SHOW THE WORK.</strong>
+        <span>publish · discover · collaborate</span>
       </div>
     </div>
   )}
-
-  {slug === 'siba-launchpad' && (
-    <div class="art-launchpad">
-      <div class="launch-surface">
-        <div class="launch-title">IBA LAUNCHPAD / PROJECT ECOSYSTEM</div>
-        <div class="launch-grid">
-          <span>SHOWCASE</span>
-          <span>PROJECTS</span>
-          <span>COLLABORATE</span>
-          <span>GUIDANCE</span>
-        </div>
-        <div class="launch-stat">
-          <strong>60+</strong>
-          <span>projects reviewed</span>
-        </div>
-      </div>
-    </div>
-  )}
-
   {slug === 'devshelf' && (
-    <div class="art-devshelf">
-      <div class="shelf-surface">
-        <div class="shelf-title">DEVSHELF / FROM FIRST PRINCIPLES</div>
-        <div class="shelf-query">
-          search → <strong>information retrieval</strong>
-        </div>
-        <div class="shelf-index">
-          <span>inverted_index</span>
-          <span>positions</span>
-          <span>prefix_trie</span>
-          <span>offline_index</span>
-        </div>
-        <div class="shelf-speed">
-          <strong>0.8ms</strong>
-          <span>query path</span>
-        </div>
+    <div class="visual-devshelf">
+      <div class="ds-head">
+        <span>DEVSHELF</span>
+        <b>INDEXED</b>
       </div>
+      <div class="ds-query">retrieval</div>
+      <div class="ds-lines">
+        <i style="width:84%"></i>
+        <i style="width:61%"></i>
+        <i style="width:72%"></i>
+        <i style="width:46%"></i>
+      </div>
+      <div class="ds-foot">positional inverted index · Trie prefix matching</div>
     </div>
   )}
-
   {slug === 'mqnotebook' && (
-    <div class="art-notebook">
-      <div class="note-stack">
-        <div class="note-file note-file--one">report_2025.pdf</div>
-        <div class="note-file note-file--two">slides.pptx</div>
-        <div class="note-file note-file--three">data.xlsx</div>
-        <div class="note-query">⌕ scanned pages + tables + presentation notes</div>
+    <div class="visual-mq">
+      <div class="mq-head">
+        <span>MQNOTEBOOK</span>
+        <b>LOCAL</b>
+      </div>
+      {['scan_001.pdf', 'notes.xlsx', 'slides.pptx'].map((f) => (
+        <div class="mq-file">{f}</div>
+      ))}
+      <div class="mq-foot">
+        <span>OCR</span>
+        <span>RERANK</span>
+        <span>RETRIEVE</span>
       </div>
     </div>
   )}

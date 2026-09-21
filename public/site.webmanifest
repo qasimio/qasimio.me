@@ -1,15 +1,9 @@
 {
-  "name": "Qasim Sethar",
-  "short_name": "Qasim Sethar",
+  "name": "Qasim Sethar — qasimio",
+  "short_name": "qasimio",
   "start_url": "/",
-  "display": "minimal-ui",
-  "background_color": "#080808",
-  "theme_color": "#080808",
-  "icons": [
-    {
-      "src": "/favicon.svg",
-      "sizes": "any",
-      "type": "image/svg+xml"
-    }
-  ]
+  "display": "standalone",
+  "background_color": "#0b1011",
+  "theme_color": "#0b1011",
+  "icons": [{ "src": "/favicon.svg", "sizes": "any", "type": "image/svg+xml" }]
 }

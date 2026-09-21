@@ -1,44 +1,54 @@
 ---
+import mark from '../assets/identity/mq-mark.png';
 import { site } from '../data/site';
 ---
 
 <footer class="site-footer">
-  <div class="site-shell footer-inner">
-    <div class="footer-top">
-      <div class="footer-brand">
-        <div class="footer-brand__top">
-          <span class="footer-mark">MQ</span>
-          <span class="micro">QASIM SETHAR / QASIMIO</span>
-        </div>
-        <p>Build something worth keeping.</p>
-        <span>Software · products · systems · communities</span>
-      </div>
-
-      <div class="footer-links">
-        <div>
-          <span class="footer-label">Navigate</span>
-          <a href="/work/">Work ↗</a>
-          <a href="/journal/">Journal ↗</a>
-          <a href="/about/">About ↗</a>
-          <a href="/resume.pdf">Résumé ↗</a>
-        </div>
-        <div>
-          <span class="footer-label">Elsewhere</span>
-          {site.social.map((item) => (
-            <a href={item.href} target="_blank" rel="noreferrer">
-              {item.label} ↗
-            </a>
-          ))}
-        </div>
-      </div>
-    </div>
-
-    <div class="footer-bottom">
-      <a class="footer-email" href={`mailto:${site.email}`}>
-        {site.email}
+  <div class="footer-main site-shell">
+    <div class="footer-cta">
+      <span class="eyebrow">OPEN CHANNEL</span>
+      <h2>
+        Have something
+        <br />
+        <em>worth figuring out?</em>
+      </h2>
+      <a class="footer-cta-link" href="/contact/">
+        Start a conversation <span>↗</span>
       </a>
-      <span>© {new Date().getFullYear()} Qasim Sethar</span>
-      <span>Keyboard-first. Human-readable.</span>
     </div>
+    <div class="footer-brand">
+      <div class="footer-brand-row">
+        <span class="footer-mark">
+          <img src={mark} alt="" />
+        </span>
+        <span>Qasim Sethar / qasimio</span>
+      </div>
+      <p>
+        I make software, keep a few public projects alive, and keep finding problems that are easier
+        to fix than ignore.
+      </p>
+    </div>
+    <div class="footer-links">
+      <div>
+        <span class="footer-label">Navigate</span>
+        <a href="/work/">Work ↗</a>
+        <a href="/journal/">Journal ↗</a>
+        <a href="/about/">About ↗</a>
+        <a href="/resume.pdf">Résumé ↗</a>
+      </div>
+      <div>
+        <span class="footer-label">Elsewhere</span>
+        {site.social.map((item) => (
+          <a href={item.href} target="_blank" rel="noreferrer">
+            {item.label} ↗
+          </a>
+        ))}
+      </div>
+    </div>
+  </div>
+  <div class="site-shell footer-bottom">
+    <a href={`mailto:${site.email}`}>{site.email}</a>
+    <span>© {new Date().getFullYear()} Qasim Sethar</span>
+    <span>Keep building.</span>
   </div>
 </footer>

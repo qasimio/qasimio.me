@@ -1,4 +1,5 @@
 ---
+import mark from '../assets/identity/mq-mark.png';
 const pathname = Astro.url.pathname;
 const links = [
   { label: 'Work', href: '/work/' },
@@ -9,14 +10,15 @@ const links = [
 
 <header class="site-header" data-site-header>
   <div class="site-shell header-inner">
-    <a class="brand" href="/" aria-label="Qasim Sethar home" transition:name="site-brand">
-      <span class="brand-mark">MQ</span>
-      <span>
-        <span class="brand-name">Qasim Sethar</span>
-        <span class="brand-handle"> / qasimio</span>
+    <a class="brand" href="/" aria-label="Qasim Sethar home">
+      <span class="brand-mark">
+        <img src={mark} alt="" />
+      </span>
+      <span class="brand-name">
+        <b>Qasim Sethar</b>
+        <span>/ qasimio</span>
       </span>
     </a>
-
     <nav class="primary-nav" aria-label="Primary navigation">
       {links.map((link) => {
         const active =
@@ -32,67 +34,37 @@ const links = [
         );
       })}
     </nav>
-
     <div class="header-actions">
-      <button
-        class="command-trigger"
-        type="button"
-        data-command-open
-        aria-label="Open command palette"
-      >
-        <span class="command-trigger__key">Ctrl</span>K
+      <button class="header-chip" type="button" data-command-open aria-label="Open command palette">
+        <span>Ctrl</span>K
       </button>
       <button
-        class="icon-button"
+        class="header-chip icon-chip"
         type="button"
         data-theme-toggle
-        aria-label="Switch color theme"
-        title="Switch color theme"
+        aria-label="Switch theme"
       >
-        <svg
-          class="theme-button__light"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="1.7"
-          aria-hidden="true"
-        >
-          <path d="M12 3v2.1M12 18.9V21M3 12h2.1M18.9 12H21M5.64 5.64l1.48 1.48M16.88 16.88l1.48 1.48M5.64 18.36l1.48-1.48M16.88 7.12l1.48-1.48" />
-          <circle cx="12" cy="12" r="3.8" />
-        </svg>
-        <svg
-          class="theme-button__dark"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="1.7"
-          aria-hidden="true"
-        >
-          <path d="M20.2 14.4A8.5 8.5 0 0 1 9.6 3.8 8.1 8.1 0 1 0 20.2 14.4Z" />
-        </svg>
-        <span class="sr-only" data-theme-label>
-          Light
-        </span>
+        <span class="theme-light">☼</span>
+        <span class="theme-dark">◐</span>
       </button>
-      <a class="header-contact" href="/contact/">
+      <a class="header-talk" href="/contact/">
         Talk <span>↗</span>
       </a>
       <button
-        class="menu-trigger"
+        class="mobile-trigger"
         type="button"
         aria-expanded="false"
         aria-controls="mobile-nav"
         data-menu-toggle
       >
+        <i></i>
+        <i></i>
         <span class="sr-only">Open navigation</span>
-        <i></i>
-        <i></i>
       </button>
     </div>
   </div>
-
   <div class="mobile-nav" id="mobile-nav" hidden data-mobile-nav>
-    <div class="site-shell mobile-nav__inner">
+    <div class="site-shell mobile-nav-inner">
       {links.map((link) => (
         <a href={link.href}>
           {link.label}
@@ -100,7 +72,7 @@ const links = [
         </a>
       ))}
       <a href="/resume.pdf">
-        Resume<span>↗</span>
+        Résumé<span>↗</span>
       </a>
       <a href="/contact/">
         Contact<span>↗</span>
@@ -109,7 +81,7 @@ const links = [
         Switch theme<span>◐</span>
       </button>
       <button type="button" data-command-open>
-        Command menu<span>Ctrl K</span>
+        Command palette<span>Ctrl K</span>
       </button>
     </div>
   </div>

@@ -1,13 +1,13 @@
 ---
 title: 'Operon'
-summary: "A terminal-native autonomous coding agent built around deterministic verification instead of trusting the model's description of what it changed."
+summary: 'A terminal-native coding agent where the filesystem, not the model, gets the final say on what actually changed.'
 type: open-source
 status: active
 year: 2026
 featured: true
 order: 15
 role: 'Designer / engineer'
-tags: [Agents, AST, Python, TUI, Verification]
+tags: [agents, AST, Python, TUI, verification]
 links:
   - label: 'GitHub'
     url: 'https://github.com/qasimio/Operon'
@@ -19,24 +19,31 @@ stats:
   - value: '9'
     label: 'LLM backends'
 pullQuote: 'The filesystem is the source of truth.'
+visual: operon
 ---
 
-## The problem
+## The failure mode
 
-Autonomous coding loops have a dangerous blind spot: a model can confidently describe an edit that never happened, happened differently, or broke another file entirely.
+Coding agents have a strange habit: they can sound certain about a change before anyone has checked whether the file on disk agrees.
 
-Operon starts from a less glamorous assumption: disk state wins.
+That is a terrible place to put trust.
 
-## The approach
+Operon starts with a simpler rule: the machine that owns the file gets the final vote.
 
-The agent maintains a persistent repository symbol graph for cross-file context, while a deterministic review layer checks actual filesystem snapshots before changes are accepted.
+## How I approached it
 
-For structured operations such as import insertion and symbol renaming, Operon can bypass free-form generation and use Python's AST and tokenization machinery.
+The agent builds a persistent repository symbol graph so cross-file relationships do not have to be rediscovered inside every context window.
 
-## Patching
+A deterministic review layer checks actual filesystem state around edits. The model can suggest what happened, but it cannot overrule the disk.
 
-Not every edit is represented cleanly by a single string replacement. The patching path therefore cascades from exact matches through increasingly tolerant structural strategies so overlapping automated and manual edits can still be handled deliberately.
+For operations that can be represented structurally, Operon can bypass free-form generation and use Python’s AST/tokenization machinery for things like imports and symbol renaming.
+
+## Patching without wishful thinking
+
+String replacement is fine until it isn't.
+
+The patching path moves through increasingly tolerant strategies, from exact matches to fuzzy multi-line structures, so the system can handle code that changed under it without pretending the first attempt was perfect.
 
 ## The bigger idea
 
-The goal is not to make a model appear autonomous. It is to make the autonomous loop accountable to things outside the model.
+I am less interested in making an agent _look_ autonomous than making the loop accountable to things outside the model.

@@ -1,99 +1,99 @@
 ---
 import { Image } from 'astro:assets';
 import Base from '../../layouts/Base.astro';
-import SectionLabel from '../../components/SectionLabel.astro';
-import { experience, peopleWork, programs, site, timeline, workStyle } from '../../data/site';
+import SectionHeading from '../../components/SectionHeading.astro';
 import portrait from '../../assets/identity/qasim-portrait.jpg';
+import { people, professional, recognition, site, timeline, workStyle } from '../../data/site';
 ---
 
 <Base
-  title="About"
-  description="About Qasim Sethar: the person behind the software, products, communities, and experiments."
+  title="About — Qasim Sethar"
+  description="About Qasim Sethar: software, products, people, and how he works."
 >
-  <header class="page-hero site-shell">
-    <div class="page-hero__top">
+  <section class="page-hero site-shell about-hero">
+    <div class="page-hero-meta">
       <span>03 / ABOUT</span>
       <span>THE PERSON</span>
     </div>
     <h1>
-      There is more
-      <br />
-      than <span class="display-serif">code.</span>
+      I like making things. I am still figuring out <em>which ones matter.</em>
     </h1>
     <p>
-      I like building software, but I also like the parts around it: people, communities, events,
-      judgment, communication, and figuring out what is actually worth shipping.
+      That is the honest version. The rest is software, people, side projects, mistakes, and
+      learning what happens after the code works.
     </p>
-  </header>
-
-  <section class="about-profile site-shell">
+  </section>
+  <section class="about-intro site-shell">
     <div class="about-photo" data-reveal>
       <Image
         src={portrait}
         alt="Qasim Sethar"
-        width={800}
-        height={870}
-        sizes="(max-width: 980px) 100vw, 40vw"
+        width={900}
+        height={1120}
+        sizes="(max-width: 900px) 100vw, 42vw"
       />
       <span>QASIM SETHAR / 2026</span>
     </div>
-    <div class="about-profile__copy" data-reveal>
-      <span class="eyebrow">The short version</span>
+    <div class="about-copy" data-reveal>
+      <span class="eyebrow">THE SHORT VERSION</span>
       <h2>
-        I build until the problem becomes <span class="display-serif">smaller.</span>
+        I like writing software. I am getting more interested in what happens <em>around it.</em>
       </h2>
       <p>
-        I am a Computer Science student at Sukkur IBA University who spends a lot of time building
-        software outside the syllabus. Some of it becomes open source. Some becomes products. Some
-        exists because I wanted to understand a problem properly.
+        I am a Computer Science student at Sukkur IBA University. Most of my spare time goes into
+        building something, maintaining something I already shipped, or getting distracted by a
+        problem that looked small five minutes earlier.
       </p>
       <p>
-        I have also learned that shipping software is only half the job. The other half is making it
-        understandable, trustworthy, discoverable, and useful to someone who did not build it.
+        I care about choosing a problem worth touching, doing the engineering properly, and putting
+        it in front of someone who can tell me whether I was right.
       </p>
-      <div class="about-links">
-        <a href="/resume.pdf">Résumé ↗</a>
-        <a href="/contact/">Contact ↗</a>
+      <div class="about-actions">
+        <a class="button-secondary" href="/resume.pdf">
+          Résumé ↗
+        </a>
+        <a class="button-secondary" href="/contact/">
+          Contact ↗
+        </a>
       </div>
     </div>
   </section>
-
-  <section class="site-shell about-section">
-    <SectionLabel index="01" title="How it got here" />
+  <section class="section-block site-shell">
+    <SectionHeading
+      index="01"
+      title="How I got here"
+      note="Not a biography. Just the useful bits."
+    />
     <div class="timeline">
       {timeline.map((item) => (
-        <div class="timeline-item" data-reveal>
-          <span>{item.year}</span>
+        <div class="timeline-row" data-reveal>
+          <span>{item.period}</span>
           <div>
             <h3>{item.title}</h3>
-            <p>{item.detail}</p>
+            <p>{item.body}</p>
           </div>
         </div>
       ))}
     </div>
   </section>
-
-  <section class="about-section about-section--accent">
-    <div class="site-shell">
-      <SectionLabel index="02" title="People and community" />
-      <div class="about-story-grid">
-        {peopleWork.map((item) => (
-          <div data-reveal>
-            <span class="eyebrow">{item.label}</span>
-            <h3>{item.title}</h3>
-            <p>{item.detail}</p>
-          </div>
-        ))}
-      </div>
+  <section class="section-block site-shell">
+    <SectionHeading index="02" title="People and community" note="The work around the work." />
+    <div class="people-grid">
+      {people.map((item) => (
+        <article class="people-card" data-reveal>
+          <strong>{item.metric}</strong>
+          <h3>{item.title}</h3>
+          <p>{item.detail}</p>
+        </article>
+      ))}
     </div>
   </section>
-
-  <section class="site-shell about-section">
-    <SectionLabel index="03" title="Professional work" />
-    <div class="experience-list">
-      {experience.map((item) => (
-        <div class="experience-item" data-reveal>
-          <span>{item.title}</span>
+  <section class="section-block site-shell">
+    <SectionHeading index="03" title="Professional work" />
+    <div class="professional-list">
+      {professional.map((item) => (
+        <div class="professional-row" data-reveal>
+          <span>{item.company}</span>
           <div>
             <strong>{item.role}</strong>
             <p>{item.detail}</p>
@@ -102,59 +102,82 @@ import portrait from '../../assets/identity/qasim-portrait.jpg';
       ))}
     </div>
   </section>
-
-  <section class="site-shell about-section">
-    <SectionLabel index="04" title="How I work" />
-    <div class="workstyle">
-      <div class="workstyle__intro">
-        <span class="eyebrow">A few tells</span>
-        <h2>The tools are ordinary. The workflow is not.</h2>
+  <section class="section-block site-shell">
+    <SectionHeading
+      index="04"
+      title="How I work"
+      note="The boring details that are actually mine."
+    />
+    <div class="workstyle-grid">
+      <div class="workstyle-copy" data-reveal>
+        <span class="eyebrow">A FEW TELLS</span>
+        <h2>
+          The tools are ordinary.
+          <br />
+          <em>I just use them a lot.</em>
+        </h2>
+        <p>
+          I have been on Arch Linux for roughly two years. I know a stupid number of keyboard
+          shortcuts, write small scripts when something gets repetitive, and use Vim inside VS Code.
+          I use Vim inside VS Code. The mouse still exists. I just do not reach for it first.
+        </p>
       </div>
-      <div class="workstyle__table">
-        {workStyle.map(([label, value]) => (
+      <div class="workstyle-table">
+        {workStyle.map((item) => (
           <div>
-            <span>{label}</span>
-            <strong>{value}</strong>
+            <span>{item.key}</span>
+            <strong>{item.value}</strong>
           </div>
         ))}
       </div>
     </div>
   </section>
-
-  <section class="site-shell about-section">
-    <SectionLabel index="05" title="Programs and recognition" />
-    <div class="program-list">
-      {programs.map((item) => (
-        <div class="program-item" data-reveal>
+  <section class="section-block site-shell">
+    <SectionHeading index="05" title="Programs and recognition" />
+    <div class="recognition-list">
+      {recognition.map((item) => (
+        <div class="recognition-row" data-reveal>
           <span>PROGRAM</span>
-          <h3>{item.title}</h3>
+          <strong>{item.label}</strong>
           <p>{item.detail}</p>
         </div>
       ))}
     </div>
   </section>
-
-  <section class="site-shell about-section elsewhere-section">
-    <SectionLabel index="06" title="Elsewhere" />
+  <section class="section-block site-shell">
+    <SectionHeading
+      index="06"
+      title="Elsewhere"
+      note="Primary links first. The rest is there if you go looking."
+    />
     <div class="elsewhere-grid">
       <div>
-        <span class="eyebrow">Primary</span>
+        <span class="eyebrow">PRIMARY</span>
         {site.social.map((item) => (
           <a href={item.href} target="_blank" rel="noreferrer">
             {item.label}
-            <span>↗</span>
+            <b>↗</b>
           </a>
         ))}
       </div>
       <div>
-        <span class="eyebrow">More internet</span>
-        {site.elsewhere.map((item) => (
+        <span class="eyebrow">MORE INTERNET</span>
+        {site.secondary.map((item) => (
           <a href={item.href} target="_blank" rel="noreferrer">
             {item.label}
-            <span>↗</span>
+            <b>↗</b>
           </a>
         ))}
       </div>
     </div>
+  </section>
+  <section class="about-end site-shell" data-reveal>
+    <span class="eyebrow">07 / CURRENT</span>
+    <h2>
+      Building deeper systems.
+      <br />
+      <em>Learning how to reach people.</em>
+    </h2>
+    <p>The second part is the one I am still learning.</p>
   </section>
 </Base>

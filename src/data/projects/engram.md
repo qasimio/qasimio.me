@@ -1,44 +1,49 @@
 ---
 title: 'Engram'
-summary: 'A knowledge system built around grounded retrieval, persistent context, and an interface between memory and agents.'
+summary: 'A knowledge system built around retrieval, persistent context, and evidence instead of a chatbot pretending it remembers.'
 type: product
 status: active
 year: 2026
 featured: true
 order: 10
-role: 'Founder / engineer'
-tags: [RAG, Search, Agents, Knowledge, PostgreSQL, MCP]
+role: 'Creator / engineer'
+tags: [RAG, retrieval, agents, knowledge, PostgreSQL, MCP]
 links:
   - label: 'GitHub'
     url: 'https://github.com/qasimio/Engram'
 stats:
-  - value: 'Hybrid'
+  - value: 'hybrid'
     label: 'retrieval'
-  - value: 'Async'
+  - value: 'async'
     label: 'ingestion'
   - value: 'MCP'
     label: 'integration'
-pullQuote: 'Memory should return evidence, not confident guesses.'
+pullQuote: 'Memory is useful only when you can point to where it came from.'
+visual: engram
 ---
 
-## Why it exists
+## The question
 
-Most personal knowledge tools stop at storage. The interesting problem starts afterward: can a system retrieve the right thing, preserve where it came from, and give an agent enough context to act without inventing the rest?
+Most knowledge tools are good at storing things. The harder question starts when you ask the system to use what it stored.
 
-Engram is my attempt at that problem.
+Can it find the right evidence? Can it keep workspaces apart? Can an agent use that context without quietly filling the gaps from its own training data?
 
-## The architecture
+That is the problem I keep coming back to with Engram.
 
-The system combines sparse and dense retrieval, Reciprocal Rank Fusion, reranking, asynchronous ingestion, workspace-first isolation, and grounded synthesis. Retrieval, evidence, and generation stay distinct instead of collapsing into one opaque prompt pipeline.
+## The system
 
-The ingestion path is asynchronous so expensive parsing, indexing, scraping, and synchronization do not live on the main API request path.
+Engram combines sparse and dense retrieval, Reciprocal Rank Fusion, reranking, asynchronous ingestion, workspace-first isolation, and grounded synthesis. The pieces stay separate on purpose. Retrieval is retrieval. Generation is generation. Evidence should not disappear inside one giant prompt.
 
-## The hard constraint
+The ingestion path lives outside the main request thread. Parsing a document, scraping a page, or syncing a repository should not block the request that asked for it.
 
-The model is allowed to be uncertain. The system is not allowed to hide that uncertainty.
+## A hard boundary
 
-When retrieved evidence does not support an answer, the intended behavior is an explicit not-found result rather than a confident fallback to model memory.
+The model is allowed to say **not found**.
 
-## Where it is now
+That sounds obvious until you build a system where every blank space is an invitation for a language model to make something up.
 
-Still in development. The goal is not another chatbot. The interesting problem is whether personal memory can become trustworthy enough to act as infrastructure for other software.
+The current direction is to make the system refuse unsupported answers instead of turning missing evidence into fluent fiction.
+
+## Where it is
+
+Still in development. I am not trying to make another chatbot. I am exploring whether personal memory can become dependable infrastructure for other software.

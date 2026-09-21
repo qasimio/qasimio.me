@@ -1,12 +1,13 @@
 ---
-title: "I got invited to GitHub's Maintainer Community."
+title: 'I got invited to GitHub’s Maintainer Community.'
+excerpt: 'I saw the invitation and stared at it for a bit longer than I expected.'
 publishedAt: 2026-09-17
 type: achievement
-tags: [github, opensource, maintainers]
+tags: [github, open-source, maintainers]
 ---
 
-A small milestone that made me smile.
+I saw the invitation and stared at it for a bit longer than I expected.
 
-I got invited to GitHub's Maintainer Community after spending a lot of time building and contributing in public.
+It is not some giant life event. But FOLDR started as a thing I wrote because I was tired of sorting files, and somewhere along the way people I don't know started using it, opening issues, and caring enough to tell me what was wrong.
 
-Nothing dramatic happened. It is just a useful signal that the work is starting to reach people outside my immediate circle.
+Getting invited into GitHub’s Maintainer Community felt like a nice little sign that the work had travelled further than my own laptop.

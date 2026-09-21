@@ -1,95 +1,96 @@
 ---
-import { getCollection, type CollectionEntry } from 'astro:content';
+import { getCollection } from 'astro:content';
 import Base from '../../layouts/Base.astro';
 import ProjectCard from '../../components/ProjectCard.astro';
-import WorkArchiveRow from '../../components/WorkArchiveRow.astro';
-import SectionLabel from '../../components/SectionLabel.astro';
-
-type Project = CollectionEntry<'projects'>;
-const projects: Project[] = (await getCollection<'projects'>('projects')).sort(
-  (a, b) => a.data.order - b.data.order,
-);
-const featured = projects.filter((entry) => entry.data.featured).slice(0, 3);
-const archive = projects.filter((entry) => !entry.data.featured);
-const types = ['all', ...new Set(projects.map((entry) => entry.data.type))];
+import SectionHeading from '../../components/SectionHeading.astro';
+const projects = (await getCollection('projects')).sort((a, b) => a.data.order - b.data.order);
+const featured = projects.filter((p) => p.data.featured);
+const archive = projects.filter((p) => !p.data.featured);
+const types = ['all', ...Array.from(new Set(projects.map((p) => p.data.type)))];
 ---
 
 <Base
-  title="Work"
-  description="Projects, products, systems, open-source work, and communities built by Qasim Sethar."
+  title="Work — Qasim Sethar"
+  description="Projects, systems, products, open source, and communities built by Qasim Sethar."
 >
-  <header class="page-hero site-shell">
-    <div class="page-hero__top">
+  <section class="page-hero site-shell work-page-hero">
+    <div class="page-hero-meta">
       <span>01 / WORK</span>
-      <span>{projects.length} PROJECTS</span>
+      <span>{projects.length} things</span>
     </div>
     <h1>
-      Things I<br />
-      <span class="display-serif">actually built.</span>
+      I build, then I find out what <em>survives.</em>
     </h1>
     <p>
-      Some became products. Some became tools. Some were built to understand a problem properly. All
-      of them left evidence behind.
+      Some projects became products. Some became systems. Some taught me enough to build the next
+      thing better. Here is the trail.
     </p>
-  </header>
-
-  <section class="site-shell" style="padding-bottom: 8rem;">
-    <SectionLabel index="01" title="Flagship work" />
-    <div class="flagship-work">
+  </section>
+  <section class="section-block site-shell">
+    <SectionHeading index="01" title="Featured" note="The work worth opening." />
+    <div class="work-featured">
       {featured.map((entry) => (
         <ProjectCard entry={entry} featured />
       ))}
     </div>
-
-    <div class="archive-section">
-      <SectionLabel index="02" title="Archive" />
+  </section>
+  <section class="section-block site-shell work-archive">
+    <div class="filter-line">
       <div class="filters" data-project-filters>
-        {types.map((type, index) => (
+        {types.map((type, i) => (
           <button
             type="button"
-            class="filter-button"
-            data-project-filter={type}
-            aria-pressed={index === 0}
+            class:list={['filter-chip', { active: i === 0 }]}
+            data-filter={type}
           >
-            {type.replaceAll('-', ' ')}
+            {type.replace('-', ' ')}
           </button>
         ))}
       </div>
-      <div class="archive-list">
-        {archive.map((entry) => (
-          <WorkArchiveRow entry={entry} />
-        ))}
-      </div>
-      <p class="empty-state" data-project-empty hidden>
-        No projects match that filter.
-      </p>
+      <span class="filter-count" data-filter-count>
+        {archive.length} more
+      </span>
+    </div>
+    <div class="archive-list" data-project-list>
+      {archive.map((entry) => (
+        <a
+          class="archive-item"
+          href={`/work/${entry.id}/`}
+          data-project-card
+          data-type={entry.data.type}
+        >
+          <span>{entry.data.year}</span>
+          <strong>{entry.data.title}</strong>
+          <span>{entry.data.type.replace('-', ' ')}</span>
+          <p>{entry.data.summary}</p>
+          <b>↗</b>
+        </a>
+      ))}
     </div>
   </section>
-
-  <script is:inline>
-    const bindProjectFilters = () => {
+  <script>
+    const setupProjectFilters = () => {
       const root = document.querySelector('[data-project-filters]');
-      if (!root || root.dataset.bound === 'true') return;
+      if (!root || root.dataset.bound) return;
       root.dataset.bound = 'true';
-      const rows = [...document.querySelectorAll('.archive-list [data-project-card]')];
-      const empty = document.querySelector('[data-project-empty]');
-      root.querySelectorAll('[data-project-filter]').forEach((button) => {
+      const buttons = [...root.querySelectorAll('[data-filter]')];
+      const cards = [...document.querySelectorAll('[data-project-list] [data-project-card]')];
+      const count = document.querySelector('[data-filter-count]');
+      buttons.forEach((button) =>
         button.addEventListener('click', () => {
-          const type = button.getAttribute('data-project-filter');
-          root
-            .querySelectorAll('button')
-            .forEach((item) => item.setAttribute('aria-pressed', String(item === button)));
+          const value = button.dataset.filter;
+          buttons.forEach((b) => b.classList.toggle('active', b === button));
           let visible = 0;
-          rows.forEach((row) => {
-            const show = type === 'all' || row.getAttribute('data-type') === type;
-            row.hidden = !show;
-            if (show) visible += 1;
+          cards.forEach((card) => {
+            const show = value === 'all' || card.dataset.type === value;
+            card.hidden = !show;
+            if (show) visible++;
           });
-          if (empty) empty.hidden = visible !== 0;
-        });
-      });
+          if (count) count.textContent = `${visible} shown`;
+        }),
+      );
     };
-    document.addEventListener('astro:page-load', bindProjectFilters);
-    bindProjectFilters();
+    document.addEventListener('astro:page-load', setupProjectFilters);
+    setupProjectFilters();
   </script>
 </Base>
