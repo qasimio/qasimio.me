@@ -5,13 +5,9 @@ type: open-source
 status: shipped
 year: 2026
 featured: true
-order: 30
-tags:
-  - Python
-  - CLI
-  - Automation
-  - Open Source
+order: 20
 role: "Creator / maintainer"
+tags: [Python, CLI, Automation, Open Source, Filesystem]
 links:
   - label: "GitHub"
     url: "https://github.com/qasimio/foldr"
@@ -20,7 +16,7 @@ links:
   - label: "Docs"
     url: "https://docs.qasimio.me/docs/foldr/start-here"
 stats:
-  - value: "7,300+"
+  - value: "7.3k+"
     label: "downloads"
   - value: "100+"
     label: "stars"
@@ -35,18 +31,18 @@ Manual file cleanup is one of those problems people accept because the alternati
 
 FOLDR is built around making automation reversible.
 
-## The useful parts
+## What it does
 
-It can organize files by type, preview a planned operation before executing it, watch directories in the background, detect duplicates, and retain enough history to undo changes.
+It can organize files by type, preview a planned operation before execution, watch directories in the background, detect duplicates, and retain enough history to undo changes.
 
-The cross-platform watcher sits on top of native filesystem events rather than polling folders forever, because a file organizer should not become the thing consuming the machine's resources.
+The watcher is built around native filesystem events through the cross-platform watchdog layer instead of endlessly polling folders.
 
-## What happened after shipping
+## What changed after shipping
 
-FOLDR moved beyond being a local experiment. It was published to PyPI, accumulated real downloads, and started getting used by people who had no reason to care about the implementation details.
+The project moved beyond being a local experiment. It was published to PyPI, accumulated real downloads and stars, and began getting used by people who had no reason to care about the implementation details.
 
-That is the interesting milestone.
+That is the important transition: once someone else relies on the software, packaging, documentation, reversibility, and boring edge cases become product work.
 
-## The lesson
+## What it taught me
 
-The project made me care much more about distribution, packaging, documentation, reversibility, and the difference between software that works on my machine and software another person can safely install.
+A useful open-source project is partly code and partly distribution. The difference between "works on my machine" and "another person can trust installing this" is much bigger than it looks from inside the repository.

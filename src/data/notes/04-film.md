@@ -1,11 +1,8 @@
 ---
 title: "This time I made something that wasn't software."
+publishedAt: 2026-09-12
 type: observation
-order: 40
-tags:
-  - film
-  - making
-  - creativity
+tags: [film, making, creativity]
 ---
 
 I spend most of my time building software.

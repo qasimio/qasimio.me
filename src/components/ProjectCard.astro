@@ -1,38 +1,26 @@
 ---
 import ProjectVisual from './ProjectVisual.astro';
-
-interface Props {
-  entry: any;
-  featured?: boolean;
-}
 const { entry, featured = false } = Astro.props;
 ---
 <a
+  class:list={['project-card', { featured }]}
   href={`/work/${entry.id}/`}
-  class:list={["project-card", { featured }]}
   data-project-card
   data-type={entry.data.type}
-  data-status={entry.data.status}
-  data-reveal
+  transition:name={`project-${entry.id}`}
 >
-  <ProjectVisual
-    title={entry.data.title}
-    type={entry.data.type}
-    year={entry.data.year}
-    status={entry.data.status}
-    slug={entry.id}
-    compact={!featured}
-  />
-  <div class="project-card__copy">
+  <ProjectVisual slug={entry.id} title={entry.data.title} compact={!featured} />
+  <div class="project-card__body">
     <div class="project-card__meta">
+      <span>{String(entry.data.year)}</span>
       <span>{entry.data.type.replace('-', ' ')}</span>
-      <span>{entry.data.year}</span>
+      <span>{entry.data.status}</span>
     </div>
     <h3>{entry.data.title}</h3>
     <p>{entry.data.summary}</p>
-    <div class="project-card__footer">
-      <span>{entry.data.status}</span>
-      <span class="arrow">↗</span>
+    <div class="project-card__foot">
+      <span>{entry.data.tags.slice(0, 3).join(' · ')}</span>
+      <span class="project-card__arrow">↗</span>
     </div>
   </div>
 </a>

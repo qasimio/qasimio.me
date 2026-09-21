@@ -1,53 +1,24 @@
 # qasimio.me
 
-The personal site for Qasim Sethar.
+Personal headquarters for Qasim Sethar.
 
 ## Stack
 
 - Astro 7
 - TypeScript
 - Tailwind CSS 4
-- MDX
+- MDX / Astro Content Collections
 - Vercel
-- Content Collections via Astro's Content Layer
 
-## Local development
+## Commands
 
-```powershell
+```bash
 pnpm install
 pnpm dev
+pnpm check
+pnpm build
+pnpm format
+pnpm format:check
 ```
 
-## Validation
-
-```powershell
-pnpm run check
-pnpm run format:check
-pnpm run build
-```
-
-## Content
-
-Projects live in `src/data/projects/`.
-
-Short-form notes live in `src/data/notes/`.
-
-Long-form writing lives in `src/data/essays/`.
-
-The schemas are defined in `src/content.config.ts`.
-
-## Routes
-
-- `/` home
-- `/work/` projects
-- `/work/[slug]/` case studies
-- `/journal/` notes + essays
-- `/journal/notes/[slug]/` short-form posts
-- `/journal/essays/[slug]/` long-form posts
-- `/about/` person, milestones, contact
-- `/resume.pdf` résumé
-- `/journal/rss.xml` RSS feed for notes
-
-## Deployment
-
-The site is static and deploys to Vercel. Add `qasimio.me` only after the new production deployment has been verified.
+The site is intentionally static. Content lives in `src/data`, visual assets in `src/assets`, and the only browser-side JavaScript is for navigation, motion, filters, and the command palette.

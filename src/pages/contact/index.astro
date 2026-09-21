@@ -1,0 +1,21 @@
+---
+import Base from '../../layouts/Base.astro';
+---
+<Base title="Contact" description="Contact Qasim Sethar.">
+  <section class="contact-page site-shell">
+    <div class="contact-page__intro" data-reveal>
+      <span class="eyebrow">04 / CONTACT</span>
+      <h1>Bring me a<br /><em>good problem.</em></h1>
+      <p>Products, engineering work, open-source collaboration, interesting problems, or a note from someone building something unusual.</p>
+      <a href="mailto:hello@qasimio.me" class="contact-email">hello@qasimio.me <span>↗</span></a>
+    </div>
+
+    <form class="contact-form" data-contact-form data-reveal>
+      <label>Name<input name="name" type="text" autocomplete="name" required /></label>
+      <label>Email<input name="email" type="email" autocomplete="email" required /></label>
+      <label>What are you building?<textarea name="message" rows="8" required></textarea></label>
+      <button type="submit">Compose email <span>↗</span></button>
+      <p>No backend, no account, no form-storage mystery. This opens your email client with the message filled in.</p>
+    </form>
+  </section>
+</Base>

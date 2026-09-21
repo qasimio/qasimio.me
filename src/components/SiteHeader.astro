@@ -7,17 +7,17 @@ const links = [
 ];
 ---
 <header class="site-header" data-site-header>
-  <div class="site-shell site-header__inner">
-    <a class="brand" href="/" aria-label="Qasim Sethar home" transition:name="site-brand">
-      <span class="brand__mark">MQ.</span>
-      <span class="brand__name">Qasim Sethar</span>
+  <div class="site-shell header-inner">
+    <a class="brand" href="/" aria-label="Qasim Sethar home" transition:name="brand">
+      <span class="brand-mark">MQ</span>
+      <span class="brand-name">Qasim Sethar</span>
     </a>
 
-    <nav class="desktop-nav" aria-label="Primary navigation">
+    <nav class="primary-nav" aria-label="Primary navigation">
       {links.map((link) => (
         <a
           href={link.href}
-          class:list={["nav-link", { active: pathname.startsWith(link.href) }]}
+          class:list={['nav-link', { active: pathname.startsWith(link.href) }]}
           aria-current={pathname.startsWith(link.href) ? 'page' : undefined}
         >
           {link.label}
@@ -25,30 +25,24 @@ const links = [
       ))}
     </nav>
 
-    <div class="desktop-actions">
-      <a href="https://github.com/qasimio" class="nav-link nav-link--quiet" target="_blank" rel="noreferrer">GitHub</a>
-      <a href="mailto:hello@qasimio.me" class="nav-link nav-link--contact">Contact <span>↗</span></a>
+    <div class="header-actions">
+      <button class="command-trigger" type="button" data-command-open aria-label="Open command menu">
+        <span class="command-trigger__key">⌘ / Ctrl</span>K
+      </button>
+      <a class="header-contact" href="/contact/">Contact <span>↗</span></a>
     </div>
 
-    <button class="menu-button" type="button" aria-expanded="false" aria-controls="mobile-menu" data-menu-toggle>
+    <button class="menu-trigger" type="button" aria-expanded="false" aria-controls="mobile-nav" data-menu-toggle>
       <span class="sr-only">Open navigation</span>
-      <span class="menu-button__lines" aria-hidden="true"><i></i><i></i></span>
+      <i></i><i></i>
     </button>
   </div>
 
-  <div class="mobile-menu" id="mobile-menu" hidden data-mobile-menu>
-    <div class="site-shell mobile-menu__inner">
-      {links.map((link) => (
-        <a href={link.href} class="mobile-menu__link">
-          <span>{link.label}</span><span>↗</span>
-        </a>
-      ))}
-      <a href="https://github.com/qasimio" target="_blank" rel="noreferrer" class="mobile-menu__link">
-        <span>GitHub</span><span>↗</span>
-      </a>
-      <a href="mailto:hello@qasimio.me" class="mobile-menu__link">
-        <span>Contact</span><span>↗</span>
-      </a>
+  <div class="mobile-nav" id="mobile-nav" hidden data-mobile-nav>
+    <div class="site-shell mobile-nav__inner">
+      {links.map((link) => <a href={link.href}>{link.label}<span>↗</span></a>)}
+      <a href="/contact/">Contact<span>↗</span></a>
+      <button type="button" data-command-open>Command menu<span>⌘K</span></button>
     </div>
   </div>
 </header>

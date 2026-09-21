@@ -1,23 +1,37 @@
-import type { APIRoute } from 'astro';
 import { getCollection } from 'astro:content';
 
 const escapeXml = (value: string) =>
-  value.replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;').replaceAll('"', '&quot;').replaceAll("'", '&apos;');
+  value
+    .replaceAll('&', '&amp;')
+    .replaceAll('<', '&lt;')
+    .replaceAll('>', '&gt;')
+    .replaceAll('\"', '&quot;')
+    .replaceAll("'", '&apos;');
 
-export const GET: APIRoute = async ({ site }) => {
-  const notes = (await getCollection('notes', ({ data }) => !data.draft))
-    .sort((a, b) => (b.data.publishedAt?.getTime() ?? 0) - (a.data.publishedAt?.getTime() ?? 0));
-  const base = site ?? new URL('https://qasimio.me');
+export async function GET(context) {
+  const notes = await getCollection('notes', ({ data }) => !data.draft);
+  const items = notes
+    .sort((a, b) => b.data.publishedAt.getTime() - a.data.publishedAt.getTime())
+    .map(
+      (entry) => `
+        <item>
+          <title>${escapeXml(entry.data.title)}</title>
+          <link>${new URL(`/journal/notes/${entry.id}/`, context.site)}</link>
+          <guid>${new URL(`/journal/notes/${entry.id}/`, context.site)}</guid>
+          <pubDate>${entry.data.publishedAt.toUTCString()}</pubDate>
+        </item>`,
+    )
+    .join('');
 
-  const items = notes.map((entry) => {
-    const url = new URL(`/journal/notes/${entry.id}/`, base).toString();
-    const pubDate = entry.data.publishedAt?.toUTCString();
-    return `\n<item>\n<title>${escapeXml(entry.data.title)}</title>\n<link>${url}</link>\n<guid>${url}</guid>${pubDate ? `\n<pubDate>${pubDate}</pubDate>` : ''}\n</item>`;
-  }).join('');
+  const xml = `<?xml version="1.0" encoding="UTF-8"?>
+  <rss version="2.0">
+    <channel>
+      <title>Qasim Sethar — Journal</title>
+      <link>${context.site}</link>
+      <description>Short notes, build logs, and observations by Qasim Sethar.</description>
+      ${items}
+    </channel>
+  </rss>`;
 
-  const xml = `<?xml version="1.0" encoding="UTF-8"?>\n<rss version="2.0"><channel><title>Qasim Sethar — Notes</title><link>${base}</link><description>Short notes from Qasim Sethar.</description>${items}\n</channel></rss>`;
-
-  return new Response(xml, {
-    headers: { 'Content-Type': 'application/rss+xml; charset=utf-8' },
-  });
-};
+  return new Response(xml, { headers: { 'Content-Type': 'application/xml; charset=utf-8' } });
+}

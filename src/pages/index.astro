@@ -2,96 +2,115 @@
 import { getCollection } from 'astro:content';
 import { Image } from 'astro:assets';
 import Base from '../layouts/Base.astro';
-import SectionHeading from '../components/SectionHeading.astro';
-import ProjectCard from '../components/ProjectCard.astro';
-import NoteItem from '../components/NoteItem.astro';
-import StatusDot from '../components/StatusDot.astro';
-import { now, site, workbench } from '../data/site';
+import SectionLabel from '../components/SectionLabel.astro';
+import ProjectVisual from '../components/ProjectVisual.astro';
+import NoteRow from '../components/NoteRow.astro';
+import { current, evidence, site } from '../data/site';
 import portrait from '../assets/identity/qasim-portrait.jpg';
 
-const allProjects = await getCollection('projects');
-const projects = [...allProjects].sort((a, b) => a.data.order - b.data.order);
+const projects = (await getCollection('projects')).sort((a, b) => a.data.order - b.data.order);
 const featured = projects.filter((entry) => entry.data.featured).slice(0, 3);
 const notes = (await getCollection('notes', ({ data }) => !data.draft))
-  .sort((a, b) => (a.data.publishedAt?.getTime() ?? 0) - (b.data.publishedAt?.getTime() ?? 0))
-  .reverse()
-  .slice(0, 4);
+  .sort((a, b) => b.data.publishedAt.getTime() - a.data.publishedAt.getTime())
+  .slice(0, 3);
 ---
-<Base title="Qasim Sethar — I build things." description={site.description}>
-  <section class="hero site-shell">
-    <div class="hero__layout">
-      <div>
-        <p class="hero__eyebrow">QASIM SETHAR / QASIMIO</p>
-        <h1>I build<br /><em>things.</em></h1>
-        <div class="hero__actions">
-          <a class="button button--solid" href="/work/">Explore the work <span>↗</span></a>
-          <a class="button" href="/about/">Meet Qasim <span>↗</span></a>
+<Base title={site.name} description={site.description}>
+  <section class="home-hero site-shell">
+    <div class="home-hero__topline">
+      <span>QASIM SETHAR / QASIMIO</span>
+      <span>SOFTWARE · PRODUCTS · ETC.</span>
+    </div>
+    <div class="home-hero__main">
+      <h1>Things<br /><em>worth building.</em></h1>
+      <div class="home-hero__aside" data-reveal>
+        <p>I build software around problems that refuse to stay theoretical.</p>
+        <a href="/work/">Enter the work <span>↗</span></a>
+      </div>
+    </div>
+    <div class="home-hero__bottom">
+      <span>SCROLL TO SEE WHAT MADE IT OUT</span>
+      <span>↓</span>
+    </div>
+  </section>
+
+  <section class="home-statement site-shell">
+    <div class="statement-index">00</div>
+    <div class="statement-copy" data-reveal>
+      <p class="eyebrow">The idea</p>
+      <h2>I am more interested in the <em>thing after the demo.</em></h2>
+      <p>I like the part where a project gets installed, relied on, criticized, improved, passed to somebody else, and slowly stops being mine.</p>
+    </div>
+  </section>
+
+  <section class="home-section site-shell">
+    <SectionLabel index="01" title="Right now" href="/work/" linkLabel="See the work" />
+    <div class="current-list">
+      {current.map((item) => (
+        <a class="current-item" href={item.href ?? '/about/'} target={item.href?.startsWith('http') ? '_blank' : undefined} rel={item.href?.startsWith('http') ? 'noreferrer' : undefined} data-reveal>
+          <span class="current-number">{item.number}</span>
+          <span class="current-label">{item.label}</span>
+          <span class="current-title">{item.title}</span>
+          <span class="current-detail">{item.detail}</span>
+          <span class="current-arrow">↗</span>
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <section class="evidence-band">
+    <div class="site-shell evidence-grid">
+      {evidence.map((item) => (
+        <div class="evidence-item" data-reveal>
+          <strong>{item.value}</strong>
+          <span>{item.label}</span>
         </div>
-      </div>
-      <div class="hero__side" data-reveal>
-        <p>Software, products, systems, and communities. I tend to start with a problem that keeps bothering me and see where it goes.</p>
-      </div>
-    </div>
-  </section>
-
-  <div class="home-rule"></div>
-  <section class="intro-strip site-shell">
-    <div class="intro-strip__inner">
-      <p class="intro-strip__copy">Not a résumé. A record of what gets built when nobody is assigning the problem.</p>
-      <div class="status"><StatusDot /> Building in public</div>
+      ))}
     </div>
   </section>
 
   <section class="home-section site-shell">
-    <SectionHeading index="01" title="Right now" />
-    <div class="current-grid">
-      <div class="current-copy">
-        <p class="eyebrow">Current focus</p>
-        <h3>Build. Break.<br /><em>Build again.</em></h3>
-        <p>Working on Engram and Operon while growing SIBA Launchpad and shipping smaller tools whenever a problem refuses to leave me alone.</p>
-        <div class="current-proof">
-          {now.map((item) => (
-            <div class="current-proof__item">
-              <span class="current-proof__value">{item.value}</span>
-              <span class="current-proof__label">{item.label}</span>
-            </div>
-          ))}
-        </div>
-      </div>
-      <div class="current-visual" aria-label="Engram current build visual" data-reveal>
-        <div class="current-visual__line"></div>
-        <div class="current-visual__dot"></div>
-      </div>
+    <SectionLabel index="02" title="Work" href="/work/" linkLabel="All work" />
+    <div class="featured-work">
+      {featured.map((entry, index) => (
+        <a class:list={['featured-project', `featured-project--${index + 1}`]} href={`/work/${entry.id}/`} data-reveal>
+          <div class="featured-project__art"><ProjectVisual slug={entry.id} title={entry.data.title} /></div>
+          <div class="featured-project__caption">
+            <span>0{index + 1}</span>
+            <span>{entry.data.title}</span>
+            <span>{entry.data.summary}</span>
+          </div>
+        </a>
+      ))}
     </div>
   </section>
 
-  <section class="home-section site-shell">
-    <SectionHeading index="02" title="Work worth seeing" linkLabel="View everything" linkHref="/work/" />
-    <div class="project-grid">
-      {featured.map((entry) => <ProjectCard entry={entry} featured />)}
+  <section class="home-section home-section--notes site-shell">
+    <SectionLabel index="03" title="Journal" href="/journal/" linkLabel="Open journal" />
+    <div class="notes-home">
+      {notes.map((entry, index) => <NoteRow entry={entry} featured={index === 0} />)}
     </div>
   </section>
 
-  <section class="home-section site-shell">
-    <SectionHeading index="03" title="Journal" linkLabel="Open the journal" linkHref="/journal/" />
-    <div class="note-list">
-      {notes.map((entry) => <NoteItem entry={entry} />)}
+  <section class="home-section site-shell home-person">
+    <div class="person-intro" data-reveal>
+      <span class="section-index">04 / THE PERSON</span>
+      <h2>Not only code.</h2>
+      <p>There is the software. Then there is the part around it: organizing people, running events, reviewing work, learning to communicate, and trying to build things that survive contact with real users.</p>
+      <a class="text-link" href="/about/">Meet the person <span>↗</span></a>
+    </div>
+    <div class="person-photo" data-reveal>
+      <Image src={portrait} alt="Qasim Sethar" widths={[700]} sizes="(max-width: 900px) 100vw, 42vw" loading="lazy" />
+      <div class="person-photo__tag">QASIM / 2026</div>
     </div>
   </section>
 
-  <section class="home-section site-shell">
-    <SectionHeading index="04" title="The person behind it" linkLabel="About Qasim" linkHref="/about/" />
-    <div class="home-about">
-      <Image src={portrait} alt="Qasim Sethar" class="home-about__photo" widths={[400]} sizes="(max-width: 960px) 100vw, 46vw" loading="lazy" />
-      <div class="home-about__copy">
-        <h2>I care about making useful things <em>real.</em></h2>
-        <p>I like difficult systems, clean interfaces, annoying problems, and the moment a project leaves the repository and enters somebody else's life.</p>
-        <div class="workbench">
-          {workbench.map(([label, value]) => (
-            <div class="workbench__row"><span class="workbench__label">{label}</span><span class="workbench__value">{value}</span></div>
-          ))}
-        </div>
-      </div>
+  <section class="home-end site-shell" data-reveal>
+    <span class="eyebrow">05 / NEXT</span>
+    <h2>Keep building.<br /><em>Keep publishing.</em></h2>
+    <p>Short notes, longer thoughts, shipped work, and the occasional thing that should not have worked but somehow did.</p>
+    <div class="home-end__links">
+      <a href="/journal/">Journal <span>↗</span></a>
+      <a href="/contact/">Contact <span>↗</span></a>
     </div>
   </section>
 </Base>

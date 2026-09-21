@@ -5,13 +5,9 @@ type: product
 status: shipped
 year: 2026
 featured: false
-order: 40
-tags:
-  - Next.js
-  - Python
-  - SQLite
-  - SIBA
+order: 30
 role: "Co-creator"
+tags: [Next.js, Python, SQLite, SIBA, Product]
 links:
   - label: "Live"
     url: "https://sibatt.vercel.app"
@@ -22,16 +18,16 @@ pullQuote: "If finding a class takes ninety pages, the interface is the problem.
 
 ## The problem
 
-Sukkur IBA timetables can be painful to navigate when the information is distributed across large institutional PDFs and the thing you actually need is one course, section, or room.
+Finding one course, section, or room in a university timetable meant navigating large institutional PDFs and manually searching through pages.
 
 SlotFinder turns that search into one interface.
 
 ## The product
 
-The current system combines PDF-powered data extraction with a lightweight search experience that can filter by section, course, and room. The frontend is designed to stay usable on a phone because that is where people are likely to check a timetable between classes.
+The system combines PDF-powered timetable extraction with a lightweight search experience filtering by section, course, and room. The frontend is designed for quick phone checks between classes.
 
-## Why this one matters
+## Why I kept it
 
-It is not the technically most complicated thing I have built. That is exactly why I keep it around.
+It is not the technically most complicated thing I have built. That is exactly why it matters.
 
-A useful product does not need an impressive architecture diagram. It needs to remove an annoyance that someone actually experiences.
+A useful product does not need an impressive architecture diagram. It needs to remove an annoyance that somebody actually experiences.

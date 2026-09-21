@@ -1,38 +1,31 @@
-# After extracting the scaffold
+# Replace the current local files
 
-This archive is intentionally lockfile-free so the dependencies resolve cleanly from the exact `package.json` rather than inheriting a previous project's lockfile.
+This archive is the new implementation. Keep the existing `.git` directory and replace the working files around it.
 
-## 1. Preserve the Git repository
-
-Keep the existing `.git` directory when replacing your current working tree. Replace the project files, not the Git history.
-
-## 2. Install from a clean lockfile
-
-From `D:\qasimio.me` in PowerShell:
+From PowerShell:
 
 ```powershell
-Remove-Item .\pnpm-lock.yaml -Force -ErrorAction SilentlyContinue
-Remove-Item -Recurse -Force .\node_modules -ErrorAction SilentlyContinue
-Remove-Item -Recurse -Force .\.astro -ErrorAction SilentlyContinue
+Set-Location D:\qasimio.me
+
+# Back up the current working tree first.
+$stamp = Get-Date -Format "yyyyMMdd-HHmmss"
+Copy-Item . "..\qasimio.me-backup-$stamp" -Recurse -Force
+
+# Keep Git metadata, replace everything else.
+Get-ChildItem -Force | Where-Object { $_.Name -ne '.git' } | Remove-Item -Recurse -Force
+
+# Extract this archive into D:\qasimio.me, then run:
 pnpm install
-```
-
-## 3. Validate before pushing
-
-```powershell
 pnpm run check
 pnpm run format:check
 pnpm run build
-```
-
-## 4. Run locally
-
-```powershell
 pnpm run dev
 ```
 
-## 5. Important content rule
+## Important
 
-`src/data/notes/` is the short-form publishing system. Put real notes there. Do not turn the site into a clone of X.
+Do not connect `qasimio.me` to this Vercel project until the new site has been reviewed locally and on the preview deployment.
 
-The initial notes included in this scaffold are editable starting points based on supplied facts. Review them before treating them as final copy.
+The `reference/` directory is intentionally ignored by Git for private screenshots/evidence. Do not put private credentials or invitations into `src/` or `public/`.
+
+The contact form intentionally does not store submissions. It opens the visitor's email client with a pre-filled message to `hello@qasimio.me`.

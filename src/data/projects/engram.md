@@ -1,17 +1,13 @@
 ---
 title: "Engram"
-summary: "A personal knowledge system built around grounded retrieval, persistent context, and an interface between memory and agents."
+summary: "A knowledge system built around grounded retrieval, persistent context, and an interface between memory and agents."
 type: product
 status: active
 year: 2026
 featured: true
 order: 10
-tags:
-  - RAG
-  - Search
-  - Agents
-  - Knowledge
 role: "Founder / engineer"
+tags: [RAG, Search, Agents, Knowledge, PostgreSQL, MCP]
 links:
   - label: "GitHub"
     url: "https://github.com/qasimio/Engram"
@@ -31,18 +27,18 @@ Most personal knowledge tools stop at storage. The interesting problem starts af
 
 Engram is my attempt at that problem.
 
-## The system
+## The architecture
 
-The project combines sparse and dense retrieval, reranking, asynchronous ingestion, workspace-first isolation, and grounded synthesis. The architecture is designed so retrieval, evidence, and generation remain distinct concerns rather than one opaque prompt pipeline.
+The system combines sparse and dense retrieval, Reciprocal Rank Fusion, reranking, asynchronous ingestion, workspace-first isolation, and grounded synthesis. Retrieval, evidence, and generation stay distinct instead of collapsing into one opaque prompt pipeline.
 
-Its ingestion path is asynchronous by design, moving expensive parsing and indexing away from the API request path.
+The ingestion path is asynchronous so expensive parsing, indexing, scraping, and synchronization do not live on the main API request path.
 
-## The constraint
+## The hard constraint
 
 The model is allowed to be uncertain. The system is not allowed to hide that uncertainty.
 
-When the retrieved evidence does not support an answer, the synthesis layer is designed to return an explicit not-found state instead of silently falling back to whatever the model happens to remember.
+When retrieved evidence does not support an answer, the intended behavior is an explicit not-found result rather than a confident fallback to model memory.
 
 ## Where it is now
 
-Still in development. The system is deliberately being built slowly because the interesting part is not making a chatbot. It is making memory trustworthy enough to become infrastructure.
+Still in development. The goal is not another chatbot. The interesting problem is whether personal memory can become trustworthy enough to act as infrastructure for other software.

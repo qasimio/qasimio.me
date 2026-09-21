@@ -1,32 +1,38 @@
 ---
 import { getCollection } from 'astro:content';
 import Base from '../../layouts/Base.astro';
-import PageIntro from '../../components/PageIntro.astro';
 import ProjectCard from '../../components/ProjectCard.astro';
+import WorkArchiveRow from '../../components/WorkArchiveRow.astro';
+import SectionLabel from '../../components/SectionLabel.astro';
 
 const projects = (await getCollection('projects')).sort((a, b) => a.data.order - b.data.order);
+const featured = projects.filter((entry) => entry.data.featured).slice(0, 3);
+const archive = projects.filter((entry) => !entry.data.featured);
 const types = ['all', ...new Set(projects.map((entry) => entry.data.type))];
 ---
-<Base title="Work — Qasim Sethar">
-  <PageIntro
-    eyebrow="The archive"
-    title={'Things I <em>built.</em>'}
-    body="Products, systems, experiments, and communities. Some shipped. Some are still being wrestled into existence."
-  />
+<Base title="Work" description="Projects, systems, open-source work, and community projects by Qasim Sethar.">
+  <header class="page-hero site-shell">
+    <div class="page-hero__top"><span>01 / WORK</span><span>{projects.length} PROJECTS</span></div>
+    <h1>Things I<br /><em>actually built.</em></h1>
+    <p>The useful distinction is not finished versus unfinished. It is whether there is something real to learn from it.</p>
+  </header>
 
-  <section class="site-shell" style="padding-bottom: 8rem;">
-    <div class="filters" data-project-filters>
-      {types.map((type, index) => (
-        <button class="filter-button" type="button" data-project-filter={type} aria-pressed={index === 0}>
-          {type.replace('-', ' ')}
-        </button>
-      ))}
+  <section class="site-shell work-index">
+    <SectionLabel index="01" title="Flagship work" />
+    <div class="flagship-work">
+      {featured.map((entry) => <ProjectCard entry={entry} featured />)}
     </div>
 
-    <div class="project-grid" data-project-list>
-      {projects.map((entry) => <ProjectCard entry={entry} featured={entry.data.featured} />)}
+    <div class="archive-section">
+      <SectionLabel index="02" title="Everything else" />
+      <div class="filters" data-project-filters>
+        {types.map((type, index) => <button type="button" class="filter-button" data-project-filter={type} aria-pressed={index === 0}>{type.replace('-', ' ')}</button>)}
+      </div>
+      <div class="archive-list">
+        {archive.map((entry) => <WorkArchiveRow entry={entry} />)}
+      </div>
+      <p class="empty-state" data-project-empty hidden>No projects match that filter.</p>
     </div>
-    <p class="filter-project-empty" data-project-empty>No projects match that filter.</p>
   </section>
 
   <script is:inline>
@@ -34,19 +40,20 @@ const types = ['all', ...new Set(projects.map((entry) => entry.data.type))];
       const root = document.querySelector('[data-project-filters]');
       if (!root || root.dataset.bound) return;
       root.dataset.bound = 'true';
-      const cards = [...document.querySelectorAll('[data-project-card]')];
+      const rows = [...document.querySelectorAll('[data-project-card]')];
       const empty = document.querySelector('[data-project-empty]');
       root.querySelectorAll('[data-project-filter]').forEach((button) => {
         button.addEventListener('click', () => {
           const type = button.getAttribute('data-project-filter');
-          root.querySelectorAll('[data-project-filter]').forEach((item) => item.setAttribute('aria-pressed', String(item === button)));
-          let shown = 0;
-          cards.forEach((card) => {
-            const visible = type === 'all' || card.getAttribute('data-type') === type;
-            card.style.display = visible ? '' : 'none';
-            if (visible) shown += 1;
+          root.querySelectorAll('button').forEach((item) => item.setAttribute('aria-pressed', String(item === button)));
+          const candidates = rows.filter((row) => row.closest('.archive-list'));
+          let visible = 0;
+          candidates.forEach((row) => {
+            const show = type === 'all' || row.getAttribute('data-type') === type;
+            row.hidden = !show;
+            if (show) visible += 1;
           });
-          if (empty) empty.style.display = shown ? 'none' : 'block';
+          if (empty) empty.hidden = visible !== 0;
         });
       });
     });
