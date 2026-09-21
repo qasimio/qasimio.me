@@ -1,5 +1,5 @@
 ---
-title: "Most of my time is spent building software."
+title: 'Most of my time is spent building software.'
 publishedAt: 2026-09-10
 type: observation
 tags: [building, work]

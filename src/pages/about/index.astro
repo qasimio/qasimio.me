@@ -2,27 +2,59 @@
 import { Image } from 'astro:assets';
 import Base from '../../layouts/Base.astro';
 import SectionLabel from '../../components/SectionLabel.astro';
-import { experience, programs, site, timeline, workStyle } from '../../data/site';
+import { experience, peopleWork, programs, site, timeline, workStyle } from '../../data/site';
 import portrait from '../../assets/identity/qasim-portrait.jpg';
 ---
-<Base title="About" description="About Qasim Sethar: software, products, communities, engineering, and the way he works.">
-  <header class="page-hero page-hero--about site-shell">
-    <div class="page-hero__top"><span>03 / ABOUT</span><span>THE PERSON, NOT THE RÉSUMÉ</span></div>
-    <h1>So, who is<br /><em>Qasim?</em></h1>
-    <p>A builder who gets restless when an interesting problem stays interesting for too long without a working answer.</p>
+
+<Base
+  title="About"
+  description="About Qasim Sethar: the person behind the software, products, communities, and experiments."
+>
+  <header class="page-hero site-shell">
+    <div class="page-hero__top">
+      <span>03 / ABOUT</span>
+      <span>THE PERSON</span>
+    </div>
+    <h1>
+      There is more
+      <br />
+      than <span class="display-serif">code.</span>
+    </h1>
+    <p>
+      I like building software, but I also like the parts around it: people, communities, events,
+      judgment, communication, and figuring out what is actually worth shipping.
+    </p>
   </header>
 
   <section class="about-profile site-shell">
     <div class="about-photo" data-reveal>
-      <Image src={portrait} alt="Qasim Sethar" widths={[800]} sizes="(max-width: 850px) 100vw, 45vw" />
+      <Image
+        src={portrait}
+        alt="Qasim Sethar"
+        width={800}
+        height={870}
+        sizes="(max-width: 980px) 100vw, 40vw"
+      />
       <span>QASIM SETHAR / 2026</span>
     </div>
     <div class="about-profile__copy" data-reveal>
       <span class="eyebrow">The short version</span>
-      <h2>I like making <em>useful things</em> from annoying problems.</h2>
-      <p>I work across software systems, AI, search, developer tooling, and small products. I am happiest when the work leaves the repository and becomes something another person can depend on.</p>
-      <p>I am studying Computer Science at Sukkur IBA University, but the education that matters most to me has usually happened after class: shipping, breaking things, reading code, helping someone else, and trying again.</p>
-      <div class="about-links"><a href="/resume.pdf">Résumé ↗</a><a href="/contact/">Contact ↗</a></div>
+      <h2>
+        I build until the problem becomes <span class="display-serif">smaller.</span>
+      </h2>
+      <p>
+        I am a Computer Science student at Sukkur IBA University who spends a lot of time building
+        software outside the syllabus. Some of it becomes open source. Some becomes products. Some
+        exists because I wanted to understand a problem properly.
+      </p>
+      <p>
+        I have also learned that shipping software is only half the job. The other half is making it
+        understandable, trustworthy, discoverable, and useful to someone who did not build it.
+      </p>
+      <div class="about-links">
+        <a href="/resume.pdf">Résumé ↗</a>
+        <a href="/contact/">Contact ↗</a>
+      </div>
     </div>
   </section>
 
@@ -31,7 +63,11 @@ import portrait from '../../assets/identity/qasim-portrait.jpg';
     <div class="timeline">
       {timeline.map((item) => (
         <div class="timeline-item" data-reveal>
-          <span>{item.year}</span><div><h3>{item.title}</h3><p>{item.detail}</p></div>
+          <span>{item.year}</span>
+          <div>
+            <h3>{item.title}</h3>
+            <p>{item.detail}</p>
+          </div>
         </div>
       ))}
     </div>
@@ -39,12 +75,15 @@ import portrait from '../../assets/identity/qasim-portrait.jpg';
 
   <section class="about-section about-section--accent">
     <div class="site-shell">
-      <SectionLabel index="02" title="Beyond code" />
+      <SectionLabel index="02" title="People and community" />
       <div class="about-story-grid">
-        <div><span class="eyebrow">People</span><h3>60+ projects reviewed.</h3><p>Spent time reviewing student work and guided 35+ students and peers through technical decisions, debugging, and getting work into a more finished state.</p></div>
-        <div><span class="eyebrow">Community</span><h3>Built SIBA Launchpad.</h3><p>A project ecosystem around Sukkur IBA that gives student work a public place to exist and makes collaboration easier to find.</p></div>
-        <div><span class="eyebrow">Events</span><h3>Sibathon’26.</h3><p>As a CS Society executive, helped organize a 24-hour student hackathon where participants could use AI while building their most creative and ambitious projects.</p></div>
-        <div><span class="eyebrow">Open source</span><h3>Maintaining what escaped.</h3><p>FOLDR became a real public package. I maintain the FOLDR and IBA Launchpad GitHub organizations and contribute across open-source projects.</p></div>
+        {peopleWork.map((item) => (
+          <div data-reveal>
+            <span class="eyebrow">{item.label}</span>
+            <h3>{item.title}</h3>
+            <p>{item.detail}</p>
+          </div>
+        ))}
       </div>
     </div>
   </section>
@@ -52,30 +91,70 @@ import portrait from '../../assets/identity/qasim-portrait.jpg';
   <section class="site-shell about-section">
     <SectionLabel index="03" title="Professional work" />
     <div class="experience-list">
-      {experience.map((item) => <div class="experience-item" data-reveal><span>{item.title}</span><div><strong>{item.role}</strong><p>{item.detail}</p></div></div>)}
+      {experience.map((item) => (
+        <div class="experience-item" data-reveal>
+          <span>{item.title}</span>
+          <div>
+            <strong>{item.role}</strong>
+            <p>{item.detail}</p>
+          </div>
+        </div>
+      ))}
     </div>
   </section>
 
   <section class="site-shell about-section">
     <SectionLabel index="04" title="How I work" />
     <div class="workstyle">
-      <div class="workstyle__intro"><span class="eyebrow">A few tells</span><h2>The environment matters because it shapes the way I think.</h2></div>
-      <div class="workstyle__table">{workStyle.map(([label, value]) => <div><span>{label}</span><strong>{value}</strong></div>)}</div>
+      <div class="workstyle__intro">
+        <span class="eyebrow">A few tells</span>
+        <h2>The tools are ordinary. The workflow is not.</h2>
+      </div>
+      <div class="workstyle__table">
+        {workStyle.map(([label, value]) => (
+          <div>
+            <span>{label}</span>
+            <strong>{value}</strong>
+          </div>
+        ))}
+      </div>
     </div>
   </section>
 
   <section class="site-shell about-section">
-    <SectionLabel index="05" title="Programs & recognition" />
+    <SectionLabel index="05" title="Programs and recognition" />
     <div class="program-list">
-      {programs.map((item) => <div class="program-item" data-reveal><span>PROGRAM</span><h3>{item.title}</h3><p>{item.detail}</p></div>)}
+      {programs.map((item) => (
+        <div class="program-item" data-reveal>
+          <span>PROGRAM</span>
+          <h3>{item.title}</h3>
+          <p>{item.detail}</p>
+        </div>
+      ))}
     </div>
   </section>
 
   <section class="site-shell about-section elsewhere-section">
     <SectionLabel index="06" title="Elsewhere" />
     <div class="elsewhere-grid">
-      <div><span class="eyebrow">Primary</span>{site.social.map((item) => <a href={item.href} target="_blank" rel="noreferrer">{item.label}<span>↗</span></a>)}</div>
-      <div><span class="eyebrow">More internet</span>{site.elsewhere.map((item) => <a href={item.href} target="_blank" rel="noreferrer">{item.label}<span>↗</span></a>)}</div>
+      <div>
+        <span class="eyebrow">Primary</span>
+        {site.social.map((item) => (
+          <a href={item.href} target="_blank" rel="noreferrer">
+            {item.label}
+            <span>↗</span>
+          </a>
+        ))}
+      </div>
+      <div>
+        <span class="eyebrow">More internet</span>
+        {site.elsewhere.map((item) => (
+          <a href={item.href} target="_blank" rel="noreferrer">
+            {item.label}
+            <span>↗</span>
+          </a>
+        ))}
+      </div>
     </div>
   </section>
 </Base>

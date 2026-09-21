@@ -1,57 +1,106 @@
 ---
-import { getCollection } from 'astro:content';
+import { getCollection, type CollectionEntry } from 'astro:content';
 import Base from '../../layouts/Base.astro';
 import SectionLabel from '../../components/SectionLabel.astro';
 import NoteRow from '../../components/NoteRow.astro';
 
-const notes = (await getCollection('notes', ({ data }) => !data.draft)).sort((a, b) => b.data.publishedAt.getTime() - a.data.publishedAt.getTime());
-const essays = (await getCollection('essays', ({ data }) => !data.draft)).sort((a, b) => b.data.publishedAt.getTime() - a.data.publishedAt.getTime());
+type Note = CollectionEntry<'notes'>;
+type Essay = CollectionEntry<'essays'>;
+const notes: Note[] = (await getCollection<'notes'>('notes', ({ data }) => !data.draft)).sort(
+  (a, b) => b.data.publishedAt.getTime() - a.data.publishedAt.getTime(),
+);
+const essays: Essay[] = (await getCollection<'essays'>('essays', ({ data }) => !data.draft)).sort(
+  (a, b) => b.data.publishedAt.getTime() - a.data.publishedAt.getTime(),
+);
 const types = ['all', ...new Set(notes.map((entry) => entry.data.type))];
 ---
-<Base title="Journal" description="Short notes, build logs, observations, and longer thoughts by Qasim Sethar.">
+
+<Base
+  title="Journal"
+  description="Short notes, build logs, observations, and longer thoughts by Qasim Sethar."
+>
   <header class="page-hero site-shell">
-    <div class="page-hero__top"><span>02 / JOURNAL</span><span>NOTES + ESSAYS</span></div>
-    <h1>Things I<br /><em>don't want to forget.</em></h1>
-    <p>A public log for useful fragments: what shipped, what broke, what I learned, and the occasional idea worth sitting with longer.</p>
+    <div class="page-hero__top">
+      <span>02 / JOURNAL</span>
+      <span>NOTES + ESSAYS</span>
+    </div>
+    <h1>
+      Things I<br />
+      <span class="display-serif">don't want to forget.</span>
+    </h1>
+    <p>
+      A public log for useful fragments: what shipped, what broke, what I learned, and the thoughts
+      that deserve a longer life.
+    </p>
   </header>
 
   <section class="site-shell journal-index">
     <SectionLabel index="01" title="Notes" href="/journal/rss.xml" linkLabel="RSS ↗" />
     <div class="filters" data-note-filters>
-      {types.map((type, index) => <button type="button" class="filter-button" data-note-filter={type} aria-pressed={index === 0}>{type}</button>)}
+      {types.map((type, index) => (
+        <button
+          type="button"
+          class="filter-button"
+          data-note-filter={type}
+          aria-pressed={index === 0}
+        >
+          {type}
+        </button>
+      ))}
     </div>
     <div class="notes-list" data-note-list>
-      {notes.map((entry) => <NoteRow entry={entry} />)}
+      {notes.map((entry, index) => (
+        <NoteRow entry={entry} featured={index === 0} />
+      ))}
     </div>
-    <p class="empty-state" data-note-empty hidden>No notes match that filter.</p>
+    <p class="empty-state" data-note-empty hidden>
+      No notes match that filter.
+    </p>
 
     <div class="essay-section">
       <SectionLabel index="02" title="Essays" />
       {essays.length === 0 ? (
-        <div class="empty-essay"><span>Nothing forced.</span><p>Long-form writing will show up when the thought is worth giving a longer life.</p></div>
+        <div class="empty-essay">
+          <span>Nothing forced.</span>
+          <p>Long-form writing will appear when the idea is worth the extra length.</p>
+        </div>
       ) : (
         <div class="notes-list">
           {essays.map((entry) => (
             <a class="note-row" href={`/journal/essays/${entry.id}/`}>
-              <time datetime={entry.data.publishedAt.toISOString()}>{entry.data.publishedAt.toLocaleDateString('en-US', { month: 'short', day: '2-digit', year: 'numeric' })}</time>
-              <div class="note-row__main"><span>essay</span><h3>{entry.data.title}</h3><p>{entry.data.description}</p></div><span class="note-row__arrow">↗</span>
+              <time datetime={entry.data.publishedAt.toISOString()}>
+                {entry.data.publishedAt.toLocaleDateString('en-US', {
+                  month: 'short',
+                  day: '2-digit',
+                  year: 'numeric',
+                })}
+              </time>
+              <div class="note-row__main">
+                <span>essay</span>
+                <h3>{entry.data.title}</h3>
+                <p>{entry.data.description}</p>
+              </div>
+              <span class="note-row__arrow">↗</span>
             </a>
           ))}
         </div>
       )}
     </div>
   </section>
+
   <script is:inline>
-    document.addEventListener('astro:page-load', () => {
+    const bindNoteFilters = () => {
       const root = document.querySelector('[data-note-filters]');
-      if (!root || root.dataset.bound) return;
+      if (!root || root.dataset.bound === 'true') return;
       root.dataset.bound = 'true';
       const rows = [...document.querySelectorAll('[data-note-item]')];
       const empty = document.querySelector('[data-note-empty]');
       root.querySelectorAll('[data-note-filter]').forEach((button) => {
         button.addEventListener('click', () => {
           const type = button.getAttribute('data-note-filter');
-          root.querySelectorAll('button').forEach((item) => item.setAttribute('aria-pressed', String(item === button)));
+          root
+            .querySelectorAll('button')
+            .forEach((item) => item.setAttribute('aria-pressed', String(item === button)));
           let visible = 0;
           rows.forEach((row) => {
             const show = type === 'all' || row.getAttribute('data-type') === type;
@@ -61,6 +110,8 @@ const types = ['all', ...new Set(notes.map((entry) => entry.data.type))];
           if (empty) empty.hidden = visible !== 0;
         });
       });
-    });
+    };
+    document.addEventListener('astro:page-load', bindNoteFilters);
+    bindNoteFilters();
   </script>
 </Base>

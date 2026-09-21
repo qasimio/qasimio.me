@@ -1,28 +1,28 @@
 ---
-title: "FOLDR"
-summary: "A cross-platform file automation tool that watches folders, previews planned changes, and keeps an undo trail when automation inevitably gets ideas."
+title: 'FOLDR'
+summary: 'A cross-platform file automation tool that watches folders, previews planned changes, and keeps an undo trail when automation inevitably gets ideas.'
 type: open-source
 status: shipped
 year: 2026
 featured: true
 order: 20
-role: "Creator / maintainer"
+role: 'Creator / maintainer'
 tags: [Python, CLI, Automation, Open Source, Filesystem]
 links:
-  - label: "GitHub"
-    url: "https://github.com/qasimio/foldr"
-  - label: "PyPI"
-    url: "https://pypi.org/project/foldr/"
-  - label: "Docs"
-    url: "https://docs.qasimio.me/docs/foldr/start-here"
+  - label: 'GitHub'
+    url: 'https://github.com/qasimio/foldr'
+  - label: 'PyPI'
+    url: 'https://pypi.org/project/foldr/'
+  - label: 'Docs'
+    url: 'https://docs.qasimio.me/docs/foldr/start-here'
 stats:
-  - value: "7.3k+"
-    label: "downloads"
-  - value: "100+"
-    label: "stars"
-  - value: "30+"
-    label: "categories"
-pullQuote: "People have better things to do than sort files manually."
+  - value: '7.3k+'
+    label: 'downloads'
+  - value: '100+'
+    label: 'stars'
+  - value: '30+'
+    label: 'categories'
+pullQuote: 'People have better things to do than sort files manually.'
 ---
 
 ## The annoyance

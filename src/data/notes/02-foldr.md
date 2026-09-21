@@ -1,5 +1,5 @@
 ---
-title: "FOLDR crossed another line."
+title: 'FOLDR crossed another line.'
 publishedAt: 2026-09-16
 type: achievement
 tags: [foldr, opensource, python]

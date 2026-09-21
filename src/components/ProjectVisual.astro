@@ -1,23 +1,48 @@
 ---
 interface Props {
   slug: string;
-  title: string;
   compact?: boolean;
 }
-const { slug, title, compact = false } = Astro.props;
+const { slug, compact = false } = Astro.props;
 ---
+
 <div class:list={['project-art', `project-art--${slug}`, { compact }]} aria-hidden="true">
   {slug === 'foldr' && (
     <div class="art-foldr">
-      <div class="art-window-bar"><span></span><span></span><span></span><b>FOLDR</b></div>
-      <div class="art-folder-tree">
-        <span class="art-line art-line--accent">/Downloads</span>
-        <span class="art-line">↳ screenshots/</span>
-        <span class="art-line">↳ documents/</span>
-        <span class="art-line">↳ invoices/</span>
-        <span class="art-line art-line--muted">→ preview  12 files</span>
+      <div class="art-window">
+        <div class="art-window-bar">
+          <i></i>
+          <i></i>
+          <i></i>
+          <b>FOLDR / PREVIEW</b>
+        </div>
+        <div class="art-file-list">
+          <div class="art-file-row">
+            <span>01</span>
+            <span>screenshots</span>
+            <span>READY</span>
+          </div>
+          <div class="art-file-row">
+            <span>02</span>
+            <span>documents</span>
+            <span>READY</span>
+          </div>
+          <div class="art-file-row">
+            <span>03</span>
+            <span>invoices</span>
+            <span>READY</span>
+          </div>
+          <div class="art-file-row">
+            <span>04</span>
+            <span>duplicates</span>
+            <span>REVIEW</span>
+          </div>
+        </div>
+        <div class="art-window-foot">
+          <span>12 planned operations</span>
+          <strong>UNDO READY</strong>
+        </div>
       </div>
-      <div class="art-status"><i></i> dry-run ready <strong>UNDO</strong></div>
     </div>
   )}
 
@@ -31,67 +56,115 @@ const { slug, title, compact = false } = Astro.props;
       <span class="node n3">evidence</span>
       <span class="node n4">agent</span>
       <span class="node n5">workspace</span>
-      <div class="art-connector c1"></div><div class="art-connector c2"></div>
-      <div class="art-connector c3"></div><div class="art-connector c4"></div>
+      <div class="art-connector c1"></div>
+      <div class="art-connector c2"></div>
+      <div class="art-connector c3"></div>
+      <div class="art-connector c4"></div>
     </div>
   )}
 
   {slug === 'operon' && (
     <div class="art-operon">
-      <div class="art-code-head"><span>OPERON / REVIEW</span><span>DISK = TRUTH</span></div>
-      <div class="diff-line"><b>-</b><span>rename_symbol("old_name")</span></div>
-      <div class="diff-line diff-line--add"><b>+</b><span>rename_symbol("new_name")</span></div>
-      <div class="art-divider"></div>
-      <div class="art-verify"><i></i><span>AST verified</span><strong>PASS</strong></div>
-      <div class="art-verify"><i></i><span>filesystem snapshot</span><strong>PASS</strong></div>
-      <div class="art-verify"><i></i><span>human approval</span><strong>WAIT</strong></div>
+      <div class="art-code">
+        <div class="art-code-head">
+          <span>OPERON / REVIEW</span>
+          <span>DISK = TRUTH</span>
+        </div>
+        <div class="code-row is-del">
+          <b>-</b>
+          <span>rename_symbol("old_name")</span>
+        </div>
+        <div class="code-row is-add">
+          <b>+</b>
+          <span>rename_symbol("new_name")</span>
+        </div>
+        <div class="verify-grid">
+          <div class="verify-card">
+            <span>01 / AST</span>
+            <strong>VERIFIED</strong>
+          </div>
+          <div class="verify-card">
+            <span>02 / DISK</span>
+            <strong>SNAPSHOT MATCH</strong>
+          </div>
+          <div class="verify-card">
+            <span>03 / HUMAN</span>
+            <strong>APPROVAL GATE</strong>
+          </div>
+        </div>
+      </div>
     </div>
   )}
 
   {slug === 'slot-finder' && (
-    <div class="art-slots">
-      <div class="slot-title">SIBA / FALL</div>
-      <div class="slot-grid">
-        {Array.from({ length: 20 }).map((_, i) => <span class:list={[{ active: [2, 3, 7, 12, 15].includes(i) }]}></span>)}
+    <div class="art-slotfinder">
+      <div class="slot-shell">
+        <div class="slot-head">
+          <span>SIBA / FALL</span>
+          <span>SEARCH RESULT</span>
+        </div>
+        <div class="slot-table">
+          {Array.from({ length: 40 }).map((_, index) => (
+            <span
+              class:list={['slot-cell', { active: [3, 4, 11, 19, 20, 27, 35].includes(index) }]}
+            ></span>
+          ))}
+        </div>
+        <div class="slot-meta">
+          <span>CS-302 / SECTION A</span>
+          <strong>ROOM 12 · 11:00</strong>
+        </div>
       </div>
-      <div class="slot-labels"><span>09</span><span>11</span><span>13</span><span>15</span><span>17</span></div>
-      <div class="slot-footer"><span>CS-302</span><strong>ROOM 12</strong></div>
     </div>
   )}
 
   {slug === 'siba-launchpad' && (
     <div class="art-launchpad">
-      <div class="launch-title">IBA LAUNCHPAD</div>
-      <div class="launch-grid">
-        <span>SHOWCASE</span><span>PROJECTS</span>
-        <span>COLLABORATE</span><span>GUIDANCE</span>
+      <div class="launch-surface">
+        <div class="launch-title">IBA LAUNCHPAD / PROJECT ECOSYSTEM</div>
+        <div class="launch-grid">
+          <span>SHOWCASE</span>
+          <span>PROJECTS</span>
+          <span>COLLABORATE</span>
+          <span>GUIDANCE</span>
+        </div>
+        <div class="launch-stat">
+          <strong>60+</strong>
+          <span>projects reviewed</span>
+        </div>
       </div>
-      <div class="launch-numbers"><strong>60+</strong><span>projects reviewed</span></div>
-      <div class="launch-bars"><i></i><i></i><i></i><i></i></div>
     </div>
   )}
 
   {slug === 'devshelf' && (
     <div class="art-devshelf">
-      <div class="devshelf-query">search → <span>information retrieval</span></div>
-      <div class="devshelf-index">
-        <span>inverted_index</span>
-        <span>positions</span>
-        <span>prefix_trie</span>
-        <span>query_time</span>
+      <div class="shelf-surface">
+        <div class="shelf-title">DEVSHELF / FROM FIRST PRINCIPLES</div>
+        <div class="shelf-query">
+          search → <strong>information retrieval</strong>
+        </div>
+        <div class="shelf-index">
+          <span>inverted_index</span>
+          <span>positions</span>
+          <span>prefix_trie</span>
+          <span>offline_index</span>
+        </div>
+        <div class="shelf-speed">
+          <strong>0.8ms</strong>
+          <span>query path</span>
+        </div>
       </div>
-      <strong>0.8ms</strong>
-      <small>query path</small>
     </div>
   )}
 
   {slug === 'mqnotebook' && (
     <div class="art-notebook">
-      <div class="note-file">report_2025.pdf</div>
-      <div class="note-file note-file--small">slides.pptx</div>
-      <div class="note-file note-file--tiny">data.xlsx</div>
-      <div class="note-search">⌕ scanned pages + tables + notes</div>
-      <div class="note-pulse"></div>
+      <div class="note-stack">
+        <div class="note-file note-file--one">report_2025.pdf</div>
+        <div class="note-file note-file--two">slides.pptx</div>
+        <div class="note-file note-file--three">data.xlsx</div>
+        <div class="note-query">⌕ scanned pages + tables + presentation notes</div>
+      </div>
     </div>
   )}
 </div>

@@ -1,9 +1,9 @@
 ---
 import { ClientRouter } from 'astro:transitions';
-import Seo from '../components/Seo.astro';
 import SiteHeader from '../components/SiteHeader.astro';
 import SiteFooter from '../components/SiteFooter.astro';
 import CommandPalette from '../components/CommandPalette.astro';
+import Seo from '../components/Seo.astro';
 import '../styles/global.css';
 
 interface Props {
@@ -11,165 +11,138 @@ interface Props {
   description?: string;
   noIndex?: boolean;
 }
+
 const { title, description, noIndex = false } = Astro.props;
 ---
+
 <!doctype html>
-<html lang="en">
+<html lang="en" data-theme="dark">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#080808" />
-    <link rel="icon" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+    <meta name="theme-color" content="#0b0c0f" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="alternate icon" href="/favicon.ico" />
     <link rel="manifest" href="/site.webmanifest" />
-    <Seo title={title} description={description} noIndex={noIndex} />
+    <script is:inline>
+      (() => {
+        try {
+          const stored = localStorage.getItem('qasim-theme');
+          const theme = stored === 'light' || stored === 'dark' ? stored : 'dark';
+          document.documentElement.dataset.theme = theme;
+        } catch {
+          document.documentElement.dataset.theme = 'dark';
+        }
+      })();
+    </script>
     <ClientRouter />
+    <Seo title={title} description={description} noIndex={noIndex} />
   </head>
   <body>
-    <a class="skip-link" href="#main-content">Skip to content</a>
+    <a class="skip-link" href="#main-content">
+      Skip to content
+    </a>
     <div class="scroll-bar" data-scroll-progress></div>
     <SiteHeader />
-    <CommandPalette />
-    <main id="main-content"><slot /></main>
+    <main id="main-content" class="page-frame">
+      <slot />
+    </main>
     <SiteFooter />
+    <CommandPalette />
 
     <script is:inline>
       const bindSite = () => {
         const doc = document.documentElement;
 
-        const updateScroll = () => {
-          const progress = document.querySelector('[data-scroll-progress]');
-          const header = document.querySelector('[data-site-header]');
+        const updateScrollProgress = () => {
           const max = document.documentElement.scrollHeight - window.innerHeight;
-          const percent = max > 0 ? (window.scrollY / max) * 100 : 0;
-          if (progress) progress.style.width = `${percent}%`;
-          if (header) header.classList.toggle('is-scrolled', window.scrollY > 20);
+          const progress = max > 0 ? window.scrollY / max : 0;
+          const bar = document.querySelector('[data-scroll-progress]');
+          if (bar) bar.style.width = `${Math.min(100, Math.max(0, progress * 100))}%`;
+          const header = document.querySelector('[data-site-header]');
+          if (header) header.classList.toggle('is-scrolled', window.scrollY > 12);
         };
 
         if (!window.__qasimScrollBound) {
           window.__qasimScrollBound = true;
-          window.addEventListener('scroll', updateScroll, { passive: true });
-          window.addEventListener('resize', updateScroll, { passive: true });
+          window.addEventListener('scroll', updateScrollProgress, { passive: true });
         }
-        updateScroll();
+        updateScrollProgress();
 
-        document.querySelectorAll('[data-reveal]:not([data-reveal-ready])').forEach((element) => {
-          element.setAttribute('data-reveal-ready', 'true');
+        document.querySelectorAll('[data-reveal]:not([data-bound])').forEach((element) => {
+          element.dataset.bound = 'true';
           if (!('IntersectionObserver' in window)) {
             element.classList.add('is-visible');
             return;
           }
-          const observer = new IntersectionObserver((entries, obs) => {
-            entries.forEach((entry) => {
-              if (entry.isIntersecting) {
+          const observer = new IntersectionObserver(
+            (entries, currentObserver) => {
+              entries.forEach((entry) => {
+                if (!entry.isIntersecting) return;
                 entry.target.classList.add('is-visible');
-                obs.unobserve(entry.target);
-              }
-            });
-          }, { rootMargin: '0px 0px -10% 0px', threshold: 0.06 });
+                currentObserver.unobserve(entry.target);
+              });
+            },
+            { threshold: 0.12, rootMargin: '0px 0px -7% 0px' },
+          );
           observer.observe(element);
         });
 
-        const menuButton = document.querySelector('[data-menu-toggle]');
-        const mobileNav = document.querySelector('[data-mobile-nav]');
-        if (menuButton && mobileNav && !menuButton.dataset.bound) {
-          menuButton.dataset.bound = 'true';
-          menuButton.addEventListener('click', () => {
-            const open = menuButton.getAttribute('aria-expanded') === 'true';
-            menuButton.setAttribute('aria-expanded', String(!open));
+        document.querySelectorAll('[data-theme-toggle]:not([data-bound])').forEach((button) => {
+          button.dataset.bound = 'true';
+          button.addEventListener('click', () => {
+            const next = doc.dataset.theme === 'light' ? 'dark' : 'light';
+            doc.dataset.theme = next;
+            try {
+              localStorage.setItem('qasim-theme', next);
+            } catch {
+              // Theme still changes for the current session when storage is unavailable.
+            }
+            const meta = document.querySelector('meta[name="theme-color"]');
+            if (meta) meta.setAttribute('content', next === 'light' ? '#f5f3ed' : '#0b0c0f');
+            document.querySelectorAll('[data-theme-label]').forEach((label) => {
+              label.textContent = next === 'light' ? 'Dark' : 'Light';
+            });
+          });
+        });
+
+        document.querySelectorAll('[data-menu-toggle]:not([data-bound])').forEach((button) => {
+          button.dataset.bound = 'true';
+          const mobileNav = document.querySelector('[data-mobile-nav]');
+          button.addEventListener('click', () => {
+            if (!mobileNav) return;
+            const open = button.getAttribute('aria-expanded') === 'true';
+            button.setAttribute('aria-expanded', String(!open));
             if (open) mobileNav.setAttribute('hidden', '');
             else mobileNav.removeAttribute('hidden');
             doc.classList.toggle('nav-open', !open);
           });
-          mobileNav.querySelectorAll('a').forEach((link) => link.addEventListener('click', () => {
-            menuButton.setAttribute('aria-expanded', 'false');
-            mobileNav.setAttribute('hidden', '');
-            doc.classList.remove('nav-open');
-          }));
+          mobileNav?.querySelectorAll('a').forEach((link) =>
+            link.addEventListener('click', () => {
+              button.setAttribute('aria-expanded', 'false');
+              mobileNav.setAttribute('hidden', '');
+              doc.classList.remove('nav-open');
+            }),
+          );
+        });
+
+        const contactForm = document.querySelector('[data-contact-form]');
+        if (contactForm && !contactForm.dataset.bound) {
+          contactForm.dataset.bound = 'true';
+          contactForm.addEventListener('submit', (event) => {
+            event.preventDefault();
+            const form = new FormData(contactForm);
+            const name = String(form.get('name') ?? '').trim();
+            const email = String(form.get('email') ?? '').trim();
+            const message = String(form.get('message') ?? '').trim();
+            const subject = encodeURIComponent(`Hello Qasim${name ? ` — ${name}` : ''}`);
+            const body = encodeURIComponent(
+              `${message}\n\nFrom: ${name || 'Unknown'}\nEmail: ${email || 'Not provided'}`,
+            );
+            window.location.href = `mailto:hello@qasimio.me?subject=${subject}&body=${body}`;
+          });
         }
-
-        const setupCommandPalette = () => {
-          const overlay = document.querySelector('[data-command-overlay]');
-          const input = document.querySelector('[data-command-input]');
-          const openCommand = () => {
-            const activeOverlay = document.querySelector('[data-command-overlay]');
-            const activeInput = document.querySelector('[data-command-input]');
-            if (!activeOverlay || !activeInput) return;
-            activeOverlay.removeAttribute('hidden');
-            doc.classList.add('command-open');
-            activeInput.focus();
-          };
-          const closeCommand = () => {
-            const activeOverlay = document.querySelector('[data-command-overlay]');
-            if (!activeOverlay) return;
-            activeOverlay.setAttribute('hidden', '');
-            doc.classList.remove('command-open');
-          };
-          const bindButtons = () => {
-            document.querySelectorAll('[data-command-open]:not([data-bound])').forEach((button) => {
-              button.setAttribute('data-bound', 'true');
-              button.addEventListener('click', openCommand);
-            });
-            document.querySelectorAll('[data-command-close]:not([data-bound])').forEach((element) => {
-              element.setAttribute('data-bound', 'true');
-              element.addEventListener('click', closeCommand);
-            });
-          };
-          const bindInput = () => {
-            const activeInput = document.querySelector('[data-command-input]');
-            if (!activeInput || activeInput.dataset.bound) return;
-            activeInput.dataset.bound = 'true';
-            activeInput.addEventListener('input', () => {
-              const query = activeInput.value.trim().toLowerCase();
-              document.querySelectorAll('[data-command-item]').forEach((item) => {
-                item.hidden = !query || !item.dataset.commandSearch.toLowerCase().includes(query);
-                if (!query) item.hidden = false;
-              });
-            });
-          };
-
-          bindButtons();
-          bindInput();
-
-          if (!window.__qasimCommandBound) {
-            window.__qasimCommandBound = true;
-            document.addEventListener('keydown', (event) => {
-              const activeOverlay = document.querySelector('[data-command-overlay]');
-              const activeInput = document.querySelector('[data-command-input]');
-              const activeItems = [...document.querySelectorAll('[data-command-item]:not([hidden])')];
-              if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === 'k') {
-                event.preventDefault();
-                if (doc.classList.contains('command-open')) closeCommand();
-                else openCommand();
-                return;
-              }
-              if (!doc.classList.contains('command-open') || !activeOverlay || !activeInput) return;
-              if (event.key === 'Escape') { event.preventDefault(); closeCommand(); return; }
-              const activeIndex = Math.max(0, activeItems.findIndex((item) => item.classList.contains('is-active')));
-              if (event.key === 'ArrowDown') {
-                event.preventDefault();
-                const next = Math.min(activeIndex + 1, activeItems.length - 1);
-                activeItems.forEach((item, index) => item.classList.toggle('is-active', index === next));
-              }
-              if (event.key === 'ArrowUp') {
-                event.preventDefault();
-                const next = Math.max(activeIndex - 1, 0);
-                activeItems.forEach((item, index) => item.classList.toggle('is-active', index === next));
-              }
-              if (event.key === 'Enter' && activeItems[activeIndex]) {
-                event.preventDefault();
-                activeItems[activeIndex].click();
-              }
-            });
-          }
-
-          if (overlay && !overlay.dataset.initialized) {
-            overlay.dataset.initialized = 'true';
-            openCommand();
-            closeCommand();
-          }
-        };
-
-        setupCommandPalette();
       };
 
       document.addEventListener('astro:page-load', bindSite);

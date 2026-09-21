@@ -1,54 +1,86 @@
 ---
-import { getCollection } from 'astro:content';
+import { getCollection, type CollectionEntry } from 'astro:content';
 import Base from '../../layouts/Base.astro';
 import ProjectCard from '../../components/ProjectCard.astro';
 import WorkArchiveRow from '../../components/WorkArchiveRow.astro';
 import SectionLabel from '../../components/SectionLabel.astro';
 
-const projects = (await getCollection('projects')).sort((a, b) => a.data.order - b.data.order);
+type Project = CollectionEntry<'projects'>;
+const projects: Project[] = (await getCollection<'projects'>('projects')).sort(
+  (a, b) => a.data.order - b.data.order,
+);
 const featured = projects.filter((entry) => entry.data.featured).slice(0, 3);
 const archive = projects.filter((entry) => !entry.data.featured);
 const types = ['all', ...new Set(projects.map((entry) => entry.data.type))];
 ---
-<Base title="Work" description="Projects, systems, open-source work, and community projects by Qasim Sethar.">
+
+<Base
+  title="Work"
+  description="Projects, products, systems, open-source work, and communities built by Qasim Sethar."
+>
   <header class="page-hero site-shell">
-    <div class="page-hero__top"><span>01 / WORK</span><span>{projects.length} PROJECTS</span></div>
-    <h1>Things I<br /><em>actually built.</em></h1>
-    <p>The useful distinction is not finished versus unfinished. It is whether there is something real to learn from it.</p>
+    <div class="page-hero__top">
+      <span>01 / WORK</span>
+      <span>{projects.length} PROJECTS</span>
+    </div>
+    <h1>
+      Things I<br />
+      <span class="display-serif">actually built.</span>
+    </h1>
+    <p>
+      Some became products. Some became tools. Some were built to understand a problem properly. All
+      of them left evidence behind.
+    </p>
   </header>
 
-  <section class="site-shell work-index">
+  <section class="site-shell" style="padding-bottom: 8rem;">
     <SectionLabel index="01" title="Flagship work" />
     <div class="flagship-work">
-      {featured.map((entry) => <ProjectCard entry={entry} featured />)}
+      {featured.map((entry) => (
+        <ProjectCard entry={entry} featured />
+      ))}
     </div>
 
     <div class="archive-section">
-      <SectionLabel index="02" title="Everything else" />
+      <SectionLabel index="02" title="Archive" />
       <div class="filters" data-project-filters>
-        {types.map((type, index) => <button type="button" class="filter-button" data-project-filter={type} aria-pressed={index === 0}>{type.replace('-', ' ')}</button>)}
+        {types.map((type, index) => (
+          <button
+            type="button"
+            class="filter-button"
+            data-project-filter={type}
+            aria-pressed={index === 0}
+          >
+            {type.replaceAll('-', ' ')}
+          </button>
+        ))}
       </div>
       <div class="archive-list">
-        {archive.map((entry) => <WorkArchiveRow entry={entry} />)}
+        {archive.map((entry) => (
+          <WorkArchiveRow entry={entry} />
+        ))}
       </div>
-      <p class="empty-state" data-project-empty hidden>No projects match that filter.</p>
+      <p class="empty-state" data-project-empty hidden>
+        No projects match that filter.
+      </p>
     </div>
   </section>
 
   <script is:inline>
-    document.addEventListener('astro:page-load', () => {
+    const bindProjectFilters = () => {
       const root = document.querySelector('[data-project-filters]');
-      if (!root || root.dataset.bound) return;
+      if (!root || root.dataset.bound === 'true') return;
       root.dataset.bound = 'true';
-      const rows = [...document.querySelectorAll('[data-project-card]')];
+      const rows = [...document.querySelectorAll('.archive-list [data-project-card]')];
       const empty = document.querySelector('[data-project-empty]');
       root.querySelectorAll('[data-project-filter]').forEach((button) => {
         button.addEventListener('click', () => {
           const type = button.getAttribute('data-project-filter');
-          root.querySelectorAll('button').forEach((item) => item.setAttribute('aria-pressed', String(item === button)));
-          const candidates = rows.filter((row) => row.closest('.archive-list'));
+          root
+            .querySelectorAll('button')
+            .forEach((item) => item.setAttribute('aria-pressed', String(item === button)));
           let visible = 0;
-          candidates.forEach((row) => {
+          rows.forEach((row) => {
             const show = type === 'all' || row.getAttribute('data-type') === type;
             row.hidden = !show;
             if (show) visible += 1;
@@ -56,6 +88,8 @@ const types = ['all', ...new Set(projects.map((entry) => entry.data.type))];
           if (empty) empty.hidden = visible !== 0;
         });
       });
-    });
+    };
+    document.addEventListener('astro:page-load', bindProjectFilters);
+    bindProjectFilters();
   </script>
 </Base>

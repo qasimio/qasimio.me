@@ -1,7 +1,17 @@
 ---
+import type { CollectionEntry } from 'astro:content';
+interface Props {
+  entry: CollectionEntry<'notes'>;
+  featured?: boolean;
+}
 const { entry, featured = false } = Astro.props;
-const date = entry.data.publishedAt.toLocaleDateString('en-US', { month: 'short', day: '2-digit', year: 'numeric' });
+const date = entry.data.publishedAt.toLocaleDateString('en-US', {
+  month: 'short',
+  day: '2-digit',
+  year: 'numeric',
+});
 ---
+
 <a
   class:list={['note-row', { featured }]}
   href={`/journal/notes/${entry.id}/`}
@@ -12,7 +22,9 @@ const date = entry.data.publishedAt.toLocaleDateString('en-US', { month: 'short'
   <div class="note-row__main">
     <span>{entry.data.type}</span>
     <h3>{entry.data.title}</h3>
-    {entry.data.tags.length > 0 && <p>{entry.data.tags.map((tag) => `#${tag}`).join('  ')}</p>}
+    {entry.data.tags.length > 0 && (
+      <p>{entry.data.tags.map((tag: string) => `#${tag}`).join('  ')}</p>
+    )}
   </div>
   <span class="note-row__arrow">↗</span>
 </a>

@@ -1,19 +1,19 @@
 ---
-title: "SlotFinder"
-summary: "A timetable search tool for Sukkur IBA built to replace the ritual of opening page after page to find one class."
+title: 'SlotFinder'
+summary: 'A timetable search tool for Sukkur IBA built to replace the ritual of opening page after page to find one class.'
 type: product
 status: shipped
 year: 2026
 featured: false
 order: 30
-role: "Co-creator"
+role: 'Co-creator'
 tags: [Next.js, Python, SQLite, SIBA, Product]
 links:
-  - label: "Live"
-    url: "https://sibatt.vercel.app"
-  - label: "GitHub"
-    url: "https://github.com/AbdulGhaffarcs/slot-finder"
-pullQuote: "If finding a class takes ninety pages, the interface is the problem."
+  - label: 'Live'
+    url: 'https://sibatt.vercel.app'
+  - label: 'GitHub'
+    url: 'https://github.com/AbdulGhaffarcs/slot-finder'
+pullQuote: 'If finding a class takes ninety pages, the interface is the problem.'
 ---
 
 ## The problem

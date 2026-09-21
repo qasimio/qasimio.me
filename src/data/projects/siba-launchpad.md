@@ -1,19 +1,19 @@
 ---
-title: "SIBA Launchpad"
-summary: "A student project ecosystem built to move good work out of private chats and semester folders and into public view."
+title: 'SIBA Launchpad'
+summary: 'A student project ecosystem built to move good work out of private chats and semester folders and into public view.'
 type: community
 status: active
 year: 2026
 featured: false
 order: 40
-role: "Creator / maintainer"
+role: 'Creator / maintainer'
 tags: [Community, SIBA, Open Source, GitHub, Students]
 links:
-  - label: "Website"
-    url: "https://iba-launchpad.vercel.app"
-  - label: "GitHub org"
-    url: "https://github.com/iba-launchpad"
-pullQuote: "Student work deserves a place to exist after grading."
+  - label: 'Website'
+    url: 'https://iba-launchpad.vercel.app'
+  - label: 'GitHub org'
+    url: 'https://github.com/iba-launchpad'
+pullQuote: 'Student work deserves a place to exist after grading.'
 ---
 
 ## The problem

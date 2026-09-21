@@ -1,5 +1,5 @@
 ---
-title: "A useful GitHub workflow for Launchpad."
+title: 'A useful GitHub workflow for Launchpad.'
 publishedAt: 2026-09-08
 type: link
 tags: [github, launchpad]

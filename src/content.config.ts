@@ -25,7 +25,7 @@ const projects = defineCollection({
     year: z.number().int(),
     featured: z.boolean().default(false),
     order: z.number().int().default(0),
-    role: z.string().default('Builder'),
+    role: z.string(),
     tags: z.array(z.string()).default([]),
     links: z.array(linkSchema).default([]),
     stats: z.array(statSchema).default([]),
@@ -41,7 +41,7 @@ const notes = defineCollection({
   schema: z.object({
     title: z.string(),
     publishedAt: z.coerce.date(),
-    type: z.enum(['update', 'achievement', 'build', 'observation', 'link']),
+    type: z.enum(['update', 'achievement', 'observation', 'build', 'link']),
     tags: z.array(z.string()).default([]),
     draft: z.boolean().default(false),
     externalUrl: z.string().url().optional(),
@@ -62,4 +62,8 @@ const essays = defineCollection({
   }),
 });
 
-export const collections = { projects, notes, essays };
+export const collections = {
+  projects,
+  notes,
+  essays,
+};

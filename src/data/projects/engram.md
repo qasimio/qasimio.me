@@ -1,24 +1,24 @@
 ---
-title: "Engram"
-summary: "A knowledge system built around grounded retrieval, persistent context, and an interface between memory and agents."
+title: 'Engram'
+summary: 'A knowledge system built around grounded retrieval, persistent context, and an interface between memory and agents.'
 type: product
 status: active
 year: 2026
 featured: true
 order: 10
-role: "Founder / engineer"
+role: 'Founder / engineer'
 tags: [RAG, Search, Agents, Knowledge, PostgreSQL, MCP]
 links:
-  - label: "GitHub"
-    url: "https://github.com/qasimio/Engram"
+  - label: 'GitHub'
+    url: 'https://github.com/qasimio/Engram'
 stats:
-  - value: "Hybrid"
-    label: "retrieval"
-  - value: "Async"
-    label: "ingestion"
-  - value: "MCP"
-    label: "integration"
-pullQuote: "Memory should return evidence, not confident guesses."
+  - value: 'Hybrid'
+    label: 'retrieval'
+  - value: 'Async'
+    label: 'ingestion'
+  - value: 'MCP'
+    label: 'integration'
+pullQuote: 'Memory should return evidence, not confident guesses.'
 ---
 
 ## Why it exists

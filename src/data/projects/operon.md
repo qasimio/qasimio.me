@@ -1,24 +1,24 @@
 ---
-title: "Operon"
+title: 'Operon'
 summary: "A terminal-native autonomous coding agent built around deterministic verification instead of trusting the model's description of what it changed."
 type: open-source
 status: active
 year: 2026
 featured: true
 order: 15
-role: "Designer / engineer"
+role: 'Designer / engineer'
 tags: [Agents, AST, Python, TUI, Verification]
 links:
-  - label: "GitHub"
-    url: "https://github.com/qasimio/Operon"
+  - label: 'GitHub'
+    url: 'https://github.com/qasimio/Operon'
 stats:
-  - value: "AST"
-    label: "structured edits"
-  - value: "5-tier"
-    label: "patching"
-  - value: "9"
-    label: "LLM backends"
-pullQuote: "The filesystem is the source of truth."
+  - value: 'AST'
+    label: 'structured edits'
+  - value: '5-tier'
+    label: 'patching'
+  - value: '9'
+    label: 'LLM backends'
+pullQuote: 'The filesystem is the source of truth.'
 ---
 
 ## The problem

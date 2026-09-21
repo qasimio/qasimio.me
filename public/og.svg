@@ -1,9 +1,10 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
-  <rect width="1200" height="630" fill="#080808"/>
-  <text x="78" y="114" fill="#ff694d" font-family="monospace" font-size="22">QASIM SETHAR / QASIMIO</text>
-  <text x="78" y="282" fill="#f3f0ea" font-family="Arial, sans-serif" font-size="108" font-weight="500">Things worth</text>
-  <text x="78" y="390" fill="#aaa59d" font-family="Georgia, serif" font-size="112" font-style="italic">building.</text>
-  <line x1="78" y1="474" x2="1122" y2="474" stroke="#242321"/>
-  <text x="78" y="526" fill="#68655f" font-family="monospace" font-size="16">SOFTWARE · PRODUCTS · SYSTEMS · COMMUNITIES</text>
-  <text x="1040" y="526" fill="#ff694d" font-family="monospace" font-size="18">MQ.</text>
+  <rect width="1200" height="630" fill="#0b0c0f"/>
+  <rect x="72" y="72" width="54" height="54" rx="16" fill="none" stroke="#363a44"/>
+  <text x="99" y="108" text-anchor="middle" fill="#f5f3ec" font-family="Georgia, serif" font-size="28" font-weight="700">MQ</text>
+  <text x="72" y="195" fill="#9b9da6" font-family="Arial, sans-serif" font-size="18" letter-spacing="4">QASIM SETHAR / QASIMIO</text>
+  <text x="72" y="315" fill="#f5f3ec" font-family="Arial, sans-serif" font-size="88" font-weight="800" letter-spacing="-4">I build things</text>
+  <text x="72" y="408" fill="#8290ff" font-family="Georgia, serif" font-size="92" font-style="italic">until they matter.</text>
+  <line x1="72" y1="500" x2="1128" y2="500" stroke="#272a31"/>
+  <text x="72" y="544" fill="#737680" font-family="monospace" font-size="16">software · products · systems · communities</text>
 </svg>

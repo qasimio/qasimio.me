@@ -1,66 +1,69 @@
 ---
-import { getCollection } from 'astro:content';
+import { getCollection, type CollectionEntry } from 'astro:content';
 import { Image } from 'astro:assets';
 import Base from '../layouts/Base.astro';
 import SectionLabel from '../components/SectionLabel.astro';
 import ProjectVisual from '../components/ProjectVisual.astro';
 import NoteRow from '../components/NoteRow.astro';
-import { current, evidence, site } from '../data/site';
+import { current, evidence, evidenceRows, site } from '../data/site';
 import portrait from '../assets/identity/qasim-portrait.jpg';
 
-const projects = (await getCollection('projects')).sort((a, b) => a.data.order - b.data.order);
+type Project = CollectionEntry<'projects'>;
+type Note = CollectionEntry<'notes'>;
+
+const projects: Project[] = (await getCollection<'projects'>('projects')).sort(
+  (a, b) => a.data.order - b.data.order,
+);
 const featured = projects.filter((entry) => entry.data.featured).slice(0, 3);
-const notes = (await getCollection('notes', ({ data }) => !data.draft))
+const notes: Note[] = (await getCollection<'notes'>('notes', ({ data }) => !data.draft))
   .sort((a, b) => b.data.publishedAt.getTime() - a.data.publishedAt.getTime())
-  .slice(0, 3);
+  .slice(0, 4);
 ---
+
 <Base title={site.name} description={site.description}>
   <section class="home-hero site-shell">
-    <div class="home-hero__topline">
-      <span>QASIM SETHAR / QASIMIO</span>
-      <span>SOFTWARE · PRODUCTS · ETC.</span>
+    <div class="hero-meta-row meta">
+      <span class="hero-kicker">Qasim Sethar / Qasimio</span>
+      <span>Software · products · systems · communities</span>
     </div>
-    <div class="home-hero__main">
-      <h1>Things<br /><em>worth building.</em></h1>
-      <div class="home-hero__aside" data-reveal>
-        <p>I build software around problems that refuse to stay theoretical.</p>
-        <a href="/work/">Enter the work <span>↗</span></a>
+
+    <div class="hero-grid">
+      <div>
+        <h1 data-reveal>
+          I build things
+          <br />
+          <span class="accent-line">until they matter.</span>
+        </h1>
+      </div>
+      <div class="hero-aside" data-reveal>
+        <p>
+          I like difficult problems, useful software, and the distance between a good idea and
+          something another person actually uses.
+        </p>
+        <div class="hero-actions">
+          <a class="button-primary" href="/work/">
+            Explore the work <span>↗</span>
+          </a>
+          <a class="button-secondary" href="/journal/">
+            Read the journal
+          </a>
+        </div>
       </div>
     </div>
-    <div class="home-hero__bottom">
-      <span>SCROLL TO SEE WHAT MADE IT OUT</span>
-      <span>↓</span>
+
+    <div class="hero-lower" data-reveal>
+      <p>
+        Currently building Engram and Operon, growing SIBA Launchpad, and learning what happens
+        after software leaves the repository.
+      </p>
+      <span class="scroll-cue">SCROLL / 01 →</span>
     </div>
   </section>
 
-  <section class="home-statement site-shell">
-    <div class="statement-index">00</div>
-    <div class="statement-copy" data-reveal>
-      <p class="eyebrow">The idea</p>
-      <h2>I am more interested in the <em>thing after the demo.</em></h2>
-      <p>I like the part where a project gets installed, relied on, criticized, improved, passed to somebody else, and slowly stops being mine.</p>
-    </div>
-  </section>
-
-  <section class="home-section site-shell">
-    <SectionLabel index="01" title="Right now" href="/work/" linkLabel="See the work" />
-    <div class="current-list">
-      {current.map((item) => (
-        <a class="current-item" href={item.href ?? '/about/'} target={item.href?.startsWith('http') ? '_blank' : undefined} rel={item.href?.startsWith('http') ? 'noreferrer' : undefined} data-reveal>
-          <span class="current-number">{item.number}</span>
-          <span class="current-label">{item.label}</span>
-          <span class="current-title">{item.title}</span>
-          <span class="current-detail">{item.detail}</span>
-          <span class="current-arrow">↗</span>
-        </a>
-      ))}
-    </div>
-  </section>
-
-  <section class="evidence-band">
-    <div class="site-shell evidence-grid">
+  <section class="signal-strip" aria-label="Selected signals">
+    <div class="site-shell signal-grid">
       {evidence.map((item) => (
-        <div class="evidence-item" data-reveal>
+        <div class="signal-item" data-reveal>
           <strong>{item.value}</strong>
           <span>{item.label}</span>
         </div>
@@ -69,11 +72,49 @@ const notes = (await getCollection('notes', ({ data }) => !data.draft))
   </section>
 
   <section class="home-section site-shell">
-    <SectionLabel index="02" title="Work" href="/work/" linkLabel="All work" />
+    <div class="current-intro" data-reveal>
+      <div>
+        <span class="eyebrow">01 / CURRENT</span>
+      </div>
+      <div>
+        <h2>The things getting my attention now.</h2>
+        <p>
+          Not a roadmap. Not a promise. Just the work currently taking up the most room in my head.
+        </p>
+      </div>
+    </div>
+    <div class="evidence-list">
+      {current.map((item) => (
+        <a
+          class="evidence-row"
+          href={item.href ?? '/about/'}
+          target={item.href?.startsWith('http') ? '_blank' : undefined}
+          rel={item.href?.startsWith('http') ? 'noreferrer' : undefined}
+          data-reveal
+        >
+          <strong>
+            {item.number} / {item.title}
+          </strong>
+          <span>{item.detail}</span>
+          <span class="evidence-row__arrow">↗</span>
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <section class="home-section site-shell">
+    <SectionLabel index="02" title="Selected work" href="/work/" linkLabel="See everything" />
     <div class="featured-work">
       {featured.map((entry, index) => (
-        <a class:list={['featured-project', `featured-project--${index + 1}`]} href={`/work/${entry.id}/`} data-reveal>
-          <div class="featured-project__art"><ProjectVisual slug={entry.id} title={entry.data.title} /></div>
+        <a
+          class:list={['featured-project', `featured-project--${index + 1}`]}
+          href={`/work/${entry.id}/`}
+          data-reveal
+          transition:name={`project-${entry.id}`}
+        >
+          <div class="featured-project__art">
+            <ProjectVisual slug={entry.id} />
+          </div>
           <div class="featured-project__caption">
             <span>0{index + 1}</span>
             <span>{entry.data.title}</span>
@@ -84,33 +125,88 @@ const notes = (await getCollection('notes', ({ data }) => !data.draft))
     </div>
   </section>
 
-  <section class="home-section home-section--notes site-shell">
-    <SectionLabel index="03" title="Journal" href="/journal/" linkLabel="Open journal" />
-    <div class="notes-home">
-      {notes.map((entry, index) => <NoteRow entry={entry} featured={index === 0} />)}
+  <section class="home-section site-shell">
+    <div class="evidence-panel" data-reveal>
+      <div class="evidence-panel__lead">
+        <span class="eyebrow">03 / PROOF</span>
+        <h2>Things become more interesting when someone else cares.</h2>
+        <p>
+          The numbers are deliberately small and concrete. They tell a better story than a shelf
+          full of badges.
+        </p>
+      </div>
+      <div class="evidence-list">
+        {evidenceRows.map((item) => (
+          <div class="evidence-row">
+            <strong>{item.value}</strong>
+            <span>
+              {item.label}
+              <br />
+              {item.detail}
+            </span>
+            <span class="evidence-row__arrow">•</span>
+          </div>
+        ))}
+      </div>
     </div>
   </section>
 
-  <section class="home-section site-shell home-person">
-    <div class="person-intro" data-reveal>
-      <span class="section-index">04 / THE PERSON</span>
-      <h2>Not only code.</h2>
-      <p>There is the software. Then there is the part around it: organizing people, running events, reviewing work, learning to communicate, and trying to build things that survive contact with real users.</p>
-      <a class="text-link" href="/about/">Meet the person <span>↗</span></a>
-    </div>
-    <div class="person-photo" data-reveal>
-      <Image src={portrait} alt="Qasim Sethar" widths={[700]} sizes="(max-width: 900px) 100vw, 42vw" loading="lazy" />
-      <div class="person-photo__tag">QASIM / 2026</div>
+  <section class="home-section site-shell">
+    <SectionLabel index="04" title="Journal" href="/journal/" linkLabel="Open journal" />
+    <div class="journal-preview">
+      {notes.map((entry, index) => (
+        <NoteRow entry={entry} featured={index === 0} />
+      ))}
     </div>
   </section>
 
-  <section class="home-end site-shell" data-reveal>
-    <span class="eyebrow">05 / NEXT</span>
-    <h2>Keep building.<br /><em>Keep publishing.</em></h2>
-    <p>Short notes, longer thoughts, shipped work, and the occasional thing that should not have worked but somehow did.</p>
-    <div class="home-end__links">
-      <a href="/journal/">Journal <span>↗</span></a>
-      <a href="/contact/">Contact <span>↗</span></a>
+  <section class="home-section site-shell">
+    <div class="person-block">
+      <div class="person-copy" data-reveal>
+        <span class="eyebrow">05 / THE PERSON</span>
+        <h2>The work matters. So does everything around it.</h2>
+        <p>
+          I build software, but I also organize people, review student projects, run events, learn
+          in public, and care a lot about how ideas survive outside a code editor.
+        </p>
+        <a class="text-link" href="/about/">
+          More about me <span>↗</span>
+        </a>
+      </div>
+      <div class="person-photo" data-reveal>
+        <Image
+          src={portrait}
+          alt="Qasim Sethar"
+          width={800}
+          height={840}
+          sizes="(max-width: 980px) 100vw, 45vw"
+        />
+        <div class="person-photo__meta">
+          <span>QASIM SETHAR</span>
+          <span>2026</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="home-close site-shell" data-reveal>
+    <span class="eyebrow">06 / NEXT</span>
+    <h2>
+      Good problems are
+      <br />
+      <em>hard to ignore.</em>
+    </h2>
+    <p>
+      Open to ambitious products, serious engineering, useful collaborations, and people building
+      something that deserves to exist.
+    </p>
+    <div class="home-close__links">
+      <a class="button-primary" href="/contact/">
+        Start a conversation <span>↗</span>
+      </a>
+      <a class="button-secondary" href="/resume.pdf">
+        Résumé
+      </a>
     </div>
   </section>
 </Base>

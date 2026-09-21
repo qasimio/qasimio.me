@@ -1,38 +1,33 @@
-# Design direction
+# qasimio.me v3 design system
 
-This version intentionally moves away from a conventional developer portfolio.
+## Direction
 
-## The hierarchy
+The site is a personal headquarters, not a portfolio template. The visual language is editorial, technical, warm, and deliberately restrained.
 
-1. Work: what was built and what happened after it left the repository.
-2. Journal: short-form updates as an owned archive, not a social network.
-3. About: the person, community work, professional work, programs, and working habits.
-4. Contact: a deliberately simple path to email without storing submissions.
+## Palette
 
-## Visual system
+Dark mode uses Obsidian `#0b0c0f`, warm white `#f5f3ec`, and Cobalt `#8290ff` as the single accent.
 
-- Near-black base with warm white type and one warm orange accent.
-- Serif italic is used sparingly as a contrast voice, not as body copy.
-- Monospace is reserved for metadata, status, and small technical labels.
-- Borders and spacing carry structure instead of rounded cards everywhere.
-- Motion is used for navigation, reveals, hover feedback, and continuity. It respects reduced-motion preferences.
-- Project visuals are built from HTML/CSS so the site is not dependent on stock imagery or a 3D engine.
+Light mode uses Bone `#f5f3ed`, Ink `#15161a`, and a deeper Cobalt `#3f53db` for contrast.
 
-## Deliberately avoided
+Pure black and pure white are avoided so both modes remain easier on the eyes and feel less like a code editor default.
 
-- fake terminal/IDE gimmicks
-- gradient-heavy backgrounds
-- 3D scenes
-- skill bars
-- social feed mechanics
-- databases and CMS infrastructure
-- analytics-driven vanity counters
-- giant technology-logo walls
+## Type
 
-## Content verification before public launch
+- Manrope: primary UI and display sans
+- DM Serif Display: restrained editorial emphasis
+- IBM Plex Mono: metadata, labels, and technical surfaces
 
-Re-check the FOLDR star/download figures immediately before publishing because they change over time. The supplied values in this scaffold are working copy based on the owner's current numbers.
+Headings intentionally use 700–800 weights. The previous version leaned too thin; this version gets its character from weight, spacing, and composition instead of hairline typography.
 
-Add the direct YouTube URL for the short film before linking it publicly.
+## Motion
 
-Replace any generic project visual with a real product screenshot when a strong screenshot exists. The current visuals are structural and editorial, not claims that they are product captures.
+The site uses Astro View Transitions / ClientRouter, scroll reveals, hover movement, and subtle header/scroll feedback. Motion is always subordinate to navigation and hierarchy, and all reveal effects yield to `prefers-reduced-motion`.
+
+## Theme behavior
+
+Dark is the default. The theme switch stores an explicit light/dark preference in localStorage. The page can still switch for the current session if browser storage is unavailable.
+
+## Things intentionally absent
+
+No gradients as decorative backgrounds, no 3D canvas, no social feed, no likes/comments, no database, and no decorative tech-logo wall.

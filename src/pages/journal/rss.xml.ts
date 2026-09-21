@@ -1,3 +1,4 @@
+import type { APIRoute } from 'astro';
 import { getCollection } from 'astro:content';
 
 const escapeXml = (value: string) =>
@@ -5,33 +6,20 @@ const escapeXml = (value: string) =>
     .replaceAll('&', '&amp;')
     .replaceAll('<', '&lt;')
     .replaceAll('>', '&gt;')
-    .replaceAll('\"', '&quot;')
+    .replaceAll('"', '&quot;')
     .replaceAll("'", '&apos;');
 
-export async function GET(context) {
-  const notes = await getCollection('notes', ({ data }) => !data.draft);
+export const GET: APIRoute = async ({ site }) => {
+  const base = site ?? new URL('https://qasimio.me/');
+  const notes = await getCollection<'notes'>('notes', ({ data }) => !data.draft);
   const items = notes
     .sort((a, b) => b.data.publishedAt.getTime() - a.data.publishedAt.getTime())
-    .map(
-      (entry) => `
-        <item>
-          <title>${escapeXml(entry.data.title)}</title>
-          <link>${new URL(`/journal/notes/${entry.id}/`, context.site)}</link>
-          <guid>${new URL(`/journal/notes/${entry.id}/`, context.site)}</guid>
-          <pubDate>${entry.data.publishedAt.toUTCString()}</pubDate>
-        </item>`,
-    )
+    .map((entry) => {
+      const url = new URL(`/journal/notes/${entry.id}/`, base);
+      return `<item><title>${escapeXml(entry.data.title)}</title><link>${url.href}</link><guid>${url.href}</guid><pubDate>${entry.data.publishedAt.toUTCString()}</pubDate></item>`;
+    })
     .join('');
 
-  const xml = `<?xml version="1.0" encoding="UTF-8"?>
-  <rss version="2.0">
-    <channel>
-      <title>Qasim Sethar — Journal</title>
-      <link>${context.site}</link>
-      <description>Short notes, build logs, and observations by Qasim Sethar.</description>
-      ${items}
-    </channel>
-  </rss>`;
-
+  const xml = `<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"><channel><title>Qasim Sethar — Journal</title><link>${base.href}</link><description>Short notes, build logs, and observations by Qasim Sethar.</description>${items}</channel></rss>`;
   return new Response(xml, { headers: { 'Content-Type': 'application/xml; charset=utf-8' } });
-}
+};

@@ -1,17 +1,17 @@
 ---
-title: "MQNotebook"
-summary: "A local-first retrieval system built around scanned PDFs, spreadsheets, presentation notes, and documents that refuse to behave like clean text."
+title: 'MQNotebook'
+summary: 'A local-first retrieval system built around scanned PDFs, spreadsheets, presentation notes, and documents that refuse to behave like clean text.'
 type: system
 status: shipped
 year: 2025
 featured: false
 order: 60
-role: "Engineer"
+role: 'Engineer'
 tags: [RAG, OCR, Python, Retrieval, Documents]
 links:
-  - label: "GitHub"
-    url: "https://github.com/qasimio/MQNotebook"
-pullQuote: "Real documents are messier than Markdown."
+  - label: 'GitHub'
+    url: 'https://github.com/qasimio/MQNotebook'
+pullQuote: 'Real documents are messier than Markdown.'
 ---
 
 ## The constraint

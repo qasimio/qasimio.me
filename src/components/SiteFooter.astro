@@ -1,32 +1,44 @@
 ---
 import { site } from '../data/site';
 ---
+
 <footer class="site-footer">
   <div class="site-shell footer-inner">
-    <div class="footer-brand">
-      <span class="footer-mark">MQ</span>
-      <p>Qasim Sethar</p>
-      <span>Software · products · experiments · communities</span>
-    </div>
-
-    <div class="footer-links">
-      <div>
-        <span class="footer-label">Navigate</span>
-        <a href="/work/">Work</a>
-        <a href="/journal/">Journal</a>
-        <a href="/about/">About</a>
-        <a href="/resume.pdf">Resume ↗</a>
+    <div class="footer-top">
+      <div class="footer-brand">
+        <div class="footer-brand__top">
+          <span class="footer-mark">MQ</span>
+          <span class="micro">QASIM SETHAR / QASIMIO</span>
+        </div>
+        <p>Build something worth keeping.</p>
+        <span>Software · products · systems · communities</span>
       </div>
-      <div>
-        <span class="footer-label">Elsewhere</span>
-        {site.social.map((item) => <a href={item.href} target="_blank" rel="noreferrer">{item.label} ↗</a>)}
+
+      <div class="footer-links">
+        <div>
+          <span class="footer-label">Navigate</span>
+          <a href="/work/">Work ↗</a>
+          <a href="/journal/">Journal ↗</a>
+          <a href="/about/">About ↗</a>
+          <a href="/resume.pdf">Résumé ↗</a>
+        </div>
+        <div>
+          <span class="footer-label">Elsewhere</span>
+          {site.social.map((item) => (
+            <a href={item.href} target="_blank" rel="noreferrer">
+              {item.label} ↗
+            </a>
+          ))}
+        </div>
       </div>
     </div>
 
     <div class="footer-bottom">
-      <a class="footer-email" href={`mailto:${site.email}`}>{site.email}</a>
+      <a class="footer-email" href={`mailto:${site.email}`}>
+        {site.email}
+      </a>
       <span>© {new Date().getFullYear()} Qasim Sethar</span>
-      <span>Built with too much keyboard input.</span>
+      <span>Keyboard-first. Human-readable.</span>
     </div>
   </div>
 </footer>

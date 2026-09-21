@@ -1,5 +1,5 @@
 ---
-title: "I launched SlotFinder because the timetable was a pain."
+title: 'I launched SlotFinder because the timetable was a pain.'
 publishedAt: 2026-09-15
 type: build
 tags: [siba, product, shipping]

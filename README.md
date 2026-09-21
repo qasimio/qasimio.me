@@ -1,24 +1,37 @@
 # qasimio.me
 
-Personal headquarters for Qasim Sethar.
+A custom personal site for Qasim Sethar, built as a living record of work, notes, people, and things worth keeping.
 
 ## Stack
 
 - Astro 7
 - TypeScript
 - Tailwind CSS 4
-- MDX / Astro Content Collections
+- MDX / Content Collections
 - Vercel
 
-## Commands
+## Local development
 
-```bash
+```powershell
 pnpm install
-pnpm dev
-pnpm check
-pnpm build
-pnpm format
-pnpm format:check
+pnpm run dev
 ```
 
-The site is intentionally static. Content lives in `src/data`, visual assets in `src/assets`, and the only browser-side JavaScript is for navigation, motion, filters, and the command palette.
+Validation:
+
+```powershell
+pnpm run check
+pnpm run format:check
+pnpm run build
+```
+
+## Content
+
+- `src/data/projects` — project case studies
+- `src/data/notes` — short-form journal entries
+- `src/data/essays` — long-form writing
+- `src/data/site.ts` — site-wide profile data
+
+## Publishing
+
+Push to `main` for the production Vercel deployment. Keep `qasimio.me` connected only after the production build is verified.
