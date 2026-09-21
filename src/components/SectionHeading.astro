@@ -1,26 +1,21 @@
 ---
 interface Props {
-  index: string;
+  number: string;
   title: string;
   note?: string;
   href?: string;
-  linkLabel?: string;
+  label?: string;
 }
-const { index, title, note, href, linkLabel = 'View all' } = Astro.props;
+const { number, title, note, href, label = 'View all' } = Astro.props;
 ---
 
-<div class="section-heading">
-  <div class="section-heading__left">
-    <span>{index}</span>
+<div class="section-head">
+  <div class="section-head__left">
+    <span class="section-head__number">{number}</span>
     <h2>{title}</h2>
   </div>
-  <div class="section-heading__right">
+  <div class="section-head__right">
     {note && <span>{note}</span>}
-    {href && (
-      <a href={href}>
-        {linkLabel}
-        <span>↗</span>
-      </a>
-    )}
+    {href && <a href={href}>{label} ↗</a>}
   </div>
 </div>

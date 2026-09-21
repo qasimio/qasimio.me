@@ -1,205 +1,215 @@
 ---
 import { Image } from 'astro:assets';
 import Base from '../../layouts/Base.astro';
-import SectionHeading from '../../components/SectionHeading.astro';
 import portrait from '../../assets/identity/qasim-portrait.jpg';
 import { community, milestones, professional, programs, site, workStyle } from '../../data/site';
 ---
 
 <Base
   title="About — Qasim Sethar"
-  description="Qasim Sethar, the person behind the software, projects, communities, and experiments."
+  description="The person behind the software, open-source work, communities, and experiments."
 >
   <section class="shell page-hero">
-    <div class="page-hero__meta">
+    <div class="page-hero__top">
       <span>03 / ABOUT</span>
       <span>THE PERSON BEHIND THE WORK</span>
     </div>
-    <p class="eyebrow eyebrow--coral">THE HUMAN PART</p>
-    <h1>
-      There is more to <em>building.</em>
-    </h1>
-    <p class="page-hero__lede">
-      Code is the part I happen to be good at. I am also learning how to choose problems, work with
-      people, ship things publicly, and make the useful parts survive after the first version.
-    </p>
-  </section>
-
-  <section class="shell about-intro">
-    <div class="about-photo" data-reveal>
-      <Image
-        src={portrait}
-        alt="Qasim Sethar"
-        widths={[720, 960]}
-        sizes="(max-width: 760px) 100vw, 44vw"
-      />
-      <span>SUKKUR · PAKISTAN · 2026</span>
-    </div>
-    <div class="about-statement" data-reveal>
-      <p class="eyebrow">THE SHORT VERSION</p>
-      <h2>
-        I want enough control over the work to follow a problem all the way <em>down.</em>
-      </h2>
-      <p>
-        I am a Computer Science student at Sukkur IBA University. Most of the things worth putting
-        here started outside coursework and got more interesting once somebody else had to use them.
-      </p>
-      <p>
-        That has pulled me toward open source, product work, communities, and the parts of
-        engineering where there is no clean assignment sheet telling you what happens next.
-      </p>
-      <div class="hero__actions">
-        <a class="button button--primary" data-magnetic="6" href="/resume.pdf">
-          Read the résumé <span>↗</span>
-        </a>
-        <a class="button button--outline" data-magnetic="4" href="/contact/">
-          Contact <span>↗</span>
-        </a>
+    <div class="about-hero">
+      <div>
+        <p class="eyebrow eyebrow--coral">THE HUMAN PART</p>
+        <h1>
+          There is more than <em>code.</em>
+        </h1>
+        <p class="about-hero__copy">
+          I'm a Computer Science student who spends an unreasonable amount of time building
+          software. The interesting part, lately, has been everything around the code: people,
+          distribution, judgment, and figuring out what is actually worth shipping.
+        </p>
+        <div class="hero-actions">
+          <a class="button button--primary" href="/resume.pdf">
+            Read the résumé ↗
+          </a>
+          <a class="button button--quiet" href="/contact/">
+            Talk ↗
+          </a>
+        </div>
+      </div>
+      <div class="about-hero__portrait">
+        <Image
+          src={portrait}
+          alt="Qasim Sethar"
+          widths={[700, 1000]}
+          sizes="(max-width:1050px) 100vw, 42vw"
+        />
+        <div class="about-hero__caption">
+          <span>QASIM SETHAR</span>
+          <span>2026</span>
+        </div>
       </div>
     </div>
   </section>
 
-  <section class="shell section">
-    <SectionHeading index="01" title="How it got here" note="the short history" />
-    <div class="milestone-list">
+  <section class="shell section" style="padding-top:2rem">
+    <div class="split-heading">
+      <div>
+        <p class="eyebrow">THE SHORT VERSION</p>
+      </div>
+      <div>
+        <h2>
+          I would rather follow a problem all the way down than wait for someone to hand me the{' '}
+          <em>brief.</em>
+        </h2>
+        <p style="color:var(--muted);max-width:62ch;margin-top:1rem">
+          That is why the work keeps moving between products, open source, search, AI systems,
+          communities, and the little tools that remove an annoyance from everyday life.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="shell section" style="padding-top:2rem">
+    <div class="section-head">
+      <div class="section-head__left">
+        <span class="section-head__number">01</span>
+        <h2>How it got here</h2>
+      </div>
+      <div class="section-head__right">
+        <span>the short history</span>
+      </div>
+    </div>
+    <div class="timeline">
       {milestones.map((item) => (
-        <article data-reveal>
-          <span>{item.period}</span>
-          <div>
-            <h3>{item.title}</h3>
-            <p>{item.detail}</p>
-          </div>
-        </article>
+        <div class="timeline-row" data-reveal>
+          <span class="timeline-row__year">{item[0]}</span>
+          <h3>{item[1]}</h3>
+          <p>{item[2]}</p>
+        </div>
       ))}
     </div>
   </section>
 
-  <section class="band-section">
+  <section class="section" style="background:var(--surface);border-block:1px solid var(--line)">
     <div class="shell">
-      <SectionHeading
-        index="02"
-        title="People changed the work"
-        note="not everything worth building is software"
-      />
-      <div class="community-grid">
+      <div class="section-head">
+        <div class="section-head__left">
+          <span class="section-head__number">02</span>
+          <h2>People</h2>
+        </div>
+        <div class="section-head__right">
+          <span>the part that never fits in a stack</span>
+        </div>
+      </div>
+      <div class="stats-grid">
         {community.map((item) => (
-          <article data-reveal>
-            <strong>{item.value}</strong>
-            <h3>{item.label}</h3>
-            <p>{item.text}</p>
+          <article class="big-stat" data-reveal>
+            <strong>{item[0]}</strong>
+            <span>{item[1]}</span>
+            <small>{item[2]}</small>
           </article>
         ))}
       </div>
     </div>
   </section>
 
-  <section class="shell section">
-    <SectionHeading index="03" title="Professional work" note="outside my own products" />
-    <div class="professional-list">
+  <section class="shell section" style="padding-bottom:6rem">
+    <div class="section-head">
+      <div class="section-head__left">
+        <span class="section-head__number">03</span>
+        <h2>Professional work</h2>
+      </div>
+      <div class="section-head__right">
+        <span>outside my own projects</span>
+      </div>
+    </div>
+    <div class="experience">
       {professional.map((item) => (
-        <article data-reveal>
-          <span>{item.period}</span>
-          <strong>{item.place}</strong>
+        <div class="experience-row" data-reveal>
+          <span class="experience-row__period">{item[0]}</span>
           <div>
-            <h3>{item.role}</h3>
-            <p>{item.text}</p>
+            <strong>{item[1]}</strong>
+            <h3>{item[2]}</h3>
           </div>
-        </article>
-      ))}
-    </div>
-  </section>
-
-  <section class="shell section workstyle-section">
-    <div class="workstyle-lead" data-reveal>
-      <p class="eyebrow">04 / HOW I WORK</p>
-      <h2>
-        The tools are ordinary. <em>The workflow is not.</em>
-      </h2>
-      <p>
-        I use Arch every day, Vim inside VS Code, and shortcuts before the mouse. None of that is a
-        personality test. It is just the environment I have spent enough time in that the interface
-        gets out of the way.
-      </p>
-    </div>
-    <div class="workstyle-table" data-reveal>
-      {workStyle.map((row) => (
-        <div>
-          <span>{row[0]}</span>
-          <strong>{row[1]}</strong>
+          <p>{item[3]}</p>
         </div>
       ))}
     </div>
   </section>
 
-  <section class="shell section">
-    <SectionHeading
-      index="05"
-      title="Programs and recognition"
-      note="useful context, not trophies"
-    />
-    <div class="program-list">
+  <section class="shell section" style="padding-top:0">
+    <div class="split-heading">
+      <div>
+        <p class="eyebrow eyebrow--violet">04 / HOW I WORK</p>
+        <h2>
+          The tools are ordinary. <em class="display-serif">The workflow isn't.</em>
+        </h2>
+      </div>
+      <div>
+        <p style="color:var(--muted);max-width:54ch">
+          I use Arch Linux every day, Vim inside VS Code, and shortcuts before the mouse. None of
+          that is a manifesto. I just like an environment that stays out of the way.
+        </p>
+        <div class="experience" style="margin-top:1.2rem">
+          {workStyle.map((row) => (
+            <div class="experience-row" style="grid-template-columns:110px 1fr">
+              <span class="experience-row__period">{row[0]}</span>
+              <strong>{row[1]}</strong>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="shell section" style="padding-top:0">
+    <div class="section-head">
+      <div class="section-head__left">
+        <span class="section-head__number">05</span>
+        <h2>Programs & recognition</h2>
+      </div>
+      <div class="section-head__right">
+        <span>context, not trophies</span>
+      </div>
+    </div>
+    <div class="experience">
       {programs.map((item) => (
-        <article data-reveal>
-          <span>PROGRAM</span>
-          <strong>{item.label}</strong>
-          <p>{item.text}</p>
-        </article>
+        <div class="experience-row" data-reveal>
+          <span class="experience-row__period">PROGRAM</span>
+          <strong>{item[0]}</strong>
+          <p>{item[1]}</p>
+        </div>
       ))}
     </div>
   </section>
 
-  <section class="shell section">
-    <SectionHeading index="06" title="Things I keep alive" note="public homes" />
-    <div class="maintain-grid">
-      <div>
-        <span>ORGANIZATIONS</span>
-        {site.organizations.map((item) => (
-          <a href={item.href} target="_blank" rel="noreferrer">
-            {item.label} ↗
-          </a>
-        ))}
+  <section class="shell section" style="padding-top:0">
+    <div class="section-head">
+      <div class="section-head__left">
+        <span class="section-head__number">06</span>
+        <h2>Elsewhere</h2>
       </div>
-      <div>
-        <span>OPEN SOURCE</span>
-        <a href="https://github.com/qasimio/foldr" target="_blank" rel="noreferrer">
-          FOLDR · maintainer ↗
-        </a>
-        <a href="https://github.com/qasimio" target="_blank" rel="noreferrer">
-          Other repositories ↗
-        </a>
+      <div class="section-head__right">
+        <span>the rest of the internet</span>
       </div>
     </div>
-  </section>
-
-  <section class="shell section">
-    <SectionHeading index="07" title="Elsewhere" note="the rest of the internet" />
-    <div class="elsewhere-grid">
-      <div>
+    <div class="link-matrix">
+      <div class="link-column">
         <span>PRIMARY</span>
         {site.socials.slice(0, 4).map((item) => (
           <a href={item.href} target="_blank" rel="noreferrer">
-            {item.label} ↗
+            <span>{item.label}</span>
+            <span>↗</span>
           </a>
         ))}
       </div>
-      <div>
-        <span>SECONDARY</span>
+      <div class="link-column">
+        <span>MORE</span>
         {site.socials.slice(4).map((item) => (
           <a href={item.href} target="_blank" rel="noreferrer">
-            {item.label} ↗
+            <span>{item.label}</span>
+            <span>↗</span>
           </a>
         ))}
       </div>
     </div>
-  </section>
-
-  <section class="shell closing-section">
-    <p class="eyebrow eyebrow--violet">08 / NEXT</p>
-    <h2>
-      Building deeper systems. <em>Learning how to reach people.</em>
-    </h2>
-    <a class="button button--primary" data-magnetic="7" href="/contact/">
-      Talk to me <span>↗</span>
-    </a>
   </section>
 </Base>

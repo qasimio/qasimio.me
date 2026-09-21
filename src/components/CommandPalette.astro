@@ -2,40 +2,34 @@
 import { commandItems } from '../data/site';
 ---
 
-<div class="command" data-command hidden>
-  <button
-    class="command__backdrop"
-    type="button"
-    data-command-close
-    aria-label="Close command palette"
-  ></button>
-  <section class="command__panel" role="dialog" aria-modal="true" aria-label="Quick navigation">
-    <div class="command__search">
-      <span>⌕</span>
-      <input
-        data-command-input
-        autocomplete="off"
-        placeholder="Search the site…"
-        aria-label="Search the site"
-      />
-      <kbd>ESC</kbd>
-    </div>
-    <div class="command__results" role="listbox">
-      {commandItems.map((item) => (
-        <a
-          data-command-item
-          data-command-search={`${item.label} ${item.group}`}
-          href={item.href}
-          {...(item.external ? { target: '_blank', rel: 'noreferrer' } : {})}
-        >
-          <span>
-            <small>{item.group}</small>
-            {item.label}
-          </span>
-          <b>↗</b>
-        </a>
-      ))}
-    </div>
-    <footer class="command__footer">↑ ↓ move · Enter open · Esc close</footer>
-  </section>
+<div class="command-backdrop" data-command-backdrop hidden data-command-close></div>
+<div
+  class="command"
+  data-command-panel
+  hidden
+  role="dialog"
+  aria-modal="true"
+  aria-label="Command palette"
+>
+  <div class="command__search">
+    <input data-command-input type="search" placeholder="Go somewhere…" autocomplete="off" />
+  </div>
+  <div class="command__items">
+    {commandItems.map((item) => (
+      <button
+        class="command__item"
+        type="button"
+        data-command-item
+        data-href={item.href}
+        data-external={item.external ? 'true' : 'false'}
+      >
+        <span>{item.label}</span>
+        <small>{item.external ? '↗' : 'open'}</small>
+      </button>
+    ))}
+  </div>
+  <div class="command__hint">
+    <span>↑ ↓ navigate</span>
+    <span>↵ open · esc close</span>
+  </div>
 </div>

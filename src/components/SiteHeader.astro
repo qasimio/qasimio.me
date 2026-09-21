@@ -8,19 +8,18 @@ const links = [
 ];
 ---
 
-<header class="site-header" data-header>
-  <div class="site-header__inner shell">
+<header class="site-header">
+  <div class="shell site-header__inner">
     <a class="brand" href="/" aria-label="Qasim Sethar home">
       <span class="brand__mark">
         <img src={mark} alt="" />
       </span>
       <span class="brand__text">
         <strong>Qasim Sethar</strong>
-        <span>qasimio</span>
+        <span>/ qasimio</span>
       </span>
     </a>
-
-    <nav class="site-nav" aria-label="Primary">
+    <nav class="site-nav" aria-label="Primary navigation">
       {links.map((link) => {
         const active =
           pathname === link.href || (pathname.startsWith(link.href) && link.href !== '/');
@@ -31,29 +30,20 @@ const links = [
         );
       })}
     </nav>
-
     <div class="header-tools">
       <button
-        class="header-command"
+        class="header-tool header-command"
         type="button"
         data-command-open
         aria-label="Open command palette"
       >
-        <span>⌘K</span>
-        <kbd>command</kbd>
+        Ctrl K
       </button>
-      <button
-        class="theme-toggle"
-        type="button"
-        data-theme-toggle
-        aria-label="Toggle light and dark mode"
-      >
-        <span class="theme-toggle__orb" data-theme-icon>
-          ◐
-        </span>
+      <button class="header-tool" type="button" data-theme-toggle aria-label="Toggle theme">
+        <span data-theme-label>Light</span>
       </button>
-      <a class="header-contact" href="/contact/">
-        Contact <span>↗</span>
+      <a class="header-tool header-tool--accent" href="/contact/">
+        Talk ↗
       </a>
       <button
         class="menu-button"
@@ -66,9 +56,8 @@ const links = [
       </button>
     </div>
   </div>
-
   <div class="mobile-menu" id="mobile-menu" data-mobile-menu hidden>
-    <div class="mobile-menu__inner shell">
+    <div class="shell mobile-menu__inner">
       {links.map((link) => (
         <a href={link.href}>
           {link.label}

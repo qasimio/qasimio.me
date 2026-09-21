@@ -1,17 +1,8 @@
 {
-  "name": "Qasim Sethar — qasimio",
-  "short_name": "qasimio",
+  "name": "Qasim Sethar",
+  "short_name": "Qasim",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#0a1515",
-  "theme_color": "#0a1515",
-  "description": "Software, products, systems, and notes by Qasim Sethar.",
-  "icons": [
-    {
-      "src": "/favicon.svg",
-      "sizes": "64x64",
-      "type": "image/svg+xml",
-      "purpose": "any"
-    }
-  ]
+  "background_color": "#071114",
+  "theme_color": "#071114"
 }

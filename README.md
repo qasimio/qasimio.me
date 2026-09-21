@@ -1,8 +1,6 @@
 # qasimio.me
 
-The personal site of Qasim Sethar.
-
-This is deliberately not a portfolio template. It is a small, static-first publishing system for work, notes, essays, and the evidence around projects that shipped.
+Personal site for Qasim Sethar, built as a long-lived personal publishing system rather than a portfolio template.
 
 ## Stack
 
@@ -10,36 +8,17 @@ This is deliberately not a portfolio template. It is a small, static-first publi
 - TypeScript
 - Tailwind CSS 4.3.3
 - MDX
-- Plus Jakarta Sans / Newsreader / IBM Plex Mono
+- Manrope + Source Serif 4 + IBM Plex Mono
 - Vercel
+- pnpm 11.21.0 / Node 24
 
-## Structure
+## Content
 
-```text
-src/
-├── components/
-├── layouts/
-├── data/
-│   ├── projects/
-│   ├── notes/
-│   └── essays/
-├── pages/
-└── styles/
-```
+- `src/data/projects` — project case studies
+- `src/data/notes` — short-form journal entries
+- `src/data/essays` — long-form writing
+- `src/data/site.ts` — site identity and structured homepage data
 
-## Commands
+## Principles
 
-```bash
-pnpm install
-pnpm run dev
-pnpm run check
-pnpm run format
-pnpm run format:check
-pnpm run build
-```
-
-## Content rules
-
-Projects are evidence. Notes are fragments. Essays are for ideas that cannot be said briefly.
-
-Do not publish invented metrics, credentials, testimonials, users, or results.
+The site is intentionally static-first. It uses motion and interaction to improve orientation and feedback, not as decoration. Work pages prioritize problem, decisions, proof, and outcome over technology lists.

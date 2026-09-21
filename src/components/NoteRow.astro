@@ -2,26 +2,27 @@
 import type { CollectionEntry } from 'astro:content';
 interface Props {
   entry: CollectionEntry<'notes'>;
-  featured?: boolean;
 }
-const { entry, featured = false } = Astro.props;
+const { entry } = Astro.props;
 const date = entry.data.publishedAt.toLocaleDateString('en-US', {
   month: 'short',
-  day: 'numeric',
+  day: '2-digit',
   year: 'numeric',
 });
 ---
 
-<a
-  class:list={['note-row', { 'note-row--featured': featured }]}
-  href={`/journal/notes/${entry.id}/`}
-  data-reveal
->
-  <time datetime={entry.data.publishedAt.toISOString()}>{date}</time>
-  <div class="note-row__body">
-    <div class="note-row__type">{entry.data.type}</div>
+<a class="note-row" href={`/journal/notes/${entry.id}/`} data-reveal>
+  <time class="note-row__date" datetime={entry.data.publishedAt.toISOString()}>
+    {date}
+  </time>
+  <div class="note-row__main">
+    <div class="note-row__meta">
+      <b>{entry.data.type}</b>
+      <span>·</span>
+      <span>{entry.data.tags.slice(0, 3).join(' · ')}</span>
+    </div>
     <h3>{entry.data.title}</h3>
-    <p>{entry.data.excerpt}</p>
+    <p class="note-row__excerpt">{entry.data.excerpt}</p>
   </div>
   <span class="note-row__arrow">↗</span>
 </a>

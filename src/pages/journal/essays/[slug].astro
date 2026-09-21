@@ -2,12 +2,10 @@
 import { getCollection, render } from 'astro:content';
 import type { CollectionEntry } from 'astro:content';
 import Base from '../../../layouts/Base.astro';
-
 export async function getStaticPaths() {
   const essays = await getCollection('essays', ({ data }) => !data.draft);
   return essays.map((entry) => ({ params: { slug: entry.id }, props: { entry } }));
 }
-
 interface Props {
   entry: CollectionEntry<'essays'>;
 }
@@ -15,42 +13,19 @@ const { entry } = Astro.props;
 const { Content } = await render(entry);
 ---
 
-<Base title={`${entry.data.title} — Journal`} description={entry.data.description}>
-  <article class="shell note-page">
-    <div class="note-page__top">
-      <span>JOURNAL / ESSAY</span>
-      <time datetime={entry.data.publishedAt.toISOString()}>
-        {entry.data.publishedAt.toLocaleDateString('en-US', {
-          month: 'long',
-          day: 'numeric',
-          year: 'numeric',
-        })}
-      </time>
+<Base title={`${entry.data.title} — Qasim Sethar`} description={entry.data.description}>
+  <article class="narrow page-hero">
+    <div class="page-hero__top">
+      <span>
+        {entry.data.publishedAt.toLocaleDateString('en-US', { month: 'short', year: 'numeric' })}
+      </span>
+      <span>ESSAY</span>
     </div>
-    <header class="note-page__head">
-      <p class="eyebrow eyebrow--violet">ESSAY</p>
-      <h1>{entry.data.title}</h1>
-      <p>{entry.data.description}</p>
-      {entry.data.tags.length > 0 && (
-        <div class="note-page__tags">
-          {entry.data.tags.map((tag) => (
-            <span>#{tag}</span>
-          ))}
-        </div>
-      )}
-    </header>
-    <div class="note-page__body">
-      <div class="prose">
-        <Content />
-      </div>
+    <p class="eyebrow eyebrow--violet">LONGER VERSION</p>
+    <h1>{entry.data.title}</h1>
+    <p class="page-hero__lede">{entry.data.description}</p>
+    <div class="prose" style="max-width:780px;margin-top:3rem">
+      <Content />
     </div>
-    <footer class="note-page__footer">
-      <a class="text-link" href="/journal/">
-        ← Journal
-      </a>
-      <a class="text-link" href="/journal/rss.xml">
-        RSS ↗
-      </a>
-    </footer>
   </article>
 </Base>

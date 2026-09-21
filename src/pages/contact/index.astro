@@ -1,35 +1,46 @@
 ---
 import Base from '../../layouts/Base.astro';
-import ContactForm from '../../components/ContactForm.astro';
 ---
 
-<Base
-  title="Contact — Qasim Sethar"
-  description="Contact Qasim Sethar about software, products, systems, collaborations, or difficult technical problems."
->
-  <section class="shell contact-page">
-    <div class="page-hero__meta">
+<Base title="Contact — Qasim Sethar" description="Get in touch with Qasim Sethar.">
+  <section class="shell page-hero">
+    <div class="page-hero__top">
       <span>04 / CONTACT</span>
-      <span>OPEN CHANNEL</span>
+      <span>HELLO@QASIMIO.ME</span>
     </div>
     <div class="contact-grid">
-      <div data-reveal>
-        <p class="eyebrow eyebrow--coral">TALK TO ME</p>
+      <div>
+        <p class="eyebrow eyebrow--coral">LET'S TALK</p>
         <h1>
-          Bring the weird <em>problem.</em>
+          Bring me the <em>strange one.</em>
         </h1>
-        <p class="page-hero__lede">
-          A product idea. A difficult system. A collaboration. Something you have tried three times
-          already and still hate.
+        <p class="contact-copy">
+          A hard technical problem. A product you are trying to make real. An open-source thing that
+          needs another pair of eyes. Or just a good conversation.
         </p>
-        <div class="contact-direct">
-          <a href="mailto:hello@qasimio.me">hello@qasimio.me ↗</a>
-          <span>Sukkur, Pakistan · UTC+5</span>
+      </div>
+      <form class="contact-form" data-contact-form>
+        <div class="form-row">
+          <div class="field">
+            <label for="name">Your name</label>
+            <input id="name" name="name" autocomplete="name" required />
+          </div>
+          <div class="field">
+            <label for="email">Email</label>
+            <input id="email" name="email" type="email" autocomplete="email" required />
+          </div>
         </div>
-      </div>
-      <div data-reveal>
-        <ContactForm />
-      </div>
+        <div class="field">
+          <label for="message">What are you building?</label>
+          <textarea id="message" name="message" rows="7" required></textarea>
+        </div>
+        <div class="form-footer">
+          <small>The form opens your mail client. Your address never leaves this page.</small>
+          <button class="button button--primary" type="submit">
+            Compose email ↗
+          </button>
+        </div>
+      </form>
     </div>
   </section>
 </Base>

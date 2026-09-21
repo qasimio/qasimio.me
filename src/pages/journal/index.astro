@@ -9,15 +9,13 @@ const notes = (await getCollection('notes', ({ data }) => !data.draft)).sort(
 const essays = (await getCollection('essays', ({ data }) => !data.draft)).sort(
   (a, b) => b.data.publishedAt.getTime() - a.data.publishedAt.getTime(),
 );
-const filterTypes = ['all', ...new Set(notes.map((entry) => entry.data.type))];
+const types = ['all', ...new Set(notes.map((entry) => entry.data.type))];
+const years = [...new Set(notes.map((entry) => entry.data.publishedAt.getFullYear()))];
 ---
 
-<Base
-  title="Journal — Qasim Sethar"
-  description="Short notes, build logs, observations, achievements, and longer writing from Qasim Sethar."
->
-  <section class="shell page-hero journal-hero">
-    <div class="page-hero__meta">
+<Base title="Journal — Qasim Sethar" description="Notes and longer writing from Qasim Sethar.">
+  <section class="shell page-hero">
+    <div class="page-hero__top">
       <span>02 / JOURNAL</span>
       <span>NOTES + ESSAYS</span>
     </div>
@@ -26,66 +24,72 @@ const filterTypes = ['all', ...new Set(notes.map((entry) => entry.data.type))];
       Things I don't want to <em>forget.</em>
     </h1>
     <p class="page-hero__lede">
-      Short things I ship, notice, learn, break, argue with, or keep thinking about after the screen
-      goes dark.
+      Short things from building, shipping, breaking, learning, and noticing something before the
+      internet moves on.
     </p>
   </section>
-
-  <section class="shell section journal-list-section">
-    <div class="section-heading">
-      <div class="section-heading__left">
-        <span>01</span>
+  <section class="shell section" style="padding-top:2rem">
+    <div class="section-head">
+      <div class="section-head__left">
+        <span class="section-head__number">01</span>
         <h2>Notes</h2>
       </div>
-      <div class="section-heading__right">
+      <div class="section-head__right">
         <a href="/journal/rss.xml">RSS ↗</a>
       </div>
     </div>
-    <div class="journal-filters">
-      {filterTypes.map((type, index) => (
-        <button type="button" data-note-filter={type} aria-pressed={index === 0}>
+    <div class="filter-bar">
+      {types.map((type, i) => (
+        <button type="button" data-note-filter={type} aria-pressed={i === 0}>
           {type.replace('-', ' ')}
         </button>
       ))}
     </div>
-    <div class="note-list note-list--full">
-      {notes.map((entry) => (
-        <div data-note-item data-note-type={entry.data.type}>
-          <NoteRow entry={entry} />
+    {years.map((year) => (
+      <div class="journal-year">
+        <div class="journal-year__year">{year}</div>
+        <div class="note-list" style="border-top:0">
+          {notes
+            .filter((entry) => entry.data.publishedAt.getFullYear() === year)
+            .map((entry) => (
+              <div data-note-item data-note-type={entry.data.type}>
+                <NoteRow entry={entry} />
+              </div>
+            ))}
         </div>
-      ))}
-    </div>
+      </div>
+    ))}
   </section>
-
-  <section class="shell section essays-section">
-    <div class="section-heading">
-      <div class="section-heading__left">
-        <span>02</span>
+  <section class="shell section" style="padding-top:2rem">
+    <div class="section-head">
+      <div class="section-head__left">
+        <span class="section-head__number">02</span>
         <h2>Essays</h2>
       </div>
-      <div class="section-heading__right">
-        <span>{essays.length ? 'longer reads' : 'no forced publishing'}</span>
+      <div class="section-head__right">
+        <span>{essays.length ? 'when the short version breaks' : 'nothing forced'}</span>
       </div>
     </div>
     {essays.length ? (
-      <div class="essay-list">
+      <div class="essay-grid">
         {essays.map((entry) => (
-          <a href={`/journal/essays/${entry.id}/`}>
-            <span>
+          <a class="essay-card" href={`/journal/essays/${entry.id}/`}>
+            <small>
               {entry.data.publishedAt.toLocaleDateString('en-US', {
                 month: 'short',
                 year: 'numeric',
               })}
-            </span>
-            <h3>{entry.data.title}</h3>
-            <p>{entry.data.description}</p>
-            <b>↗</b>
+            </small>
+            <div>
+              <h3>{entry.data.title}</h3>
+              <p>{entry.data.description}</p>
+            </div>
           </a>
         ))}
       </div>
     ) : (
-      <div class="empty-writing">
-        <p>I will write something long when the short version stops being enough.</p>
+      <div class="narrow" style="padding:2rem 0;color:var(--muted)">
+        I will write something long when the short version stops being enough.
       </div>
     )}
   </section>

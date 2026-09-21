@@ -6,52 +6,45 @@ interface Props {
   featured?: boolean;
 }
 const { entry, featured = false } = Astro.props;
-const statusText = entry.data.status === 'active' ? 'in progress' : entry.data.status;
+const status =
+  entry.data.status === 'active' || entry.data.status === 'ongoing'
+    ? 'in progress'
+    : entry.data.status;
 ---
 
-<article class:list={['project-card', { 'project-card--featured': featured }]} data-reveal>
+<article class:list={['work-card', { 'work-card--hero': featured }]} data-reveal>
   <a
+    class="work-card__media"
     href={`/work/${entry.id}/`}
-    class="project-card__visual"
     aria-label={`Open ${entry.data.title} case study`}
   >
     <ProjectVisual slug={entry.data.visual} />
   </a>
-
-  <div class="project-card__content">
-    <div class="project-card__eyebrow">
-      <span>{entry.data.year}</span>
-      <span>{entry.data.type.replace('-', ' ')}</span>
-      <span class="status">
-        <i></i>
-        {statusText}
+  <div class="work-card__body">
+    <div class="work-card__meta">
+      <span>
+        {entry.data.year} · {entry.data.type.replace('-', ' ')}
       </span>
+      <span>{status}</span>
     </div>
-
-    <div class="project-card__title-row">
-      <a href={`/work/${entry.id}/`}>
-        <h3>{entry.data.title}</h3>
-      </a>
-      <span class="project-card__arrow">↗</span>
-    </div>
-
+    <h3>
+      <a href={`/work/${entry.id}/`}>{entry.data.title}</a>
+    </h3>
     <p>{entry.data.summary}</p>
-
     {entry.data.proof.length > 0 && (
-      <div class="project-card__proof">
+      <div class="work-card__proof">
         {entry.data.proof.slice(0, 3).map((item) => (
           <span>
             <strong>{item.value}</strong>
-            {item.label}
+            <small>{item.label}</small>
           </span>
         ))}
       </div>
     )}
-
-    <div class="project-card__footer">
-      <span>{entry.data.tags.slice(0, 4).join(' · ')}</span>
-      <a href={`/work/${entry.id}/`}>
-        Read the case <span>↗</span>
+    <div class="work-card__bottom">
+      <span class="tags">{entry.data.tags.slice(0, 4).join(' · ')}</span>
+      <a class="text-link" href={`/work/${entry.id}/`}>
+        Case study <span>↗</span>
       </a>
     </div>
   </div>

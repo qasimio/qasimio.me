@@ -3,14 +3,21 @@ import Base from '../layouts/Base.astro';
 ---
 
 <Base title="404 — Qasim Sethar" noIndex>
-  <section class="shell error-page">
-    <p class="eyebrow eyebrow--coral">404 / WRONG TURN</p>
+  <section class="shell page-hero">
+    <div class="page-hero__top">
+      <span>404</span>
+      <span>NOT FOUND</span>
+    </div>
+    <p class="eyebrow eyebrow--coral">WRONG DOOR</p>
     <h1>
-      This page <em>escaped.</em>
+      That page isn't <em>here.</em>
     </h1>
-    <p>The URL is wrong, the page moved, or the internet decided to be the internet.</p>
+    <p class="page-hero__lede">
+      The link may be old, the route may have moved, or the internet has once again misplaced
+      something.
+    </p>
     <a class="button button--primary" href="/">
-      Back home <span>↗</span>
+      Back home ↗
     </a>
   </section>
 </Base>

@@ -6,70 +6,50 @@ interface Props {
 const { slug, mode = 'card' } = Astro.props;
 ---
 
-<div
-  class:list={['project-visual', `project-visual--${slug}`, `project-visual--${mode}`]}
-  aria-hidden="true"
->
+<div class:list={['visual', `visual--${slug}`, `visual--${mode}`]} aria-hidden="true">
   {slug === 'foldr' && (
-    <div class="visual-shell visual-foldr">
-      <div class="visual-top">
-        <span>FOLDR / PREVIEW</span>
-        <b>READY</b>
+    <div class="window">
+      <div class="window__bar">
+        <i class="window__dot"></i>
+        <i class="window__dot"></i>
+        <i class="window__dot"></i>
+        <span class="window__title">FOLDR / PREVIEW</span>
       </div>
-      <div class="visual-list">
+      <div class="window__rows">
         {['Screenshots', 'Documents', 'Downloads', 'Duplicates'].map((item, i) => (
-          <div>
+          <div class="window__row">
             <small>0{i + 1}</small>
-            <strong>{item}</strong>
+            <b>{item}</b>
             <span>{i === 3 ? 'review' : 'ready'}</span>
           </div>
         ))}
       </div>
-      <div class="visual-bottom">
+      <div class="window__footer">
         <b>12 planned operations</b>
         <span>undo ready</span>
       </div>
     </div>
   )}
   {slug === 'engram' && (
-    <div class="visual-shell visual-engram">
-      <div class="visual-top">
-        <span>ENGRAM / RETRIEVAL</span>
-        <b>GROUNDED</b>
-      </div>
-      <div class="engram-map">
-        <i class="engram-center">E</i>
-        {['DOCUMENT', 'MEMORY', 'QUERY', 'SOURCE', 'ANSWER'].map((label, i) => (
-          <span class={`engram-node engram-node--${i}`}>{label}</span>
-        ))}
-        <i class="engram-line l1"></i>
-        <i class="engram-line l2"></i>
-        <i class="engram-line l3"></i>
-        <i class="engram-line l4"></i>
-        <i class="engram-line l5"></i>
-      </div>
-      <div class="visual-bottom">
-        <b>retrieve</b>
-        <span>→ rerank → ground → answer</span>
-      </div>
+    <div class="engram-orbit">
+      <span class="engram-core">E</span>
+      <span class="engram-node engram-node--a">documents</span>
+      <span class="engram-node engram-node--b">memory</span>
+      <span class="engram-node engram-node--c">query</span>
+      <span class="engram-node engram-node--d">answer</span>
     </div>
   )}
   {slug === 'operon' && (
-    <div class="visual-shell visual-operon">
-      <div class="visual-top">
+    <div class="operon-terminal">
+      <div class="operon-bar">
         <span>OPERON / VERIFY</span>
-        <b>DISK = TRUTH</b>
+        <span style="margin-left:auto">DISK = TRUTH</span>
       </div>
-      <div class="visual-code">
-        <span>
-          rename_symbol(<em>"old_name"</em>)
-        </span>
-        <i>→</i>
-        <strong>
-          rename_symbol(<em>"new_name"</em>)
-        </strong>
+      <div class="operon-line">
+        <em>rename_symbol</em>(<strong>"old_name"</strong>) → <em>rename_symbol</em>(
+        <strong>"new_name"</strong>)
       </div>
-      <div class="visual-checks">
+      <div class="operon-checks">
         <div>
           <small>AST</small>
           <b>PASS</b>
@@ -86,83 +66,83 @@ const { slug, mode = 'card' } = Astro.props;
     </div>
   )}
   {slug === 'slot-finder' && (
-    <div class="visual-shell visual-slot">
-      <div class="visual-top">
-        <span>SLOT FINDER</span>
-        <b>FALL 2026</b>
+    <div class="window">
+      <div class="window__bar">
+        <i class="window__dot"></i>
+        <i class="window__dot"></i>
+        <i class="window__dot"></i>
+        <span class="window__title">SLOT FINDER / FALL 2026</span>
       </div>
-      <div class="slot-search">
-        <span>CS-301</span>
-        <i>⌕</i>
-      </div>
-      <div class="slot-days">
-        {['MON', 'TUE', 'WED', 'THU', 'FRI'].map((day) => (
-          <span>{day}</span>
-        ))}
-      </div>
-      <div class="slot-result slot-result--one">
-        <b>CS-301</b>
-        <span>10:00 · Lab 2</span>
-      </div>
-      <div class="slot-result slot-result--two">
-        <b>CS-326</b>
-        <span>13:00 · Room 14</span>
+      <div class="window__rows">
+        <div class="window__row">
+          <small>SEARCH</small>
+          <b>CS-301</b>
+          <span>found</span>
+        </div>
+        <div class="window__row">
+          <small>ROOM</small>
+          <b>Lab 2</b>
+          <span>10:00</span>
+        </div>
+        <div class="window__row">
+          <small>SECTION</small>
+          <b>CS-B</b>
+          <span>today</span>
+        </div>
       </div>
     </div>
   )}
   {slug === 'siba-launchpad' && (
-    <div class="visual-shell visual-launchpad">
-      <div class="visual-top">
-        <span>IBA LAUNCHPAD</span>
-        <b>PUBLIC</b>
-      </div>
-      <div class="launchpad-map">
-        <i>LP</i>
-        <span>students</span>
-        <span>projects</span>
-        <span>github</span>
-        <span>feedback</span>
-      </div>
-      <div class="visual-bottom">
-        <b>SHOW THE WORK.</b>
-        <span>publish · discover · build</span>
-      </div>
+    <div class="engram-orbit">
+      <span class="engram-core">LP</span>
+      <span class="engram-node engram-node--a">students</span>
+      <span class="engram-node engram-node--b">projects</span>
+      <span class="engram-node engram-node--c">github</span>
+      <span class="engram-node engram-node--d">publish</span>
     </div>
   )}
   {slug === 'devshelf' && (
-    <div class="visual-shell visual-devshelf">
-      <div class="visual-top">
-        <span>DEVSHELF</span>
-        <b>INDEXED</b>
+    <div class="window">
+      <div class="window__bar">
+        <i class="window__dot"></i>
+        <i class="window__dot"></i>
+        <i class="window__dot"></i>
+        <span class="window__title">DEVSHELF / SEARCH</span>
       </div>
-      <div class="devshelf-query">retrieval</div>
-      <div class="devshelf-lines">
-        {[86, 68, 74, 55, 64].map((size) => (
-          <i style={`width:${size}%`}></i>
+      <div class="window__rows">
+        <div class="window__row">
+          <small>QUERY</small>
+          <b>retrieval</b>
+          <span>fast</span>
+        </div>
+        {[86, 68, 74, 55].map((width) => (
+          <div class="window__row">
+            <small>DOC</small>
+            <b
+              style={`display:block;height:6px;background:var(--violet);width:${width}%;border-radius:999px`}
+            ></b>
+            <span>rank</span>
+          </div>
         ))}
-      </div>
-      <div class="visual-bottom">
-        <span>positional inverted index</span>
-        <b>Trie</b>
       </div>
     </div>
   )}
   {slug === 'mqnotebook' && (
-    <div class="visual-shell visual-mq">
-      <div class="visual-top">
-        <span>MQNOTEBOOK</span>
-        <b>LOCAL</b>
+    <div class="window">
+      <div class="window__bar">
+        <i class="window__dot"></i>
+        <i class="window__dot"></i>
+        <i class="window__dot"></i>
+        <span class="window__title">MQNOTEBOOK / LOCAL</span>
       </div>
-      {['scan_001.pdf', 'notes.xlsx', 'slides.pptx'].map((file) => (
-        <div class="mq-file">
-          <span>◼</span>
-          {file}
-        </div>
-      ))}
-      <div class="visual-bottom">
-        <span>OCR</span>
-        <span>RERANK</span>
-        <span>RETRIEVE</span>
+      <div class="window__rows">
+        {['scan_001.pdf', 'notes.xlsx', 'slides.pptx'].map((file, i) => (
+          <div class="window__row">
+            <small>0{i + 1}</small>
+            <b>{file}</b>
+            <span>{i === 0 ? 'ocr' : 'ready'}</span>
+          </div>
+        ))}
       </div>
     </div>
   )}
