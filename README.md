@@ -1,43 +1,53 @@
-# Astro Starter Kit: Minimal
+# qasimio.me
 
-```sh
-pnpm create astro@latest -- --template minimal
+The personal site for Qasim Sethar.
+
+## Stack
+
+- Astro 7
+- TypeScript
+- Tailwind CSS 4
+- MDX
+- Vercel
+- Content Collections via Astro's Content Layer
+
+## Local development
+
+```powershell
+pnpm install
+pnpm dev
 ```
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+## Validation
 
-## 🚀 Project Structure
-
-Inside of your Astro project, you'll see the following folders and files:
-
-```text
-/
-├── public/
-├── src/
-│   └── pages/
-│       └── index.astro
-└── package.json
+```powershell
+pnpm run check
+pnpm run format:check
+pnpm run build
 ```
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
+## Content
 
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
+Projects live in `src/data/projects/`.
 
-Any static assets, like images, can be placed in the `public/` directory.
+Short-form notes live in `src/data/notes/`.
 
-## 🧞 Commands
+Long-form writing lives in `src/data/essays/`.
 
-All commands are run from the root of the project, from a terminal:
+The schemas are defined in `src/content.config.ts`.
 
-| Command                | Action                                           |
-| :--------------------- | :----------------------------------------------- |
-| `pnpm install`         | Installs dependencies                            |
-| `pnpm dev`             | Starts local dev server at `localhost:4321`      |
-| `pnpm build`           | Build your production site to `./dist/`          |
-| `pnpm preview`         | Preview your build locally, before deploying     |
-| `pnpm astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `pnpm astro -- --help` | Get help using the Astro CLI                     |
+## Routes
 
-## 👀 Want to learn more?
+- `/` home
+- `/work/` projects
+- `/work/[slug]/` case studies
+- `/journal/` notes + essays
+- `/journal/notes/[slug]/` short-form posts
+- `/journal/essays/[slug]/` long-form posts
+- `/about/` person, milestones, contact
+- `/resume.pdf` résumé
+- `/journal/rss.xml` RSS feed for notes
 
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+## Deployment
+
+The site is static and deploys to Vercel. Add `qasimio.me` only after the new production deployment has been verified.

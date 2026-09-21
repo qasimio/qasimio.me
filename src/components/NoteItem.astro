@@ -1,0 +1,27 @@
+---
+interface Props {
+  entry: any;
+}
+const { entry } = Astro.props;
+const date = entry.data.publishedAt
+  ? entry.data.publishedAt.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })
+  : 'Recent';
+---
+<a
+  href={`/journal/notes/${entry.id}/`}
+  class="note-item"
+  data-note-item
+  data-type={entry.data.type}
+  data-tags={entry.data.tags.join(',')}
+  data-reveal
+>
+  <span class="note-item__date">{date}</span>
+  <div class="note-item__main">
+    <span class="note-item__type">{entry.data.type}</span>
+    <h3>{entry.data.title}</h3>
+    <div class="note-item__tags">
+      {entry.data.tags.slice(0, 3).map((tag: string) => <span>#{tag}</span>)}
+    </div>
+  </div>
+  <span class="note-item__arrow">↗</span>
+</a>

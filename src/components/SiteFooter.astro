@@ -1,0 +1,30 @@
+---
+import { site } from '../data/site';
+---
+<footer class="site-footer">
+  <div class="site-shell">
+    <div class="footer-cta" data-reveal>
+      <p class="eyebrow">Open channel</p>
+      <h2>Have something<br /><em>worth building?</em></h2>
+      <a class="footer-email" href={`mailto:${site.email}`}>
+        <span>{site.email}</span><span class="arrow">↗</span>
+      </a>
+    </div>
+
+    <div class="footer-grid">
+      <div>
+        <p class="footer-kicker">QASIM SETHAR</p>
+        <p class="footer-note">Software, products, systems, and communities.</p>
+      </div>
+      <div class="footer-links">
+        {site.socials.map((item) => (
+          <a href={item.href} target="_blank" rel="noreferrer">{item.label}</a>
+        ))}
+      </div>
+      <div class="footer-meta">
+        <a href="/resume.pdf">Résumé ↗</a>
+        <span>© {new Date().getFullYear()} Qasim Sethar</span>
+      </div>
+    </div>
+  </div>
+</footer>

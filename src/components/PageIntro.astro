@@ -1,0 +1,13 @@
+---
+interface Props {
+  eyebrow: string;
+  title: string;
+  body?: string;
+}
+const { eyebrow, title, body } = Astro.props;
+---
+<section class="page-intro site-shell" data-reveal>
+  <p class="eyebrow">{eyebrow}</p>
+  <h1 set:html={title} transition:animate="slide" />
+  {body && <p class="page-intro__body">{body}</p>}
+</section>

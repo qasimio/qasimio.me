@@ -1,0 +1,72 @@
+---
+import { getCollection, render } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import ProjectVisual from '../../components/ProjectVisual.astro';
+import { site } from '../../data/site';
+
+export async function getStaticPaths() {
+  const projects = await getCollection('projects');
+  return projects.map((entry) => ({ params: { slug: entry.id }, props: { entry } }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+---
+<Base title={`${entry.data.title} — Qasim Sethar`} description={entry.data.summary}>
+  <article class="project-page site-shell">
+    <header class="project-page__hero" data-reveal>
+      <div class="project-page__meta-row">
+        <span class="project-page__meta">{String(entry.data.year)}</span>
+        <span class="project-page__meta">{entry.data.type.replace('-', ' ')}</span>
+        <span class="project-page__meta">{entry.data.status}</span>
+      </div>
+      <h1 transition:name={`project-${entry.id}`}>{entry.data.title}</h1>
+      <p class="project-page__summary">{entry.data.summary}</p>
+      {entry.data.links.length > 0 && (
+        <div class="project-page__links">
+          {entry.data.links.map((link: any) => (
+            <a href={link.url} target="_blank" rel="noreferrer">{link.label} ↗</a>
+          ))}
+        </div>
+      )}
+    </header>
+
+    <section class="project-page__showcase">
+      <ProjectVisual title={entry.data.title} type={entry.data.type} year={entry.data.year} status={entry.data.status} slug={entry.id} />
+      {entry.data.stats.length > 0 && (
+        <div class="project-page__stats">
+          {entry.data.stats.map((stat: any) => (
+            <div class="project-page__stat">
+              <strong>{stat.value}</strong>
+              <span>{stat.label}</span>
+            </div>
+          ))}
+        </div>
+      )}
+    </section>
+
+    <div class="project-page__body">
+      <div class="prose"><Content /></div>
+      <aside class="project-page__aside">
+        <div class="project-page__aside-card">
+          <span class="eyebrow">Role</span>
+          <p>{entry.data.role ?? 'Builder'}</p>
+        </div>
+        <div class="project-page__aside-card">
+          <span class="eyebrow">Tags</span>
+          <p>{entry.data.tags.join(' · ')}</p>
+        </div>
+        {entry.data.pullQuote && (
+          <div class="project-page__aside-card">
+            <span class="eyebrow">The idea</span>
+            <p>{entry.data.pullQuote}</p>
+          </div>
+        )}
+        <div class="project-page__aside-card">
+          <span class="eyebrow">Elsewhere</span>
+          <p><a href={`mailto:${site.email}`}>Ask me about it ↗</a></p>
+        </div>
+      </aside>
+    </div>
+  </article>
+</Base>

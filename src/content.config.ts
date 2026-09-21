@@ -2,6 +2,16 @@ import { defineCollection } from 'astro:content';
 import { glob } from 'astro/loaders';
 import { z } from 'astro/zod';
 
+const link = z.object({
+  label: z.string(),
+  url: z.string().url(),
+});
+
+const stat = z.object({
+  value: z.string(),
+  label: z.string(),
+});
+
 const projects = defineCollection({
   loader: glob({
     pattern: '**/*.{md,mdx}',
@@ -16,8 +26,10 @@ const projects = defineCollection({
     featured: z.boolean().default(false),
     order: z.number().int().default(0),
     tags: z.array(z.string()).default([]),
-    liveUrl: z.string().url().optional(),
-    repoUrl: z.string().url().optional(),
+    role: z.string().optional(),
+    links: z.array(link).default([]),
+    stats: z.array(stat).default([]),
+    pullQuote: z.string().optional(),
   }),
 });
 
@@ -28,8 +40,9 @@ const notes = defineCollection({
   }),
   schema: z.object({
     title: z.string(),
-    publishedAt: z.coerce.date(),
+    publishedAt: z.coerce.date().optional(),
     type: z.enum(['update', 'achievement', 'observation', 'build', 'link']),
+    order: z.number().int().default(0),
     tags: z.array(z.string()).default([]),
     draft: z.boolean().default(false),
     externalUrl: z.string().url().optional(),
@@ -44,7 +57,8 @@ const essays = defineCollection({
   schema: z.object({
     title: z.string(),
     description: z.string(),
-    publishedAt: z.coerce.date(),
+    publishedAt: z.coerce.date().optional(),
+    order: z.number().int().default(0),
     tags: z.array(z.string()).default([]),
     draft: z.boolean().default(false),
   }),

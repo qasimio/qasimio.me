@@ -1,0 +1,54 @@
+---
+const pathname = Astro.url.pathname;
+const links = [
+  { label: 'Work', href: '/work/' },
+  { label: 'Journal', href: '/journal/' },
+  { label: 'About', href: '/about/' },
+];
+---
+<header class="site-header" data-site-header>
+  <div class="site-shell site-header__inner">
+    <a class="brand" href="/" aria-label="Qasim Sethar home" transition:name="site-brand">
+      <span class="brand__mark">MQ.</span>
+      <span class="brand__name">Qasim Sethar</span>
+    </a>
+
+    <nav class="desktop-nav" aria-label="Primary navigation">
+      {links.map((link) => (
+        <a
+          href={link.href}
+          class:list={["nav-link", { active: pathname.startsWith(link.href) }]}
+          aria-current={pathname.startsWith(link.href) ? 'page' : undefined}
+        >
+          {link.label}
+        </a>
+      ))}
+    </nav>
+
+    <div class="desktop-actions">
+      <a href="https://github.com/qasimio" class="nav-link nav-link--quiet" target="_blank" rel="noreferrer">GitHub</a>
+      <a href="mailto:hello@qasimio.me" class="nav-link nav-link--contact">Contact <span>↗</span></a>
+    </div>
+
+    <button class="menu-button" type="button" aria-expanded="false" aria-controls="mobile-menu" data-menu-toggle>
+      <span class="sr-only">Open navigation</span>
+      <span class="menu-button__lines" aria-hidden="true"><i></i><i></i></span>
+    </button>
+  </div>
+
+  <div class="mobile-menu" id="mobile-menu" hidden data-mobile-menu>
+    <div class="site-shell mobile-menu__inner">
+      {links.map((link) => (
+        <a href={link.href} class="mobile-menu__link">
+          <span>{link.label}</span><span>↗</span>
+        </a>
+      ))}
+      <a href="https://github.com/qasimio" target="_blank" rel="noreferrer" class="mobile-menu__link">
+        <span>GitHub</span><span>↗</span>
+      </a>
+      <a href="mailto:hello@qasimio.me" class="mobile-menu__link">
+        <span>Contact</span><span>↗</span>
+      </a>
+    </div>
+  </div>
+</header>

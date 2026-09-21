@@ -1,0 +1,54 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import PageIntro from '../../components/PageIntro.astro';
+import ProjectCard from '../../components/ProjectCard.astro';
+
+const projects = (await getCollection('projects')).sort((a, b) => a.data.order - b.data.order);
+const types = ['all', ...new Set(projects.map((entry) => entry.data.type))];
+---
+<Base title="Work — Qasim Sethar">
+  <PageIntro
+    eyebrow="The archive"
+    title={'Things I <em>built.</em>'}
+    body="Products, systems, experiments, and communities. Some shipped. Some are still being wrestled into existence."
+  />
+
+  <section class="site-shell" style="padding-bottom: 8rem;">
+    <div class="filters" data-project-filters>
+      {types.map((type, index) => (
+        <button class="filter-button" type="button" data-project-filter={type} aria-pressed={index === 0}>
+          {type.replace('-', ' ')}
+        </button>
+      ))}
+    </div>
+
+    <div class="project-grid" data-project-list>
+      {projects.map((entry) => <ProjectCard entry={entry} featured={entry.data.featured} />)}
+    </div>
+    <p class="filter-project-empty" data-project-empty>No projects match that filter.</p>
+  </section>
+
+  <script is:inline>
+    document.addEventListener('astro:page-load', () => {
+      const root = document.querySelector('[data-project-filters]');
+      if (!root || root.dataset.bound) return;
+      root.dataset.bound = 'true';
+      const cards = [...document.querySelectorAll('[data-project-card]')];
+      const empty = document.querySelector('[data-project-empty]');
+      root.querySelectorAll('[data-project-filter]').forEach((button) => {
+        button.addEventListener('click', () => {
+          const type = button.getAttribute('data-project-filter');
+          root.querySelectorAll('[data-project-filter]').forEach((item) => item.setAttribute('aria-pressed', String(item === button)));
+          let shown = 0;
+          cards.forEach((card) => {
+            const visible = type === 'all' || card.getAttribute('data-type') === type;
+            card.style.display = visible ? '' : 'none';
+            if (visible) shown += 1;
+          });
+          if (empty) empty.style.display = shown ? 'none' : 'block';
+        });
+      });
+    });
+  </script>
+</Base>

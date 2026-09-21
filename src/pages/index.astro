@@ -1,16 +1,97 @@
 ---
----
+import { getCollection } from 'astro:content';
+import { Image } from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import SectionHeading from '../components/SectionHeading.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+import NoteItem from '../components/NoteItem.astro';
+import StatusDot from '../components/StatusDot.astro';
+import { now, site, workbench } from '../data/site';
+import portrait from '../assets/identity/qasim-portrait.jpg';
 
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <link rel="icon" href="/favicon.ico" />
-    <meta name="viewport" content="width=device-width" />
-    <meta name="generator" content={Astro.generator} />
-    <title>Astro</title>
-  </head>
-  <body>
-    <h1>Astro</h1>
-  </body>
-</html>
+const allProjects = await getCollection('projects');
+const projects = [...allProjects].sort((a, b) => a.data.order - b.data.order);
+const featured = projects.filter((entry) => entry.data.featured).slice(0, 3);
+const notes = (await getCollection('notes', ({ data }) => !data.draft))
+  .sort((a, b) => (a.data.publishedAt?.getTime() ?? 0) - (b.data.publishedAt?.getTime() ?? 0))
+  .reverse()
+  .slice(0, 4);
+---
+<Base title="Qasim Sethar — I build things." description={site.description}>
+  <section class="hero site-shell">
+    <div class="hero__layout">
+      <div>
+        <p class="hero__eyebrow">QASIM SETHAR / QASIMIO</p>
+        <h1>I build<br /><em>things.</em></h1>
+        <div class="hero__actions">
+          <a class="button button--solid" href="/work/">Explore the work <span>↗</span></a>
+          <a class="button" href="/about/">Meet Qasim <span>↗</span></a>
+        </div>
+      </div>
+      <div class="hero__side" data-reveal>
+        <p>Software, products, systems, and communities. I tend to start with a problem that keeps bothering me and see where it goes.</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="home-rule"></div>
+  <section class="intro-strip site-shell">
+    <div class="intro-strip__inner">
+      <p class="intro-strip__copy">Not a résumé. A record of what gets built when nobody is assigning the problem.</p>
+      <div class="status"><StatusDot /> Building in public</div>
+    </div>
+  </section>
+
+  <section class="home-section site-shell">
+    <SectionHeading index="01" title="Right now" />
+    <div class="current-grid">
+      <div class="current-copy">
+        <p class="eyebrow">Current focus</p>
+        <h3>Build. Break.<br /><em>Build again.</em></h3>
+        <p>Working on Engram and Operon while growing SIBA Launchpad and shipping smaller tools whenever a problem refuses to leave me alone.</p>
+        <div class="current-proof">
+          {now.map((item) => (
+            <div class="current-proof__item">
+              <span class="current-proof__value">{item.value}</span>
+              <span class="current-proof__label">{item.label}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+      <div class="current-visual" aria-label="Engram current build visual" data-reveal>
+        <div class="current-visual__line"></div>
+        <div class="current-visual__dot"></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="home-section site-shell">
+    <SectionHeading index="02" title="Work worth seeing" linkLabel="View everything" linkHref="/work/" />
+    <div class="project-grid">
+      {featured.map((entry) => <ProjectCard entry={entry} featured />)}
+    </div>
+  </section>
+
+  <section class="home-section site-shell">
+    <SectionHeading index="03" title="Journal" linkLabel="Open the journal" linkHref="/journal/" />
+    <div class="note-list">
+      {notes.map((entry) => <NoteItem entry={entry} />)}
+    </div>
+  </section>
+
+  <section class="home-section site-shell">
+    <SectionHeading index="04" title="The person behind it" linkLabel="About Qasim" linkHref="/about/" />
+    <div class="home-about">
+      <Image src={portrait} alt="Qasim Sethar" class="home-about__photo" widths={[400]} sizes="(max-width: 960px) 100vw, 46vw" loading="lazy" />
+      <div class="home-about__copy">
+        <h2>I care about making useful things <em>real.</em></h2>
+        <p>I like difficult systems, clean interfaces, annoying problems, and the moment a project leaves the repository and enters somebody else's life.</p>
+        <div class="workbench">
+          {workbench.map(([label, value]) => (
+            <div class="workbench__row"><span class="workbench__label">{label}</span><span class="workbench__value">{value}</span></div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+</Base>

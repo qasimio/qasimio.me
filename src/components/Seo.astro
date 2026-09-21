@@ -1,0 +1,46 @@
+---
+interface Props {
+  title?: string;
+  description?: string;
+  image?: string;
+  noIndex?: boolean;
+}
+
+const {
+  title = 'Qasim Sethar',
+  description = 'Qasim Sethar builds software, products, systems, and communities around difficult problems.',
+  image = '/og.png',
+  noIndex = false,
+} = Astro.props;
+
+const canonical = new URL(Astro.url.pathname, 'https://qasimio.me').toString();
+const imageUrl = new URL(image, Astro.site ?? 'https://qasimio.me').toString();
+---
+<link rel="canonical" href={canonical} />
+<meta name="description" content={description} />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="Qasim Sethar" />
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+<meta property="og:url" content={canonical} />
+<meta property="og:image" content={imageUrl} />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content={title} />
+<meta name="twitter:description" content={description} />
+<meta name="twitter:image" content={imageUrl} />
+{noIndex && <meta name="robots" content="noindex, nofollow" />}
+
+<script type="application/ld+json" set:html={JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: 'Qasim Sethar',
+  alternateName: 'qasimio',
+  url: 'https://qasimio.me',
+  image: 'https://qasimio.me/mq-mark.png',
+  sameAs: [
+    'https://github.com/qasimio',
+    'https://linkedin.com/in/qasimio',
+    'https://x.com/qasimiohq',
+    'https://www.youtube.com/@qasimiohq',
+  ],
+})} />

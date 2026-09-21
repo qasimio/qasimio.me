@@ -1,0 +1,84 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import PageIntro from '../../components/PageIntro.astro';
+import NoteItem from '../../components/NoteItem.astro';
+
+const notes = (await getCollection('notes', ({ data }) => !data.draft))
+  .sort((a, b) => (a.data.order ?? 0) - (b.data.order ?? 0));
+const essays = (await getCollection('essays', ({ data }) => !data.draft))
+  .sort((a, b) => (a.data.order ?? 0) - (b.data.order ?? 0));
+const types = ['all', ...new Set(notes.map((entry) => entry.data.type))];
+---
+<Base title="Journal — Qasim Sethar">
+  <PageIntro
+    eyebrow="Journal"
+    title={'Fragments, <em>notes</em>, and the longer thoughts.'}
+    body="Short updates live here. Longer pieces can grow beside them. The point is not content for content's sake. It is a record of ideas worth keeping."
+  />
+
+  <section class="site-shell" style="padding-bottom: 8rem;">
+    <div class="journal-tabs">
+      <a class="journal-tab active" href="/journal/">Notes</a>
+      <a class="journal-tab" href="#essays">Essays</a>
+      <a class="journal-tab" href="/journal/rss.xml">RSS ↗</a>
+    </div>
+    <div class="filters" data-note-filters>
+      {types.map((type, index) => (
+        <button class="filter-button" type="button" data-note-filter={type} aria-pressed={index === 0}>
+          {type}
+        </button>
+      ))}
+    </div>
+    <div class="note-list" data-note-list>
+      {notes.map((entry) => <NoteItem entry={entry} />)}
+    </div>
+    <p class="filter-note" data-note-empty>No notes match that filter.</p>
+
+    <div id="essays" style="padding-top: 7rem;">
+      <div class="section-heading" data-reveal>
+        <div class="section-heading__title"><span class="section-index">LONG FORM</span><h2>Essays</h2></div>
+      </div>
+      {essays.length > 0 ? (
+        <div class="note-list">
+          {essays.map((entry) => (
+            <a class="note-item" href={`/journal/essays/${entry.id}/`} data-reveal>
+              <span class="note-item__date">Essay</span>
+              <div class="note-item__main">
+                <span class="note-item__type">Long form</span>
+                <h3>{entry.data.title}</h3>
+                <div class="note-item__tags">{entry.data.tags.map((tag) => <span>#{tag}</span>)}</div>
+              </div>
+              <span class="note-item__arrow">↗</span>
+            </a>
+          ))}
+        </div>
+      ) : (
+        <p style="color: var(--muted); max-width: 40rem;">Long-form writing will appear here when there is something worth saying at length. No filler quota.</p>
+      )}
+    </div>
+  </section>
+
+  <script is:inline>
+    document.addEventListener('astro:page-load', () => {
+      const root = document.querySelector('[data-note-filters]');
+      if (!root || root.dataset.bound) return;
+      root.dataset.bound = 'true';
+      const cards = [...document.querySelectorAll('[data-note-item]')];
+      const empty = document.querySelector('[data-note-empty]');
+      root.querySelectorAll('[data-note-filter]').forEach((button) => {
+        button.addEventListener('click', () => {
+          const type = button.getAttribute('data-note-filter');
+          root.querySelectorAll('[data-note-filter]').forEach((item) => item.setAttribute('aria-pressed', String(item === button)));
+          let shown = 0;
+          cards.forEach((card) => {
+            const visible = type === 'all' || card.getAttribute('data-type') === type;
+            card.style.display = visible ? '' : 'none';
+            if (visible) shown += 1;
+          });
+          if (empty) empty.style.display = shown ? 'none' : 'block';
+        });
+      });
+    });
+  </script>
+</Base>

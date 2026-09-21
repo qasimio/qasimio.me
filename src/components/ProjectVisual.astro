@@ -1,0 +1,28 @@
+---
+interface Props {
+  title: string;
+  type: string;
+  year: number;
+  status: string;
+  slug: string;
+  compact?: boolean;
+}
+const { title, type, year, status, slug, compact = false } = Astro.props;
+const mark = title.slice(0, 2).toUpperCase();
+---
+<div class:list={["project-visual", `project-visual--${slug}`, { compact }]} aria-hidden="true">
+  <div class="project-visual__frame">
+    <div class="project-visual__topline">
+      <span>{String(year)}</span>
+      <span>{status}</span>
+    </div>
+    <div class="project-visual__core">
+      <span class="project-visual__mark">{mark}</span>
+      <span class="project-visual__type">{type.replace('-', ' ')}</span>
+    </div>
+    <div class="project-visual__baseline">
+      <span>QASIM SETHAR</span>
+      <span>/{slug}</span>
+    </div>
+  </div>
+</div>

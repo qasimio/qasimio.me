@@ -1,0 +1,38 @@
+---
+import ProjectVisual from './ProjectVisual.astro';
+
+interface Props {
+  entry: any;
+  featured?: boolean;
+}
+const { entry, featured = false } = Astro.props;
+---
+<a
+  href={`/work/${entry.id}/`}
+  class:list={["project-card", { featured }]}
+  data-project-card
+  data-type={entry.data.type}
+  data-status={entry.data.status}
+  data-reveal
+>
+  <ProjectVisual
+    title={entry.data.title}
+    type={entry.data.type}
+    year={entry.data.year}
+    status={entry.data.status}
+    slug={entry.id}
+    compact={!featured}
+  />
+  <div class="project-card__copy">
+    <div class="project-card__meta">
+      <span>{entry.data.type.replace('-', ' ')}</span>
+      <span>{entry.data.year}</span>
+    </div>
+    <h3>{entry.data.title}</h3>
+    <p>{entry.data.summary}</p>
+    <div class="project-card__footer">
+      <span>{entry.data.status}</span>
+      <span class="arrow">↗</span>
+    </div>
+  </div>
+</a>
