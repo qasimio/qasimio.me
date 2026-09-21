@@ -1,0 +1,116 @@
+---
+import '../styles/global.css';
+import { ClientRouter } from 'astro:transitions';
+import ThemeToggle from '../components/ThemeToggle.astro';
+import { site } from '../data/site';
+const { current = 'home', title = site.name } = Astro.props;
+const nav = [
+  ['home', '/', 'About'],
+  ['work', '/work/', 'Experience + Work'],
+  ['journal', '/journal/', 'Writing'],
+  ['about', '/about/', 'More about me'],
+];
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#0a192f" />
+    <meta name="description" content={`${site.name} — ${site.role}. ${site.intro}`} />
+    <link rel="icon" href="/favicon.svg" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <ClientRouter />
+    <title>{title}</title>
+  </head>
+  <body>
+    <div class="site-shell">
+      <aside class="sidebar">
+        <div class="sidebar-inner">
+          <a class="sidebar-name" href="/" aria-label="Qasim Sethar home">
+            Qasim Sethar
+          </a>
+          <div class="sidebar-role">{site.role}</div>
+          <p class="sidebar-copy">
+            I build software, tools, and communities, and I like staying close to the hard parts.
+          </p>
+          <nav class="sidebar-nav" aria-label="Primary navigation">
+            {nav.map(([key, href, label]) => (
+              <a
+                href={href}
+                class={current === key ? 'is-active' : ''}
+                aria-current={current === key ? 'page' : undefined}
+              >
+                {label}
+              </a>
+            ))}
+          </nav>
+          <div class="sidebar-bottom">
+            <div class="socials" aria-label="Social links">
+              {site.socials.map((item) => (
+                <a href={item.url} target="_blank" rel="noreferrer" aria-label={item.label}>
+                  {item.short}
+                </a>
+              ))}
+            </div>
+            <div class="sidebar-meta">
+              <span>{site.location}</span>
+              <span>
+                <a href="/resume.pdf">Résumé ↗</a>
+              </span>
+            </div>
+            <ThemeToggle />
+          </div>
+        </div>
+      </aside>
+
+      <main class="main" id="main-content">
+        <div class="main-inner">
+          <slot />
+        </div>
+      </main>
+
+      <footer class="footer">
+        <div class="footer-inner">
+          <div>
+            <div class="footer-title">Qasim Sethar</div>
+            <div class="footer-copy">Software, products, systems, communities.</div>
+          </div>
+          <div class="footer-links">
+            <a href="/">Home ↗</a>
+            <a href="/work/">Work ↗</a>
+            <a href="/journal/">Writing ↗</a>
+            <a href="/about/">About ↗</a>
+            <a href="/resume.pdf">Résumé ↗</a>
+            <a href="/contact/">Contact ↗</a>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <span>{site.email}</span>
+          <span>© {new Date().getFullYear()} · qasimio</span>
+        </div>
+      </footer>
+    </div>
+    <script is:inline>
+      const setupReveal = () => {
+        const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        const items = document.querySelectorAll('.reveal');
+        if (reduced) return items.forEach((el) => el.classList.add('is-visible'));
+        const observer = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                entry.target.classList.add('is-visible');
+                observer.unobserve(entry.target);
+              }
+            });
+          },
+          { threshold: 0.12 },
+        );
+        items.forEach((el) => observer.observe(el));
+      };
+      setupReveal();
+      document.addEventListener('astro:page-load', setupReveal);
+    </script>
+  </body>
+</html>

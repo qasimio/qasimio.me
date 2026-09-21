@@ -1,42 +1,22 @@
 ---
 title: 'DevShelf'
-summary: 'A vertical search engine for computer-science literature, built from first principles to understand what an index actually does.'
-type: system
-status: shipped
+eyebrow: 'SYSTEM · SEARCH'
+summary: 'A first-principles vertical search engine built to understand how retrieval works without hiding behind a search product.'
+type: 'System'
+status: 'Archived'
 year: 2025
 featured: false
-order: 60
+order: 6
+tags: ['Java', 'Information Retrieval', 'Data Structures']
 role: 'Engineer'
-tags: [Java, information retrieval, algorithms]
-visual: devshelf
 links:
-  - label: 'GitHub'
-    url: 'https://github.com/qasimio/DevShelf'
+  - { label: 'GitHub', url: 'https://github.com/qasimio/DevShelf' }
 stats:
-  - value: 'Java'
-    label: 'implementation'
-  - value: 'Trie'
-    label: 'prefix matching'
-  - value: 'O(1)'
-    label: 'targeted lookup'
-proof:
-  - value: 'Inverted index'
-    label: 'positional search'
-  - value: 'Trie'
-    label: 'prefix matching'
-  - value: 'Offline'
-    label: 'index generation'
-pullQuote: 'I wanted to understand search well enough to build one.'
+  - { value: 'O(1)', label: 'keyword lookup target' }
+  - { value: 'Trie', label: 'prefix matching' }
+pullQuote: 'I wanted to understand search badly enough to stop delegating the interesting parts to Lucene.'
 ---
 
-## Why build search from scratch?
+DevShelf was a deliberate detour. I wanted to know what a search engine felt like when the index was my problem rather than somebody else's API.
 
-Because saying “I know search” after plugging in somebody else's indexing engine felt a little too easy.
-
-DevShelf is a first-principles vertical search engine for technical documents, using a positional inverted index and Trie-based prefix matching.
-
-## What it taught me
-
-The useful part was not getting a query to return a result. It was deciding what information the index should preserve, keeping indexing separate from querying, and watching data structures change the system's behavior.
-
-That work became the foundation for how I approached retrieval in later projects.
+The project used a positional inverted index, prefix matching, and a decoupled offline indexing pipeline. It became the foundation for a lot of the retrieval questions that followed.

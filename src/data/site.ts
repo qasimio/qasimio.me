@@ -1,166 +1,88 @@
 export const site = {
   name: 'Qasim Sethar',
   handle: 'qasimio',
+  role: 'Software Engineer & Product Builder',
   email: 'hello@qasimio.me',
   location: 'Sukkur, Pakistan',
+  university: 'Sukkur IBA University',
+  intro:
+    'I like building software, but I care just as much about what happens after it leaves the editor: whether people use it, whether it survives contact with reality, and whether I can make the next version better.',
   socials: [
-    { label: 'GitHub', href: 'https://github.com/qasimio' },
-    { label: 'LinkedIn', href: 'https://linkedin.com/in/qasimio' },
-    { label: 'X', href: 'https://x.com/qasimiohq' },
-    { label: 'YouTube', href: 'https://www.youtube.com/@qasimiohq' },
-    { label: 'Dev.to', href: 'https://dev.to/qasimio' },
-    { label: 'Peerlist', href: 'https://peerlist.io/qasimio/' },
-    { label: 'Medium', href: 'https://medium.com/@qasimio' },
-    { label: 'Patreon', href: 'https://patreon.com/qasimio' },
+    { label: 'GitHub', short: 'GH', url: 'https://github.com/qasimio' },
+    { label: 'LinkedIn', short: 'LI', url: 'https://linkedin.com/in/qasimio' },
+    { label: 'X', short: 'X', url: 'https://x.com/qasimiohq' },
+    { label: 'YouTube', short: 'YT', url: 'https://www.youtube.com/@qasimiohq' },
+    { label: 'Dev.to', short: 'DEV', url: 'https://dev.to/qasimio' },
+    { label: 'Peerlist', short: 'PL', url: 'https://peerlist.io/qasimio/' },
+    { label: 'Patreon', short: 'PA', url: 'https://patreon.com/qasimio' },
+    { label: 'Gravatar', short: 'GV', url: 'https://gravatar.com/qasimio' },
   ],
-  organizations: [
-    { label: 'FOLDR', href: 'https://github.com/foldrhq' },
-    { label: 'IBA Launchpad', href: 'https://github.com/iba-launchpad' },
+  now: [
+    ['Building', 'Engram + Operon'],
+    ['Maintaining', 'FOLDR'],
+    ['Organizing', 'SIBA Launchpad'],
+    ['Learning', 'distribution, products, systems'],
   ],
 };
 
-export const proof = [
-  { value: '100+', label: 'GitHub stars', note: 'FOLDR', href: 'https://github.com/qasimio/foldr' },
-  { value: '7.3k+', label: 'downloads', note: 'FOLDR', href: 'https://pepy.tech/projects/foldr' },
-  { value: '60+', label: 'projects reviewed', note: 'student + peer work' },
-  { value: '35+', label: 'people guided', note: 'debugging + direction' },
-];
-
-export const now = [
+export const timeline = [
   {
-    title: 'Engram',
-    state: 'BUILDING',
-    detail:
-      'Personal knowledge infrastructure for documents, retrieval, memory, and agent context.',
-    href: '/work/engram/',
+    date: '2026',
+    title: 'Started shipping into the real world.',
+    place: 'FOLDR · SlotFinder',
+    text: 'FOLDR crossed 100 stars and 7.3k+ downloads by the figures I was tracking; SlotFinder turned a very annoying timetable search into one page.',
   },
   {
-    title: 'Operon',
-    state: 'BUILDING',
-    detail:
-      'A coding agent where the model can suggest a change, but the machine has to verify it.',
-    href: '/work/operon/',
+    date: '2026',
+    title: 'Invited into GitHub’s Maintainer Community.',
+    place: 'Open source',
+    text: 'An invitation after spending more time maintaining, reviewing, and participating in public software than I expected to.',
   },
   {
-    title: 'SIBA Launchpad',
-    state: 'GROWING',
-    detail:
-      'A public home for student work, because a project should not disappear when the grade is posted.',
-    href: '/work/siba-launchpad/',
-  },
-];
-
-export const principles = [
-  {
-    title: 'Start with the annoyance.',
-    detail:
-      'The things I ship usually start when a small problem becomes too irritating to keep working around.',
+    date: '2026',
+    title: 'Organized Sibathon ’26.',
+    place: 'SIBA CS Society',
+    text: 'Helped organize a 24-hour student hackathon through the CS Society, with AI allowed and the brief being simple: make the best, strangest thing you can.',
   },
   {
-    title: 'Believe the source of truth.',
-    detail:
-      'When a model, cache, or abstraction disagrees with the state-owning system, the owner wins.',
+    date: '2025–26',
+    title: 'Started building a community around building.',
+    place: 'SIBA Launchpad',
+    text: 'Started a project community to make student work visible, help people find collaborators, and give unfinished ideas somewhere better to go than a private folder.',
   },
   {
-    title: 'Make failure reversible.',
-    detail:
-      'Preview dangerous work. Keep history. Make recovery obvious. Trust is part of the interface.',
+    date: '2025',
+    title: 'Got deeper into search and systems.',
+    place: 'DevShelf',
+    text: 'Built a search engine in Java from first principles. That rabbit hole eventually led to retrieval, RAG, memory, and agent systems.',
+  },
+  {
+    date: '2025',
+    title: 'Started treating tooling as product work.',
+    place: 'FOLDR',
+    text: 'Turned a small automation idea into a published cross-platform CLI and kept improving it after other people started using it.',
   },
 ];
 
-export const milestones = [
+export const recognition = [
+  ['GitHub Maintainer Community', 'Invited into a GitHub maintainer-focused community.'],
   [
-    '2025',
-    'Started building beyond coursework.',
-    'Experiments turned into proper systems once the assignment stopped being the finish line.',
+    'GitHub Developer Program',
+    'Used GitHub API capabilities inside Launchpad for profile data and direct starring.',
   ],
-  [
-    '2025 → 26',
-    'Moved closer to people as well as code.',
-    'CS Society, project reviews, mentoring, Sibathon, and Launchpad made the work less solitary.',
-  ],
-  [
-    '2026',
-    'Started shipping into the real world.',
-    'FOLDR got real users. SlotFinder solved a campus problem. Open-source work became public work.',
-  ],
-  [
-    'NOW',
-    'Going deeper and wider.',
-    'Engram and Operon are in development while distribution and product judgment become part of the job.',
-  ],
-];
-
-export const community = [
-  [
-    '60+',
-    'projects reviewed',
-    'Student and peer projects reviewed closely enough to talk about architecture, finish, and what was actually breaking.',
-  ],
-  [
-    '35+',
-    'people guided',
-    'Helping students and peers get unstuck, pick a direction, or push a project over the line.',
-  ],
-  [
-    '24h',
-    'Sibathon’26',
-    'A 24-hour student hackathon organized through the CS Society, with AI allowed.',
-  ],
-  [
-    '2',
-    'GitHub organizations',
-    'FOLDR and IBA Launchpad, both used as public homes rather than empty namespaces.',
-  ],
+  ['Google AI Professional Certificate', 'Professional certificate in applied AI.'],
+  ['CS Society Executive', 'Executive member, Sukkur IBA University, 2025–2026.'],
 ];
 
 export const professional = [
   [
-    '2026',
-    'FlyRank AI',
-    'Backend / AI engineering intern',
-    'Backend and AI work in a production-oriented environment.',
+    'FlyRank',
+    'Backend / AI Engineering',
+    'Production-oriented backend and AI work in a professional environment.',
   ],
   [
-    '2026',
     'Arch Technologies',
-    'Machine learning engineering',
-    'NLP work around BERT fine-tuning, preprocessing, and local inference.',
+    'Machine Learning Engineering',
+    'Model fine-tuning, inference prototypes, and ML engineering work.',
   ],
-  [
-    '2025 → 26',
-    'CS Society · Sukkur IBA',
-    'Executive member',
-    'Technical activities, project review, and organizing Sibathon’26.',
-  ],
-];
-
-export const programs = [
-  [
-    'GitHub Maintainer Community',
-    'Invited into the maintainer community after building and contributing in public.',
-  ],
-  [
-    'GitHub Developer Program',
-    'Used GitHub APIs inside Launchpad so GitHub identity and activity could become part of the product.',
-  ],
-  ['Google AI Professional Certificate', 'Completed in 2026.'],
-];
-
-export const workStyle = [
-  ['Environment', 'Arch Linux · daily'],
-  ['Editor', 'VS Code + Vim'],
-  ['Input', 'Keyboard-first'],
-  ['Automation', 'Shell + Python'],
-  ['Data', 'PostgreSQL · SQL · DBMS'],
-];
-
-export const commandItems = [
-  { label: 'Home', href: '/' },
-  { label: 'Work', href: '/work/' },
-  { label: 'Journal', href: '/journal/' },
-  { label: 'About', href: '/about/' },
-  { label: 'Contact', href: '/contact/' },
-  { label: 'Résumé', href: '/resume.pdf', external: true },
-  ...site.socials.map((item) => ({ label: item.label, href: item.href, external: true })),
 ];

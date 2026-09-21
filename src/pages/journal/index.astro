@@ -1,96 +1,94 @@
 ---
+import Shell from '../../layouts/Shell.astro';
 import { getCollection } from 'astro:content';
-import Base from '../../layouts/Base.astro';
 import NoteRow from '../../components/NoteRow.astro';
-
 const notes = (await getCollection('notes', ({ data }) => !data.draft)).sort(
   (a, b) => b.data.publishedAt.getTime() - a.data.publishedAt.getTime(),
 );
 const essays = (await getCollection('essays', ({ data }) => !data.draft)).sort(
   (a, b) => b.data.publishedAt.getTime() - a.data.publishedAt.getTime(),
 );
-const types = ['all', ...new Set(notes.map((entry) => entry.data.type))];
-const years = [...new Set(notes.map((entry) => entry.data.publishedAt.getFullYear()))];
+const types = [...new Set(notes.map((n) => n.data.type))];
 ---
 
-<Base title="Journal — Qasim Sethar" description="Notes and longer writing from Qasim Sethar.">
-  <section class="shell page-hero">
-    <div class="page-hero__top">
-      <span>02 / JOURNAL</span>
-      <span>NOTES + ESSAYS</span>
-    </div>
-    <p class="eyebrow eyebrow--violet">A PUBLIC LOG</p>
-    <h1>
-      Things I don't want to <em>forget.</em>
+<Shell current="journal" title="Writing — Qasim Sethar">
+  <section class="page-section" style="padding-top:18px">
+    <span class="eyebrow">WRITING</span>
+    <h1 style="margin:14px 0 0;color:var(--white);font-size:clamp(54px,7vw,94px);line-height:.98;letter-spacing:-.06em;font-weight:700">
+      Things I don't want to forget.
     </h1>
-    <p class="page-hero__lede">
-      Short things from building, shipping, breaking, learning, and noticing something before the
-      internet moves on.
+    <p class="hero-copy">
+      Short notes from things I shipped, learned, broke, argued with, or could not stop thinking
+      about. Long-form appears when an idea earns the extra length.
     </p>
   </section>
-  <section class="shell section" style="padding-top:2rem">
+  <section class="page-section">
     <div class="section-head">
-      <div class="section-head__left">
-        <span class="section-head__number">01</span>
-        <h2>Notes</h2>
-      </div>
-      <div class="section-head__right">
-        <a href="/journal/rss.xml">RSS ↗</a>
-      </div>
+      <span class="section-num">01</span>
+      <span class="section-title">Notes</span>
     </div>
-    <div class="filter-bar">
-      {types.map((type, i) => (
-        <button type="button" data-note-filter={type} aria-pressed={i === 0}>
-          {type.replace('-', ' ')}
+    <div class="filter-row" data-note-filters>
+      <button class="filter-btn" data-note-filter="all" aria-pressed="true">
+        All
+      </button>
+      {types.map((type) => (
+        <button class="filter-btn" data-note-filter={type} aria-pressed="false">
+          {type}
         </button>
       ))}
     </div>
-    {years.map((year) => (
-      <div class="journal-year">
-        <div class="journal-year__year">{year}</div>
-        <div class="note-list" style="border-top:0">
-          {notes
-            .filter((entry) => entry.data.publishedAt.getFullYear() === year)
-            .map((entry) => (
-              <div data-note-item data-note-type={entry.data.type}>
-                <NoteRow entry={entry} />
-              </div>
-            ))}
-        </div>
-      </div>
-    ))}
+    <div class="notes">
+      {notes.map((entry) => (
+        <NoteRow entry={entry} />
+      ))}
+    </div>
   </section>
-  <section class="shell section" style="padding-top:2rem">
+  <section class="page-section">
     <div class="section-head">
-      <div class="section-head__left">
-        <span class="section-head__number">02</span>
-        <h2>Essays</h2>
-      </div>
-      <div class="section-head__right">
-        <span>{essays.length ? 'when the short version breaks' : 'nothing forced'}</span>
-      </div>
+      <span class="section-num">02</span>
+      <span class="section-title">Essays</span>
     </div>
     {essays.length ? (
-      <div class="essay-grid">
+      <div class="notes">
         {essays.map((entry) => (
-          <a class="essay-card" href={`/journal/essays/${entry.id}/`}>
-            <small>
+          <a class="note-row" href={`/journal/essays/${entry.id}/`}>
+            <time class="note-date">
               {entry.data.publishedAt.toLocaleDateString('en-US', {
-                month: 'short',
                 year: 'numeric',
+                month: 'short',
+                day: '2-digit',
               })}
-            </small>
-            <div>
-              <h3>{entry.data.title}</h3>
-              <p>{entry.data.description}</p>
-            </div>
+            </time>
+            <span class="note-type">essay</span>
+            <span class="note-title">{entry.data.title}</span>
+            <span class="note-arrow">↗</span>
           </a>
         ))}
       </div>
     ) : (
-      <div class="narrow" style="padding:2rem 0;color:var(--muted)">
-        I will write something long when the short version stops being enough.
-      </div>
+      <p class="journal-intro">
+        Nothing here yet. I am not inventing essays to fill a navigation item.
+      </p>
     )}
   </section>
-</Base>
+</Shell>
+<script is:inline>
+  const initNoteFilters = () => {
+    const root = document.querySelector('[data-note-filters]');
+    if (!root || root.dataset.bound) return;
+    root.dataset.bound = '1';
+    root.addEventListener('click', (e) => {
+      const btn = e.target.closest('[data-note-filter]');
+      if (!btn) return;
+      const value = btn.dataset.noteFilter;
+      root
+        .querySelectorAll('[data-note-filter]')
+        .forEach((i) => i.setAttribute('aria-pressed', String(i === btn)));
+      document.querySelectorAll('.notes .note-row').forEach((row) => {
+        row.hidden = value !== 'all' && row.dataset.noteType !== value;
+      });
+    });
+  };
+  initNoteFilters();
+  document.addEventListener('astro:page-load', initNoteFilters);
+</script>

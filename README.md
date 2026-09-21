@@ -1,24 +1,26 @@
 # qasimio.me
 
-Personal site for Qasim Sethar, built as a long-lived personal publishing system rather than a portfolio template.
+A custom multi-page personal site for Qasim Sethar.
+
+The interface takes structural inspiration from Brittany Chiang's v4 portfolio: persistent left rail, dark navy palette, section hierarchy, experience, projects, writing, social links, and compact footer. The chronological experience/building trail is inspired by Jhey Tompkins' public timeline approach. The implementation, content, and visuals are original to this site.
 
 ## Stack
 
 - Astro 7.3.3
 - TypeScript
 - Tailwind CSS 4.3.3
-- MDX
-- Manrope + Source Serif 4 + IBM Plex Mono
+- MDX / Astro Content Collections
+- Inter Variable
 - Vercel
-- pnpm 11.21.0 / Node 24
+- Node 24 / pnpm 11.21.0
 
-## Content
+## Run
 
-- `src/data/projects` — project case studies
-- `src/data/notes` — short-form journal entries
-- `src/data/essays` — long-form writing
-- `src/data/site.ts` — site identity and structured homepage data
-
-## Principles
-
-The site is intentionally static-first. It uses motion and interaction to improve orientation and feedback, not as decoration. Work pages prioritize problem, decisions, proof, and outcome over technology lists.
+```powershell
+pnpm install
+pnpm approve-builds
+pnpm run check
+pnpm run format
+pnpm run build
+pnpm run dev
+```

@@ -1,54 +1,25 @@
 ---
 title: 'SlotFinder'
-summary: 'A timetable search tool for Sukkur IBA that turns a pile of pages into a quick answer.'
-type: product
-status: shipped
+eyebrow: 'PRODUCT · SIBA UTILITY'
+summary: 'A timetable search tool for Sukkur IBA built because finding one class should not require opening half the timetable.'
+type: 'Product'
+status: 'Live'
 year: 2026
 featured: false
-order: 40
-role: 'Co-creator'
-tags: [Next.js, Python, SQLite, SIBA]
-visual: slot-finder
+order: 4
+tags: ['Next.js', 'FastAPI', 'SQLite', 'PDF extraction']
+role: 'Co-creator / Engineer'
 links:
-  - label: 'Live'
-    url: 'https://sibatt.vercel.app'
-  - label: 'GitHub'
-    url: 'https://github.com/AbdulGhaffarcs/slot-finder'
+  - { label: 'Live site', url: 'https://sibatt.vercel.app' }
+  - { label: 'GitHub', url: 'https://github.com/AbdulGhaffarcs/slot-finder' }
 stats:
-  - value: 'PDF'
-    label: 'source format'
-  - value: 'Search'
-    label: 'course / room / section'
-  - value: 'Mobile'
-    label: 'primary use case'
-proof:
-  - value: 'PDF → data'
-    label: 'pipeline'
-  - value: 'Search'
-    label: 'course / room / section'
-  - value: 'Live'
-    label: 'SIBA utility'
-pullQuote: 'If finding a class takes ninety pages, the interface is the problem.'
+  - { value: '1', label: 'search surface' }
+  - { value: 'SIBA', label: 'real users' }
+pullQuote: 'The best feature was removing the need to know where the timetable lived.'
 ---
 
-## The problem
+The timetable existed. The problem was finding the timetable entry you cared about.
 
-Finding a class at SIBA meant opening timetable pages and hunting for the course, section, or room manually.
+SlotFinder turns institutional timetable PDFs into a searchable interface by section, course, and room. The backend handles extraction and data preparation while the frontend ships the resulting dataset as a fast static experience.
 
-It worked. It was also exactly the kind of small friction people stop noticing because everyone has learned to tolerate it.
-
-Abdul and I decided that was a good enough reason to build a search box.
-
-## The product
-
-SlotFinder turns institutional timetable PDFs into searchable data and puts a small interface on top of it.
-
-The architecture is not the point here. The point is checking a class on a phone in a few seconds instead of opening a stack of pages between lectures.
-
-## Why I like this one
-
-It is not the most complicated thing I have built.
-
-That is why I like it.
-
-A useful product does not need to be technically exotic. It needs to remove a real annoyance well.
+It is not a grand research project. That is why I like it. It is a small piece of software aimed directly at a real piece of friction.

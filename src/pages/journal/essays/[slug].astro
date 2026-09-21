@@ -1,31 +1,30 @@
 ---
+import Shell from '../../../layouts/Shell.astro';
 import { getCollection, render } from 'astro:content';
-import type { CollectionEntry } from 'astro:content';
-import Base from '../../../layouts/Base.astro';
-export async function getStaticPaths() {
-  const essays = await getCollection('essays', ({ data }) => !data.draft);
+const essays = await getCollection('essays', ({ data }) => !data.draft);
+export function getStaticPaths() {
   return essays.map((entry) => ({ params: { slug: entry.id }, props: { entry } }));
-}
-interface Props {
-  entry: CollectionEntry<'essays'>;
 }
 const { entry } = Astro.props;
 const { Content } = await render(entry);
 ---
 
-<Base title={`${entry.data.title} — Qasim Sethar`} description={entry.data.description}>
-  <article class="narrow page-hero">
-    <div class="page-hero__top">
-      <span>
-        {entry.data.publishedAt.toLocaleDateString('en-US', { month: 'short', year: 'numeric' })}
-      </span>
-      <span>ESSAY</span>
-    </div>
-    <p class="eyebrow eyebrow--violet">LONGER VERSION</p>
-    <h1>{entry.data.title}</h1>
-    <p class="page-hero__lede">{entry.data.description}</p>
-    <div class="prose" style="max-width:780px;margin-top:3rem">
+<Shell current="journal" title={`${entry.data.title} — Qasim Sethar`}>
+  <article class="page-section" style="padding-top:18px">
+    <span class="eyebrow">
+      ESSAY ·{' '}
+      {entry.data.publishedAt.toLocaleDateString('en-US', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+      })}
+    </span>
+    <h1 style="margin:14px 0 0;color:var(--white);font-size:clamp(48px,6.8vw,90px);line-height:.98;letter-spacing:-.06em;font-weight:700">
+      {entry.data.title}
+    </h1>
+    <p class="hero-copy">{entry.data.description}</p>
+    <div class="prose" style="margin-top:42px">
       <Content />
     </div>
   </article>
-</Base>
+</Shell>

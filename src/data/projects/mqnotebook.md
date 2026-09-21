@@ -1,48 +1,22 @@
 ---
 title: 'MQNotebook'
-summary: 'A local retrieval system built for the messy documents real people keep: scans, spreadsheets, slides, and files that refuse to behave.'
-type: system
-status: shipped
+eyebrow: 'SYSTEM · DOCUMENT AI'
+summary: 'A local-first document retrieval system built for messy PDFs, OCR, presentations, and spreadsheets.'
+type: 'System'
+status: 'Earlier work'
 year: 2025
 featured: false
-order: 70
+order: 7
+tags: ['Python', 'RAG', 'OCR', 'LlamaIndex']
 role: 'Engineer'
-tags: [Python, RAG, OCR, retrieval]
-visual: mqnotebook
 links:
-  - label: 'GitHub'
-    url: 'https://github.com/qasimio/MQNotebook'
+  - { label: 'GitHub', url: 'https://github.com/qasimio/MQNotebook' }
 stats:
-  - value: 'OCR'
-    label: 'scanned documents'
-  - value: 'Hybrid'
-    label: 'retrieval'
-  - value: '~60%'
-    label: 'context savings'
-proof:
-  - value: 'OCR'
-    label: 'scanned files'
-  - value: 'Hybrid'
-    label: 'retrieval'
-  - value: '~60%'
-    label: 'context savings'
-pullQuote: 'Real documents are messier than Markdown.'
+  - { value: '~40%', label: 'reported retrieval precision gain' }
+  - { value: '60%', label: 'reported token reduction' }
+pullQuote: 'Real documents are messier than the demo PDFs everybody uses.'
 ---
 
-## The constraint
+MQNotebook came from treating document retrieval as a hostile environment instead of a clean benchmark.
 
-Real documents are messy.
-
-Scanned PDFs. Multi-sheet workbooks. Presentation notes. Files that decide to lock themselves at exactly the wrong moment.
-
-MQNotebook was an attempt to make retrieval survive that reality.
-
-## The system
-
-The pipeline combines extraction and OCR with hybrid retrieval and reranking so a single similarity score is not responsible for the whole answer.
-
-The project also became one of the stepping stones toward the retrieval architecture I use in larger systems.
-
-## What stayed with me
-
-A retrieval system is only as good as the ugly input it can survive.
+It handled scanned PDFs, OCR, slide notes, and multi-sheet spreadsheets, then added hybrid retrieval and reranking. The project was where I learned to care about the ingestion path as much as the retrieval model.

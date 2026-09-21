@@ -1,215 +1,96 @@
 ---
-import { Image } from 'astro:assets';
-import Base from '../../layouts/Base.astro';
-import portrait from '../../assets/identity/qasim-portrait.jpg';
-import { community, milestones, professional, programs, site, workStyle } from '../../data/site';
+import Shell from '../../layouts/Shell.astro';
+import { site, recognition, professional } from '../../data/site';
+import qasim from '../../assets/identity/qasim.jpg';
 ---
 
-<Base
-  title="About — Qasim Sethar"
-  description="The person behind the software, open-source work, communities, and experiments."
->
-  <section class="shell page-hero">
-    <div class="page-hero__top">
-      <span>03 / ABOUT</span>
-      <span>THE PERSON BEHIND THE WORK</span>
-    </div>
-    <div class="about-hero">
-      <div>
-        <p class="eyebrow eyebrow--coral">THE HUMAN PART</p>
-        <h1>
-          There is more than <em>code.</em>
-        </h1>
-        <p class="about-hero__copy">
-          I'm a Computer Science student who spends an unreasonable amount of time building
-          software. The interesting part, lately, has been everything around the code: people,
-          distribution, judgment, and figuring out what is actually worth shipping.
-        </p>
-        <div class="hero-actions">
-          <a class="button button--primary" href="/resume.pdf">
-            Read the résumé ↗
-          </a>
-          <a class="button button--quiet" href="/contact/">
-            Talk ↗
-          </a>
-        </div>
-      </div>
-      <div class="about-hero__portrait">
-        <Image
-          src={portrait}
-          alt="Qasim Sethar"
-          widths={[700, 1000]}
-          sizes="(max-width:1050px) 100vw, 42vw"
-        />
-        <div class="about-hero__caption">
-          <span>QASIM SETHAR</span>
-          <span>2026</span>
-        </div>
-      </div>
-    </div>
+<Shell current="about" title="About — Qasim Sethar">
+  <section class="page-section" style="padding-top:18px">
+    <span class="eyebrow">ABOUT</span>
+    <h1 style="margin:14px 0 0;color:var(--white);font-size:clamp(52px,6.8vw,90px);line-height:.98;letter-spacing:-.06em;font-weight:700">
+      More than the code.
+    </h1>
   </section>
-
-  <section class="shell section" style="padding-top:2rem">
-    <div class="split-heading">
+  <section class="page-section">
+    <div class="about-grid">
       <div>
-        <p class="eyebrow">THE SHORT VERSION</p>
+        <div class="about-photo-wrap">
+          <img class="about-photo" src={qasim.src} alt="Qasim Sethar" />
+        </div>
+        <div class="about-callout">
+          “I want to own the problem from the first annoying thought to the thing somebody keeps
+          using.”
+        </div>
       </div>
-      <div>
-        <h2>
-          I would rather follow a problem all the way down than wait for someone to hand me the{' '}
-          <em>brief.</em>
-        </h2>
-        <p style="color:var(--muted);max-width:62ch;margin-top:1rem">
-          That is why the work keeps moving between products, open source, search, AI systems,
-          communities, and the little tools that remove an annoyance from everyday life.
+      <div class="copy-stack">
+        <p>
+          I'm Qasim, a software engineer and CS student at <strong>{site.university}</strong>. I
+          spend most of my time building software and a smaller but important amount of time helping
+          other people build theirs.
+        </p>
+        <p>
+          My projects move between AI systems, retrieval, search, developer tools, automation, and
+          small products for very specific problems.
+        </p>
+        <p>
+          I also care about the non-code side: organizing events, reviewing student projects,
+          building communities, talking to users, maintaining open source, and learning how to get
+          something in front of people instead of keeping it in a repository forever.
+        </p>
+        <p>
+          I use Arch Linux as my daily development environment, work inside VS Code with Vim, and
+          prefer keyboard-first workflows. Mostly because I am stubborn. Partly because it is fast.
         </p>
       </div>
     </div>
   </section>
-
-  <section class="shell section" style="padding-top:2rem">
+  <section class="page-section">
     <div class="section-head">
-      <div class="section-head__left">
-        <span class="section-head__number">01</span>
-        <h2>How it got here</h2>
-      </div>
-      <div class="section-head__right">
-        <span>the short history</span>
-      </div>
-    </div>
-    <div class="timeline">
-      {milestones.map((item) => (
-        <div class="timeline-row" data-reveal>
-          <span class="timeline-row__year">{item[0]}</span>
-          <h3>{item[1]}</h3>
-          <p>{item[2]}</p>
-        </div>
-      ))}
-    </div>
-  </section>
-
-  <section class="section" style="background:var(--surface);border-block:1px solid var(--line)">
-    <div class="shell">
-      <div class="section-head">
-        <div class="section-head__left">
-          <span class="section-head__number">02</span>
-          <h2>People</h2>
-        </div>
-        <div class="section-head__right">
-          <span>the part that never fits in a stack</span>
-        </div>
-      </div>
-      <div class="stats-grid">
-        {community.map((item) => (
-          <article class="big-stat" data-reveal>
-            <strong>{item[0]}</strong>
-            <span>{item[1]}</span>
-            <small>{item[2]}</small>
-          </article>
-        ))}
-      </div>
-    </div>
-  </section>
-
-  <section class="shell section" style="padding-bottom:6rem">
-    <div class="section-head">
-      <div class="section-head__left">
-        <span class="section-head__number">03</span>
-        <h2>Professional work</h2>
-      </div>
-      <div class="section-head__right">
-        <span>outside my own projects</span>
-      </div>
+      <span class="section-num">01</span>
+      <span class="section-title">Recognition & programs</span>
     </div>
     <div class="experience">
-      {professional.map((item) => (
-        <div class="experience-row" data-reveal>
-          <span class="experience-row__period">{item[0]}</span>
+      {recognition.map((item, index) => (
+        <article class="experience-row">
+          <div class="experience-time">0{index + 1}</div>
           <div>
-            <strong>{item[1]}</strong>
-            <h3>{item[2]}</h3>
+            <div class="experience-place">{item[0]}</div>
+            <p class="experience-copy">{item[1]}</p>
           </div>
-          <p>{item[3]}</p>
-        </div>
+        </article>
       ))}
     </div>
   </section>
-
-  <section class="shell section" style="padding-top:0">
-    <div class="split-heading">
-      <div>
-        <p class="eyebrow eyebrow--violet">04 / HOW I WORK</p>
-        <h2>
-          The tools are ordinary. <em class="display-serif">The workflow isn't.</em>
-        </h2>
-      </div>
-      <div>
-        <p style="color:var(--muted);max-width:54ch">
-          I use Arch Linux every day, Vim inside VS Code, and shortcuts before the mouse. None of
-          that is a manifesto. I just like an environment that stays out of the way.
-        </p>
-        <div class="experience" style="margin-top:1.2rem">
-          {workStyle.map((row) => (
-            <div class="experience-row" style="grid-template-columns:110px 1fr">
-              <span class="experience-row__period">{row[0]}</span>
-              <strong>{row[1]}</strong>
-            </div>
-          ))}
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="shell section" style="padding-top:0">
+  <section class="page-section">
     <div class="section-head">
-      <div class="section-head__left">
-        <span class="section-head__number">05</span>
-        <h2>Programs & recognition</h2>
-      </div>
-      <div class="section-head__right">
-        <span>context, not trophies</span>
-      </div>
+      <span class="section-num">02</span>
+      <span class="section-title">Professional work</span>
     </div>
     <div class="experience">
-      {programs.map((item) => (
-        <div class="experience-row" data-reveal>
-          <span class="experience-row__period">PROGRAM</span>
-          <strong>{item[0]}</strong>
-          <p>{item[1]}</p>
-        </div>
+      {professional.map((item, index) => (
+        <article class="experience-row">
+          <div class="experience-time">0{index + 1}</div>
+          <div>
+            <div class="experience-place">{item[0]}</div>
+            <div class="experience-role">{item[1]}</div>
+            <p class="experience-copy">{item[2]}</p>
+          </div>
+        </article>
       ))}
     </div>
   </section>
-
-  <section class="shell section" style="padding-top:0">
+  <section class="page-section">
     <div class="section-head">
-      <div class="section-head__left">
-        <span class="section-head__number">06</span>
-        <h2>Elsewhere</h2>
-      </div>
-      <div class="section-head__right">
-        <span>the rest of the internet</span>
-      </div>
+      <span class="section-num">03</span>
+      <span class="section-title">Elsewhere</span>
     </div>
-    <div class="link-matrix">
-      <div class="link-column">
-        <span>PRIMARY</span>
-        {site.socials.slice(0, 4).map((item) => (
-          <a href={item.href} target="_blank" rel="noreferrer">
-            <span>{item.label}</span>
-            <span>↗</span>
-          </a>
-        ))}
-      </div>
-      <div class="link-column">
-        <span>MORE</span>
-        {site.socials.slice(4).map((item) => (
-          <a href={item.href} target="_blank" rel="noreferrer">
-            <span>{item.label}</span>
-            <span>↗</span>
-          </a>
-        ))}
-      </div>
+    <div class="now-grid" style="grid-template-columns:repeat(2,1fr)">
+      {site.socials.map((item) => (
+        <a class="now-item" href={item.url} target="_blank" rel="noreferrer">
+          <small>{item.short}</small>
+          <strong>{item.label} ↗</strong>
+        </a>
+      ))}
     </div>
   </section>
-</Base>
+</Shell>

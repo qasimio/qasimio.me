@@ -1,71 +1,79 @@
 ---
+import Shell from '../../layouts/Shell.astro';
 import { getCollection } from 'astro:content';
-import Base from '../../layouts/Base.astro';
 import ProjectCard from '../../components/ProjectCard.astro';
-
 const projects = (await getCollection('projects')).sort((a, b) => a.data.order - b.data.order);
-const featured = projects.filter((entry) => entry.data.featured);
-const archive = projects.filter((entry) => !entry.data.featured);
-const types = ['all', ...new Set(projects.map((entry) => entry.data.type))];
+const types = [...new Set(projects.map((p) => p.data.type))];
 ---
 
-<Base
-  title="Work — Qasim Sethar"
-  description="Systems, products, tools, and community projects built by Qasim Sethar."
->
-  <section class="shell page-hero">
-    <div class="page-hero__top">
-      <span>01 / WORK</span>
-      <span>{projects.length} PROJECTS</span>
-    </div>
-    <p class="eyebrow eyebrow--teal">BUILT / SHIPPED / STILL STUBBORN</p>
-    <h1>
-      I make things that have to <em>work.</em>
+<Shell current="work" title="Experience + Work — Qasim Sethar">
+  <section class="page-section" style="padding-top:18px">
+    <span class="eyebrow">EXPERIENCE + WORK</span>
+    <h1
+      class="hero-title"
+      style="margin:15px 0 0;color:var(--white);font-size:clamp(50px,6.2vw,82px);line-height:1.02;letter-spacing:-.055em;font-weight:700"
+    >
+      Things I actually built.
     </h1>
-    <p class="page-hero__lede">
-      Some became products. Some became tools. Some started as a way to understand a problem
-      properly. The useful thing is the trail they leave behind.
+    <p class="hero-copy">
+      Products, systems, open-source tools, and a few experiments that got far enough to leave a
+      trail.
     </p>
   </section>
-  <section class="shell section" style="padding-top:2rem">
+  <section class="page-section">
     <div class="section-head">
-      <div class="section-head__left">
-        <span class="section-head__number">01</span>
-        <h2>Flagship work</h2>
-      </div>
-      <div class="section-head__right">
-        <span>the few worth lingering on</span>
-      </div>
+      <span class="section-num">01</span>
+      <span class="section-title">Featured</span>
     </div>
-    <div class="featured-layout">
-      {featured.map((entry, i) => (
-        <ProjectCard entry={entry} featured={i === 0} />
-      ))}
+    <div class="project-list">
+      {projects
+        .filter((p) => p.data.featured)
+        .map((entry) => (
+          <ProjectCard entry={entry} />
+        ))}
     </div>
   </section>
-  <section class="shell section" style="padding-top:2rem">
+  <section class="page-section">
     <div class="section-head">
-      <div class="section-head__left">
-        <span class="section-head__number">02</span>
-        <h2>Everything else</h2>
-      </div>
-      <div class="section-head__right">
-        <span>{archive.length} more</span>
-      </div>
+      <span class="section-num">02</span>
+      <span class="section-title">All work</span>
     </div>
-    <div class="filter-bar" role="group" aria-label="Filter projects">
-      {types.map((type, i) => (
-        <button type="button" data-project-filter={type} aria-pressed={i === 0}>
-          {type.replace('-', ' ')}
+    <div class="filter-row" data-project-filters>
+      <button class="filter-btn" data-project-filter="all" aria-pressed="true">
+        All
+      </button>
+      {types.map((type) => (
+        <button class="filter-btn" data-project-filter={type} aria-pressed="false">
+          {type}
         </button>
       ))}
     </div>
-    <div class="featured-layout">
-      {archive.map((entry) => (
-        <div data-project-item data-project-type={entry.data.type}>
-          <ProjectCard entry={entry} />
-        </div>
+    <div class="project-list" id="project-archive">
+      {projects.map((entry) => (
+        <ProjectCard entry={entry} />
       ))}
     </div>
   </section>
-</Base>
+</Shell>
+<script is:inline>
+  const initProjectFilters = () => {
+    const root = document.querySelector('[data-project-filters]');
+    if (!root || root.dataset.bound) return;
+    root.dataset.bound = '1';
+    root.addEventListener('click', (e) => {
+      const btn = e.target.closest('[data-project-filter]');
+      if (!btn) return;
+      const value = btn.dataset.projectFilter;
+      root
+        .querySelectorAll('[data-project-filter]')
+        .forEach((i) => i.setAttribute('aria-pressed', String(i === btn)));
+      document.querySelectorAll('#project-archive .project-card').forEach((card) => {
+        const meta = card.querySelector('.project-meta')?.textContent || '';
+        const type = meta.split('·')[1]?.trim() || '';
+        card.hidden = value !== 'all' && type !== value;
+      });
+    });
+  };
+  initProjectFilters();
+  document.addEventListener('astro:page-load', initProjectFilters);
+</script>

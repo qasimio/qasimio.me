@@ -1,58 +1,33 @@
 ---
 title: 'Operon'
-summary: 'A terminal-native coding agent built around repository context and verification instead of trusting the model to describe its own work.'
-type: open-source
-status: active
+eyebrow: 'OPEN SOURCE · AGENT TOOLING'
+summary: 'A terminal-native coding agent built around verification, repository structure, and controlled edits.'
+type: 'Open source'
+status: 'In development'
 year: 2026
 featured: true
-order: 30
-role: 'Creator / engineer'
-tags: [agents, AST, Python, TUI, verification]
-visual: operon
+order: 2
+tags: ['Python', 'AST', 'Textual', 'ReAct', 'LLM']
+role: 'Creator / Maintainer'
 links:
-  - label: 'GitHub'
-    url: 'https://github.com/qasimio/Operon'
+  - { label: 'GitHub', url: 'https://github.com/qasimio/Operon' }
 stats:
-  - value: 'AST'
-    label: 'structured edits'
-  - value: '5-tier'
-    label: 'patch matching'
-  - value: '9'
-    label: 'LLM backends'
-proof:
-  - value: 'AST'
-    label: 'fast-path edits'
-  - value: '5-tier'
-    label: 'patch matching'
-  - value: 'HITL'
-    label: 'approval gates'
-pullQuote: 'The model can suggest. The machine verifies.'
+  - { value: 'AST', label: 'deterministic edits' }
+  - { value: '5-tier', label: 'patch matching' }
+  - { value: '300s', label: 'approval fallback' }
+pullQuote: 'An agent saying “I changed it” is not evidence that the file changed.'
 ---
 
-## The failure mode
+Operon grew out of a distrust of agent loops that report success because the model believes it succeeded.
 
-Coding agents can describe a change confidently before the change is actually there.
+The system builds a persistent repository symbol graph, gives deterministic operations a fast path, validates edits against the filesystem, and keeps human approval in the loop for changes that should not be trusted blindly.
 
-That bothered me more than the model quality itself.
+## The hard part
 
-If the file on disk says one thing and the model says another, I want the file to win.
+Repository-wide work breaks when the agent only sees snippets. Operon keeps a structural view of the codebase and uses that context to decide where edits belong before asking the model to improvise.
 
-## How I approached it
+For predictable operations such as imports and symbol renames, the system avoids the model entirely and uses Python AST/tokenization primitives.
 
-Operon keeps a persistent repository symbol graph so cross-file relationships do not need to be reconstructed from scratch every time a task starts.
+## What I learned
 
-Around edits, a deterministic verification layer checks the real filesystem state. The model can propose a change. It does not get to announce success until the machine has checked it.
-
-For structured operations, the system can use Python's AST and tokenization machinery instead of asking a language model to improvise syntax.
-
-## Patching
-
-Exact replacement is great until one character changes.
-
-Operon falls through increasingly tolerant patch strategies instead of turning the first failed match into an imaginary success. The goal is boring reliability, not an impressive demo.
-
-## What I am actually interested in
-
-I am not trying to make an agent look autonomous.
-
-I am trying to make the loop accountable to something outside the model.
+Autonomy is useful only when the system can verify its own claims. The most valuable part of the project became the machinery around the model rather than the model itself.

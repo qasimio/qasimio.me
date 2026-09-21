@@ -1,23 +1,16 @@
 ---
-import Base from '../layouts/Base.astro';
+import Shell from '../layouts/Shell.astro';
 ---
 
-<Base title="404 — Qasim Sethar" noIndex>
-  <section class="shell page-hero">
-    <div class="page-hero__top">
-      <span>404</span>
-      <span>NOT FOUND</span>
+<Shell title="404 — Qasim Sethar">
+  <section class="page-section hero" style="min-height:72vh">
+    <span class="eyebrow">404 · LOST</span>
+    <h1>This page went somewhere else.</h1>
+    <p class="hero-copy">Probably my fault. Probably your fault. The server is not taking sides.</p>
+    <div class="hero-actions">
+      <a class="btn btn-solid" href="/">
+        Go home ↗
+      </a>
     </div>
-    <p class="eyebrow eyebrow--coral">WRONG DOOR</p>
-    <h1>
-      That page isn't <em>here.</em>
-    </h1>
-    <p class="page-hero__lede">
-      The link may be old, the route may have moved, or the internet has once again misplaced
-      something.
-    </p>
-    <a class="button button--primary" href="/">
-      Back home ↗
-    </a>
   </section>
-</Base>
+</Shell>

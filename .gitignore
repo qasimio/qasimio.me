@@ -3,12 +3,9 @@ dist/
 .astro/
 .vercel/
 reference/
-
 .env
 .env.*
 !.env.example
-
 .DS_Store
 Thumbs.db
-
 pnpm-debug.log*

@@ -1,58 +1,37 @@
 ---
 title: 'Engram'
-summary: 'A knowledge system for documents, retrieval, memory, and the parts of AI assistants that forget too easily.'
-type: product
-status: active
+eyebrow: 'PRODUCT · AI SYSTEMS'
+summary: 'A knowledge system for turning documents and conversations into persistent, retrievable context.'
+type: 'Product'
+status: 'In development'
 year: 2026
 featured: true
-order: 20
-role: 'Creator / engineer'
-tags: [AI, retrieval, FastAPI, PostgreSQL, agents]
-visual: engram
+order: 1
+tags: ['FastAPI', 'PostgreSQL', 'pgvector', 'Redis', 'Celery', 'Next.js']
+role: 'Founder / Engineer'
 links:
-  - label: 'GitHub'
-    url: 'https://github.com/qasimio/Engram'
+  - { label: 'GitHub', url: 'https://github.com/qasimio/Engram' }
 stats:
-  - value: 'Hybrid'
-    label: 'retrieval'
-  - value: 'Async'
-    label: 'ingestion'
-  - value: 'MCP'
-    label: 'agent interface'
-proof:
-  - value: 'Sparse + dense'
-    label: 'retrieval'
-  - value: 'RRF'
-    label: 'fusion'
-  - value: 'MCP'
-    label: 'integration'
-pullQuote: 'Save it once. Ask for it later.'
+  - { value: '7', label: 'LLM backends supported' }
+  - { value: 'RRF', label: 'hybrid retrieval' }
+  - { value: 'MCP', label: 'integration layer' }
+pullQuote: 'The interesting part was never the model. It was making the system know what it actually knows.'
 ---
 
-## The problem
+Engram started from a simple irritation: an assistant can be very good at answering questions and still be terrible at remembering the material you actually gave it.
 
-I kept creating the same problem twice: once when I learned something, and again when I forgot where I had put it.
+The system combines asynchronous ingestion, sparse + dense retrieval, reranking, workspace isolation, grounded synthesis, and an abstraction layer for local and hosted models. The design goal is not to make an LLM sound certain. It is to make certainty earn its place.
 
-Notes lived in files. Files lived in folders. Useful answers were buried in old repositories and screenshots. Everything was technically searchable. None of it was pleasant enough to become a habit.
+## The hard part
 
-Engram started as an attempt to make memory less annoying.
+The model was rarely the hardest component. Retrieval quality, ingestion boundaries, tenant isolation, source attribution, and the failure path mattered more.
 
-## What I built
+The useful constraint became simple: when the evidence is not there, the system should say so instead of quietly filling the gap from training data.
 
-The system ingests documents and other sources in the background, keeps work isolated by workspace, retrieves with both sparse and dense signals, reranks candidates, and then asks a model to synthesize an answer from that evidence.
+## Architecture
 
-The important architectural choice is that slow ingestion is not allowed to block the main request path.
+The application separates the request path from ingestion work. Redis and Celery handle background processing; PostgreSQL + pgvector holds structured and vector data; the retrieval layer fuses lexical and semantic evidence before reranking it; the synthesis layer is required to cite the evidence it uses.
 
-## The part I care about
+## What changed
 
-A model can produce an answer even when the evidence is weak. I don't find that impressive.
-
-The interesting behavior is what happens when the system cannot support an answer.
-
-Engram is designed around grounded synthesis and an explicit not-found path instead of making something up because the model feels like it should.
-
-## Where it is now
-
-Still in development.
-
-Some parts are solid. Some are being pulled apart because I learned they were solving an engineering problem rather than a user problem. That distinction gets more expensive the later you discover it.
+The project moved from “chat with my files” toward an actual memory system. That shift changed the architecture, the boundaries, and the kinds of bugs worth worrying about.

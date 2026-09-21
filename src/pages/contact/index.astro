@@ -1,46 +1,35 @@
 ---
-import Base from '../../layouts/Base.astro';
+import Shell from '../../layouts/Shell.astro';
+import { site } from '../../data/site';
 ---
 
-<Base title="Contact — Qasim Sethar" description="Get in touch with Qasim Sethar.">
-  <section class="shell page-hero">
-    <div class="page-hero__top">
-      <span>04 / CONTACT</span>
-      <span>HELLO@QASIMIO.ME</span>
-    </div>
-    <div class="contact-grid">
-      <div>
-        <p class="eyebrow eyebrow--coral">LET'S TALK</p>
-        <h1>
-          Bring me the <em>strange one.</em>
-        </h1>
-        <p class="contact-copy">
-          A hard technical problem. A product you are trying to make real. An open-source thing that
-          needs another pair of eyes. Or just a good conversation.
-        </p>
-      </div>
-      <form class="contact-form" data-contact-form>
-        <div class="form-row">
-          <div class="field">
-            <label for="name">Your name</label>
-            <input id="name" name="name" autocomplete="name" required />
-          </div>
-          <div class="field">
-            <label for="email">Email</label>
-            <input id="email" name="email" type="email" autocomplete="email" required />
-          </div>
-        </div>
-        <div class="field">
-          <label for="message">What are you building?</label>
-          <textarea id="message" name="message" rows="7" required></textarea>
-        </div>
-        <div class="form-footer">
-          <small>The form opens your mail client. Your address never leaves this page.</small>
-          <button class="button button--primary" type="submit">
-            Compose email ↗
-          </button>
-        </div>
-      </form>
+<Shell current="about" title="Contact — Qasim Sethar">
+  <section class="page-section" style="padding-top:18px">
+    <span class="eyebrow">CONTACT</span>
+    <h1 style="margin:14px 0 0;color:var(--white);font-size:clamp(52px,7vw,92px);line-height:.98;letter-spacing:-.06em;font-weight:700">
+      Talk to me.
+    </h1>
+    <p class="hero-copy">Email is easiest. I read it.</p>
+    <div class="hero-actions">
+      <a class="btn btn-solid" href={`mailto:${site.email}`}>
+        Email {site.email} ↗
+      </a>
     </div>
   </section>
-</Base>
+  <section class="page-section">
+    <div class="section-head">
+      <span class="section-num">01</span>
+      <span class="section-title">Other ways</span>
+    </div>
+    <div class="now-grid" style="grid-template-columns:repeat(2,1fr)">
+      {site.socials
+        .filter((s) => ['GitHub', 'LinkedIn', 'X', 'YouTube'].includes(s.label))
+        .map((item) => (
+          <a class="now-item" href={item.url} target="_blank" rel="noreferrer">
+            <small>{item.short}</small>
+            <strong>{item.label} ↗</strong>
+          </a>
+        ))}
+    </div>
+  </section>
+</Shell>

@@ -1,13 +1,12 @@
 ---
-title: 'GitHub invited me to the Maintainer Community.'
-excerpt: "I read the email twice. FOLDR started as a stupidly practical file sorter. Somewhere along the way, people I don't know started using it."
+title: 'I got invited to GitHub’s Maintainer Community.'
 publishedAt: 2026-09-17
-type: achievement
-tags: [github, open-source, foldr]
+type: 'people'
+tags: ['github', 'open-source']
 ---
 
-I read the email twice because I thought I had opened the wrong thing.
+I got the invitation today.
 
-FOLDR started as a very practical little project: I was tired of sorting the same files by hand. Now people I don't know are opening issues, installing it, and telling me what breaks on their machines.
+It felt bigger than a badge because it came after a lot of small, boring things: maintaining a project, answering issues, reviewing work, contributing in public, and gradually becoming responsible for software other people can actually install.
 
-That is a strange transition. A repository stops being just yours at some point, and you don't really get a notification when it happens.
+Still processing it.
