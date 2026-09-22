@@ -1,0 +1,28 @@
+---
+const { kind, label } = Astro.props;
+---
+
+<div
+  class:list={['project-art', `project-art--${kind}`]}
+  aria-label={`${label} project visual`}
+  role="img"
+>
+  <div class="project-art__window">
+    <div class="project-art__bar">
+      <span class="project-art__dot"></span>
+      <span class="project-art__dot"></span>
+      <span class="project-art__dot"></span>
+    </div>
+    <div class="project-art__body">
+      <div class="project-art__label">{label} / system</div>
+      <div class="project-art__line w1"></div>
+      <div class="project-art__line w2"></div>
+      <div class="project-art__line w3"></div>
+      <div class="project-art__chips">
+        <span class="project-art__chip">VERIFY</span>
+        <span class="project-art__chip">RETRIEVE</span>
+        <span class="project-art__chip">SHIP</span>
+      </div>
+    </div>
+  </div>
+</div>

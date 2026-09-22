@@ -1,0 +1,57 @@
+<header class="nav" data-nav>
+  <div class="nav__inner">
+    <a class="nav__logo" href="/" aria-label="Qasim Sethar home">
+      <img src="/identity/mq-mark.png" alt="MQ" width="44" height="44" />
+      <span class="nav__logo-back" aria-hidden="true"></span>
+    </a>
+
+    <nav class="nav__links" aria-label="Primary navigation">
+      <a data-index="01" href="/#about">
+        About
+      </a>
+      <a data-index="02" href="/#jobs">
+        Experience
+      </a>
+      <a data-index="03" href="/#projects">
+        Work
+      </a>
+      <a data-index="04" href="/#contact">
+        Contact
+      </a>
+      <a class="nav__resume" href="/resume.pdf" target="_blank" rel="noopener noreferrer">
+        Resume
+      </a>
+    </nav>
+
+    <button
+      class="nav__menu"
+      type="button"
+      data-mobile-menu
+      aria-expanded="false"
+      aria-controls="mobile-menu"
+      aria-label="Open navigation"
+    >
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+  </div>
+
+  <div id="mobile-menu" class="mobile-menu" data-mobile-panel aria-hidden="true">
+    <nav aria-label="Mobile navigation">
+      <a href="/#about">01. About</a>
+      <a href="/#jobs">02. Experience</a>
+      <a href="/#projects">03. Work</a>
+      <a href="/journal/">04. Journal</a>
+      <a href="/#contact">05. Contact</a>
+      <a
+        class="big-button mobile-menu__resume"
+        href="/resume.pdf"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        Resume
+      </a>
+    </nav>
+  </div>
+</header>

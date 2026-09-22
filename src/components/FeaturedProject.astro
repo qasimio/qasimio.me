@@ -1,0 +1,74 @@
+---
+const { project, index } = Astro.props;
+---
+
+<li class:list={['featured-project', { 'featured-project--reverse': index % 2 === 1 }]}>
+  <div class="featured-project__image reveal">
+    <div class={`project-visual project-visual--${project.slug}`} aria-hidden="true">
+      <div class="project-visual__chrome">
+        <i></i>
+        <i></i>
+        <i></i>
+        <span>{project.title.toUpperCase()}</span>
+      </div>
+      {project.slug === 'engram' && (
+        <div class="visual-graph">
+          <b>E</b>
+          <i></i>
+          <i></i>
+          <i></i>
+          <em>memory</em>
+          <em>retrieval</em>
+          <em>evidence</em>
+        </div>
+      )}
+      {project.slug === 'operon' && (
+        <div class="visual-terminal">
+          <code>verify(change)</code>
+          <span>✓ filesystem match</span>
+          <span>✓ syntax valid</span>
+          <span>✓ approval required</span>
+        </div>
+      )}
+      {project.slug === 'foldr' && (
+        <div class="visual-files">
+          <span>documents/</span>
+          <span>screenshots/</span>
+          <span>invoices/</span>
+          <span>duplicates/</span>
+          <strong>UNDO READY</strong>
+        </div>
+      )}
+    </div>
+  </div>
+  <div class="featured-project__content reveal">
+    <p class="featured-project__overline">{project.eyebrow}</p>
+    <h3>
+      <a href={`/archive/${project.slug}/`}>{project.title}</a>
+    </h3>
+    <div class="featured-project__description">
+      <p>{project.description}</p>
+    </div>
+    <ul class="featured-project__tech" aria-label={`${project.title} technologies`}>
+      {project.tech.map((tech) => (
+        <li>{tech}</li>
+      ))}
+    </ul>
+    <div class="featured-project__links">
+      <a
+        href={project.github}
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label={`${project.title} on GitHub`}
+      >
+        ↗ GitHub
+      </a>
+      <a href={`/archive/${project.slug}/`}>Read case study ↗</a>
+      {project.external && (
+        <a href={project.external} target="_blank" rel="noopener noreferrer">
+          Live ↗
+        </a>
+      )}
+    </div>
+  </div>
+</li>

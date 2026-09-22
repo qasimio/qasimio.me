@@ -1,0 +1,29 @@
+---
+import { site } from '../data/site';
+import Icons from './Icons.astro';
+---
+
+<footer class="footer">
+  <div class="footer__inner">
+    <a class="footer__brand" href="/">
+      Qasim Sethar.
+    </a>
+    <p>Built, maintained, and still being changed.</p>
+    <div class="footer__socials">
+      {site.socials.map((item) => (
+        <a href={item.url} target="_blank" rel="noopener noreferrer" aria-label={item.name}>
+          <Icons name={item.name.toLowerCase() === 'x' ? 'x' : item.name.toLowerCase()} size={20} />
+        </a>
+      ))}
+      <a href={`mailto:${site.email}`} aria-label="Email">
+        @
+      </a>
+    </div>
+  </div>
+  <div class="footer__credit">
+    <span>Designed &amp; built by Qasim Sethar</span>
+    <a href="https://github.com/bchiang7/v4" target="_blank" rel="noopener noreferrer">
+      Inspired by Brittany Chiang v4 ↗
+    </a>
+  </div>
+</footer>

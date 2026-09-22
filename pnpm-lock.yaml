@@ -16,15 +16,24 @@ importers:
       '@astrojs/sitemap':
         specifier: 3.7.4
         version: 3.7.4
+      '@fontsource-variable/fira-code':
+        specifier: 5.2.6
+        version: 5.2.6
       '@fontsource-variable/inter':
         specifier: 5.3.0
         version: 5.3.0
       '@tailwindcss/vite':
         specifier: 4.3.3
         version: 4.3.3(vite@8.3.0(@types/node@24.13.6)(esbuild@0.28.2)(jiti@2.7.0)(yaml@2.9.1))
+      animejs:
+        specifier: 3.2.2
+        version: 3.2.2
       astro:
         specifier: 7.3.3
         version: 7.3.3(@emnapi/core@1.11.3)(@emnapi/runtime@1.11.3)(@types/node@24.13.6)(jiti@2.7.0)(yaml@2.9.1)
+      scrollreveal:
+        specifier: 4.0.9
+        version: 4.0.9
       sharp:
         specifier: 0.35.4
         version: 0.35.4(@types/node@24.13.6)
@@ -679,6 +688,12 @@ packages:
     engines: { node: '>=18' }
     cpu: [x64]
     os: [win32]
+
+  '@fontsource-variable/fira-code@5.2.6':
+    resolution:
+      {
+        integrity: sha512-TZe+3xOB0JofZOTNeITYVsD1y/OiFucwTmcmhC19mj+GOgCnNkbp7bb1Jobfg+HjlAHr11HdptENKu0B+VkWLg==,
+      }
 
   '@fontsource-variable/inter@5.3.0':
     resolution:
@@ -1492,6 +1507,12 @@ packages:
       }
     hasBin: true
 
+  animejs@3.2.2:
+    resolution:
+      {
+        integrity: sha512-Ao95qWLpDPXXM+WrmwcKbl6uNlC5tjnowlaRYtuVDHHoygjtIPfDUoK9NthrlZsQSKjZXlmji2TrBUAVbiH0LQ==,
+      }
+
   ansi-regex@6.3.0:
     resolution:
       {
@@ -2005,6 +2026,18 @@ packages:
     engines: { node: '>=20' }
     hasBin: true
 
+  is-dom-node-list@1.2.1:
+    resolution:
+      {
+        integrity: sha512-P1H071iT5TGG8pAHslhrLDo/tQLYc8tGuWABVqhGU4l2mm7aDNb9cx2myQ2AujEQO6B2cAujcW4a0/+6UfXInw==,
+      }
+
+  is-dom-node@1.0.4:
+    resolution:
+      {
+        integrity: sha512-NEnTHKCeyGJTL0cKdzATF8SWzyTMYf5CbNKWBvsXvyMxZG32g+a09qkeCbrfQNLTD85CbPeHb4YjIJCjyzF0yA==,
+      }
+
   is-plain-obj@4.1.0:
     resolution:
       {
@@ -2350,6 +2383,12 @@ packages:
         integrity: sha512-Yw0ECSpJoViF1qTU4DC6NwtC4aWGt1EkzaQB8KPPyCRR8z9TWeV0HbEFGTO+ZY1wB22zmxnJqhPyTpOVCpeHTA==,
       }
 
+  miniraf@1.0.0:
+    resolution:
+      {
+        integrity: sha512-XpvhtJYzVrpXe+JoAthrT9E40NIrSDDMcdHEYL2M+lR/OCas0nadetcBBq/MWYqlgV5aDWVQ3mfAqd+fG6Y/EQ==,
+      }
+
   mrmime@2.0.1:
     resolution:
       {
@@ -2646,6 +2685,12 @@ packages:
         integrity: sha512-6VwtthbV4o/7+OaAF9I5L5V3llLEsoPyq9P1JVXkedTP33c7MfCG0/5NOPcSJn0TzXcG9YUrR0gQSWioew3LDg==,
       }
 
+  rematrix@0.3.0:
+    resolution:
+      {
+        integrity: sha512-xB/9ZvJIKaDgXX0qkvV9/pLD8zK23A6TVV6F8Vhsl+SrxbBeVYutz5uszxgC6Rt3RP9LZiH8OXaYjr+x6WXWmQ==,
+      }
+
   request-light@0.5.8:
     resolution:
       {
@@ -2710,6 +2755,12 @@ packages:
         integrity: sha512-42tBVwLWnaQvW5zc4HbZrTuWccECCZfBi92FDuwtqxasH+JbPB3/FOKb1m222K42R4WxuxzzMsTswfzgtSu64Q==,
       }
     engines: { node: '>=11.0.0' }
+
+  scrollreveal@4.0.9:
+    resolution:
+      {
+        integrity: sha512-fefGvzVS8YbXbDK1+T0kvy2yqxaiBJZeGUhPeqajf+7sGqtX4xikbKGAlzQuPCpswAMswx94ZwhDjXKnRIqW1w==,
+      }
 
   semver@7.8.5:
     resolution:
@@ -2831,6 +2882,12 @@ packages:
         integrity: sha512-uxc/zpqFg6x7C8vOE7lh6Lbda8eEL9zmVm/PLeTPBRhh1xCgdWaQ+J1CUieGpIfm2HdtsUpRv+HshiasBMcc6A==,
       }
     engines: { node: '>=6' }
+
+  tealight@0.3.6:
+    resolution:
+      {
+        integrity: sha512-Dys3N8jFBThD9pNVpPCyUiu6DfWcTBdqWQJIvnAuVaFkGEdrPBJ43070vVbn6sTlLvn2IQK2zFW4FrVIrTo8eQ==,
+      }
 
   tiny-inflate@1.0.3:
     resolution:
@@ -3336,10 +3393,10 @@ packages:
       }
     engines: { node: ^20.19.0 || ^22.12.0 || >=23 }
 
-  yargs@18.1.0:
+  yargs@18.2.0:
     resolution:
       {
-        integrity: sha512-2rAgRKu54VsHkqI0/tYkmluGXHD4KW7yZoycuqDQ15QOTnc2VVfy0nN/1eMhnQLO00A+dwtK20xuCnc1YGeUyg==,
+        integrity: sha512-9OpKOLeaoNFecEp7P6iYbzze/5CqWoH7N3SMs/6y1XF4nMvFMspEGZzJ6uFi9MmQwXhyzqYoSEKO3tvA3Z/o2w==,
       }
     engines: { node: ^20.19.0 || ^22.12.0 || >=23 }
 
@@ -3376,7 +3433,7 @@ snapshots:
       chokidar: 4.0.3
       kleur: 4.1.5
       typescript: 6.0.3
-      yargs: 18.1.0
+      yargs: 18.2.0
     transitivePeerDependencies:
       - '@emnapi/runtime'
       - prettier
@@ -3706,6 +3763,8 @@ snapshots:
 
   '@esbuild/win32-x64@0.28.2':
     optional: true
+
+  '@fontsource-variable/fira-code@5.2.6': {}
 
   '@fontsource-variable/inter@5.3.0': {}
 
@@ -4119,6 +4178,8 @@ snapshots:
     dependencies:
       process-ancestry: 0.1.0
 
+  animejs@3.2.2: {}
+
   ansi-regex@6.3.0: {}
 
   ansi-styles@6.2.3: {}
@@ -4481,6 +4542,12 @@ snapshots:
 
   is-docker@4.0.0: {}
 
+  is-dom-node-list@1.2.1:
+    dependencies:
+      is-dom-node: 1.0.4
+
+  is-dom-node@1.0.4: {}
+
   is-plain-obj@4.1.0: {}
 
   is-unsafe@2.0.2: {}
@@ -4646,6 +4713,8 @@ snapshots:
 
   micromark-util-types@2.0.2: {}
 
+  miniraf@1.0.0: {}
+
   mrmime@2.0.1: {}
 
   muggle-string@0.4.1: {}
@@ -4757,6 +4826,8 @@ snapshots:
     dependencies:
       regex-utilities: 2.3.0
 
+  rematrix@0.3.0: {}
+
   request-light@0.5.8: {}
 
   request-light@0.7.0: {}
@@ -4816,6 +4887,12 @@ snapshots:
       '@bruits/satteri-win32-x64-msvc': 0.10.5
 
   sax@1.6.1: {}
+
+  scrollreveal@4.0.9:
+    dependencies:
+      miniraf: 1.0.0
+      rematrix: 0.3.0
+      tealight: 0.3.6
 
   semver@7.8.5: {}
 
@@ -4919,6 +4996,11 @@ snapshots:
   tailwindcss@4.3.3: {}
 
   tapable@2.3.3: {}
+
+  tealight@0.3.6:
+    dependencies:
+      is-dom-node: 1.0.4
+      is-dom-node-list: 1.2.1
 
   tiny-inflate@1.0.3: {}
 
@@ -5176,7 +5258,7 @@ snapshots:
 
   yargs-parser@22.0.0: {}
 
-  yargs@18.1.0:
+  yargs@18.2.0:
     dependencies:
       cliui: 9.0.1
       escalade: 3.2.0

@@ -9,8 +9,8 @@ export default defineConfig({
     defaultStrategy: 'hover',
     prefetchAll: false,
   },
+  integrations: [mdx(), sitemap()],
   vite: {
     plugins: [tailwindcss()],
   },
-  integrations: [mdx(), sitemap()],
 });

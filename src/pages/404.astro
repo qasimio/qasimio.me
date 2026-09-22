@@ -1,16 +1,24 @@
 ---
-import Shell from '../layouts/Shell.astro';
+import Layout from '../layouts/Layout.astro';
+import Nav from '../components/Nav.astro';
+import SideRails from '../components/SideRails.astro';
 ---
 
-<Shell title="404 — Qasim Sethar">
-  <section class="page-section hero" style="min-height:72vh">
-    <span class="eyebrow">404 · LOST</span>
-    <h1>This page went somewhere else.</h1>
-    <p class="hero-copy">Probably my fault. Probably your fault. The server is not taking sides.</p>
-    <div class="hero-actions">
-      <a class="btn btn-solid" href="/">
-        Go home ↗
+<Layout title="404 — Qasim Sethar">
+  <Nav />
+  <SideRails />
+  <main id="content" class="site-content">
+    <section class="section" style="padding-top:200px; min-height:75vh;">
+      <p class="overline">404. Not found</p>
+      <h1 style="font-size:clamp(60px,12vw,120px); color:var(--lightest-slate);">
+        This page got lost.
+      </h1>
+      <p style="max-width:560px; font-size:20px;">
+        Which is slightly embarrassing for a website dedicated to keeping records.
+      </p>
+      <a class="big-button" href="/" style="margin-top:30px;">
+        Take me home ↗
       </a>
-    </div>
-  </section>
-</Shell>
+    </section>
+  </main>
+</Layout>

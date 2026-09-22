@@ -1,0 +1,26 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Nav from '../../components/Nav.astro';
+import SideRails from '../../components/SideRails.astro';
+import ProjectCard from '../../components/ProjectCard.astro';
+import { featuredProjects, otherProjects } from '../../data/site';
+---
+
+<Layout title="Archive — Qasim Sethar" description="Projects and experiments by Qasim Sethar.">
+  <Nav />
+  <SideRails />
+  <main id="content" class="site-content">
+    <section class="section" style="padding-top: 180px; min-height: 70vh;">
+      <h1 class="numbered-heading">Archive</h1>
+      <p style="max-width: 700px; font-size: 20px; margin-bottom: 50px;">
+        A more complete list of projects, experiments, and useful accidents. The homepage keeps the
+        signal high. This is where the rest lives.
+      </p>
+      <ul class="projects-grid">
+        {[...featuredProjects, ...otherProjects].map((project) => (
+          <ProjectCard project={project} />
+        ))}
+      </ul>
+    </section>
+  </main>
+</Layout>

@@ -1,218 +1,233 @@
 ---
-import Shell from '../layouts/Shell.astro';
-import { getCollection } from 'astro:content';
-import { site, timeline, professional } from '../data/site';
-import qasim from '../assets/identity/qasim.jpg';
+import Layout from '../layouts/Layout.astro';
+import Nav from '../components/Nav.astro';
+import SideRails from '../components/SideRails.astro';
+import Loader from '../components/Loader.astro';
+import FeaturedProject from '../components/FeaturedProject.astro';
 import ProjectCard from '../components/ProjectCard.astro';
 import NoteRow from '../components/NoteRow.astro';
-const projects = (await getCollection('projects')).sort((a, b) => a.data.order - b.data.order);
-const featured = projects.filter((p) => p.data.featured);
-const notes = (await getCollection('notes', ({ data }) => !data.draft))
-  .sort((a, b) => b.data.publishedAt.getTime() - a.data.publishedAt.getTime())
-  .slice(0, 5);
+import Icons from '../components/Icons.astro';
+import {
+  featuredProjects,
+  otherProjects,
+  notes,
+  experience,
+  timeline,
+  site,
+  skills,
+} from '../data/site';
 ---
 
-<Shell current="home" title={`${site.name} — ${site.role}`}>
-  <section class="page-section hero" id="top">
-    <span class="eyebrow">ABOUT · {site.location}</span>
-    <h1>
-      I build <strong>software</strong>, then stay close enough to see what it becomes.
-    </h1>
-    <p class="hero-copy">
-      I am Qasim Sethar. I build products, developer tools, AI systems, and small pieces of software
-      that remove annoyances I cannot stop noticing. I care about the engineering, but also the part
-      where someone else actually uses the thing.
-    </p>
-    <div class="hero-actions">
-      <a class="btn btn-solid" href="/work/">
-        See the work ↗
-      </a>
-      <a class="btn" href="/about/">
-        More about me ↗
-      </a>
-    </div>
-  </section>
+<Layout
+  title="Qasim Sethar — Software Engineer"
+  description="Qasim Sethar builds software, systems, and products."
+  home
+>
+  <Loader />
+  <Nav />
+  <SideRails />
 
-  <section class="page-section reveal" id="about">
-    <div class="section-head">
-      <span class="section-num">01</span>
-      <span class="section-title">About</span>
-    </div>
-    <div class="about-grid">
-      <div class="about-photo-wrap">
-        <img class="about-photo" src={qasim.src} alt="Qasim Sethar" />
+  <main id="content" class="site-content">
+    <section class="section hero" id="hero">
+      <div class="hero__content">
+        <p class="hero__intro reveal">Hi, my name is</p>
+        <h1 class="hero__name reveal">Qasim Sethar.</h1>
+        <h2 class="hero__role reveal">I build things for the web.</h2>
+        <h3 class="hero__subrole reveal">And systems around them.</h3>
+        <p class="hero__description reveal">
+          I’m a computer science student and software engineer who likes building useful systems,
+          shipping them, and learning what changes when someone else actually uses them.
+        </p>
+        <a class="big-button hero__button reveal" href="#about">
+          Get to know me ↘
+        </a>
       </div>
-      <div class="copy-stack">
-        <p>
-          I'm a Computer Science student at <strong>{site.university}</strong> and spend a
-          suspicious amount of my free time building software instead of using it normally.
-        </p>
-        <p>
-          Some of the work is deep systems work. Some of it is tiny utility software. Some of it is
-          organizing people around projects. The common thread is that I like owning the problem
-          from “this is annoying” to “someone can use this.”
-        </p>
-        <p>
-          I maintain <strong>FOLDR</strong>, build <strong>Engram</strong> and{' '}
-          <strong>Operon</strong>, helped build <strong>SlotFinder</strong>, and created{' '}
-          <strong>SIBA Launchpad</strong> to keep student work visible after the semester ends.
-        </p>
-        <div class="link-row">
-          <a class="text-link" href="/about/">
-            Read the longer version ↗
-          </a>
-          <a class="text-link" href="/resume.pdf">
-            Résumé ↗
-          </a>
+    </section>
+
+    <section class="section reveal" id="about">
+      <h2 class="numbered-heading">About Me</h2>
+      <div class="about__grid">
+        <div class="about__text">
+          <p>
+            Hello! I’m Qasim. I spend a lot of my time making software and an almost equal amount of
+            time figuring out why the software I just made is behaving strangely.
+          </p>
+          <p>
+            I started with projects because I wanted to understand how things worked. That turned
+            into search, retrieval, AI systems, developer tools, and the more annoying question of
+            what happens after the code leaves the editor.
+          </p>
+          <p>
+            I care about the whole loop: finding a problem, building the thing, making it reliable,
+            putting it somewhere people can use, and listening when reality disagrees with the plan.
+          </p>
+          <p>Some of the things I work with:</p>
+          <ul class="about__skills">
+            {skills.map((skill) => (
+              <li>{skill}</li>
+            ))}
+          </ul>
         </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="page-section reveal" id="proof">
-    <div class="section-head">
-      <span class="section-num">02</span>
-      <span class="section-title">A little proof</span>
-    </div>
-    <div class="proof-grid">
-      <div class="proof-item">
-        <strong>100+</strong>
-        <span>GitHub stars · FOLDR</span>
-      </div>
-      <div class="proof-item">
-        <strong>7.3k+</strong>
-        <span>tracked downloads · FOLDR</span>
-      </div>
-      <div class="proof-item">
-        <strong>60+</strong>
-        <span>student projects reviewed</span>
-      </div>
-      <div class="proof-item">
-        <strong>35+</strong>
-        <span>students and peers guided</span>
-      </div>
-      <div class="proof-item">
-        <strong>24h</strong>
-        <span>hackathon organized · Sibathon ’26</span>
-      </div>
-      <div class="proof-item">
-        <strong>2</strong>
-        <span>GitHub organizations maintained</span>
-      </div>
-    </div>
-  </section>
-
-  <section class="page-section reveal" id="now">
-    <div class="section-head">
-      <span class="section-num">03</span>
-      <span class="section-title">Right now</span>
-    </div>
-    <div class="now-grid">
-      {site.now.map(([label, value]) => (
-        <div class="now-item">
-          <small>{label}</small>
-          <strong>{value}</strong>
-        </div>
-      ))}
-    </div>
-  </section>
-
-  <section class="page-section reveal" id="experience">
-    <div class="section-head">
-      <span class="section-num">04</span>
-      <span class="section-title">The timeline</span>
-    </div>
-    <p class="work-intro">
-      A chronological record of the turns that changed what I build. Not a résumé. More like a
-      trail.
-    </p>
-    <div class="timeline">
-      {timeline.map((item) => (
-        <article class="timeline-item reveal">
-          <span class="timeline-dot"></span>
-          <time class="timeline-date">{item.date}</time>
-          <h3 class="timeline-title">{item.title}</h3>
-          <div class="timeline-place">{item.place}</div>
-          <p class="timeline-copy">{item.text}</p>
-        </article>
-      ))}
-    </div>
-  </section>
-
-  <section class="page-section reveal" id="projects">
-    <div class="section-head">
-      <span class="section-num">05</span>
-      <span class="section-title">Projects</span>
-    </div>
-    <p class="work-intro">The things I spent enough time on to deserve a page.</p>
-    <div class="project-list" style="margin-top:25px">
-      {featured.map((entry) => (
-        <ProjectCard entry={entry} />
-      ))}
-    </div>
-    <div class="hero-actions">
-      <a class="btn" href="/work/">
-        View all work ↗
-      </a>
-    </div>
-  </section>
-
-  <section class="page-section reveal" id="writing">
-    <div class="section-head">
-      <span class="section-num">06</span>
-      <span class="section-title">Writing</span>
-    </div>
-    <p class="work-intro">
-      Short notes when a thought is worth keeping. Longer writing when a subject refuses to fit in a
-      paragraph.
-    </p>
-    <div class="notes" style="margin-top:20px">
-      {notes.map((entry) => (
-        <NoteRow entry={entry} />
-      ))}
-    </div>
-    <div class="hero-actions">
-      <a class="btn" href="/journal/">
-        Open the journal ↗
-      </a>
-    </div>
-  </section>
-
-  <section class="page-section reveal" id="professional">
-    <div class="section-head">
-      <span class="section-num">07</span>
-      <span class="section-title">Work outside my own repos</span>
-    </div>
-    <div class="experience">
-      {professional.map((item, index) => (
-        <article class="experience-row">
-          <div class="experience-time">0{index + 1}</div>
-          <div>
-            <div class="experience-place">{item[0]}</div>
-            <div class="experience-role">{item[1]}</div>
-            <p class="experience-copy">{item[2]}</p>
+        <div class="about__photo reveal">
+          <div class="about__photo-wrap">
+            <img
+              src="/identity/qasim.jpg"
+              alt="Portrait of Qasim Sethar"
+              width="500"
+              height="500"
+              loading="lazy"
+            />
           </div>
-        </article>
-      ))}
-    </div>
-  </section>
+          <p class="about__caption">Qasim / qasimio · Sukkur, Pakistan</p>
+        </div>
+      </div>
+    </section>
 
-  <section class="page-section reveal" id="contact">
-    <div class="section-head">
-      <span class="section-num">08</span>
-      <span class="section-title">Contact</span>
-    </div>
-    <p class="hero-copy" style="max-width:48ch">
-      If you are building something difficult, need another engineer in the room, or want to talk
-      about a problem that has been annoying you for too long, email is easiest.
-    </p>
-    <div class="hero-actions">
-      <a class="btn btn-solid" href={`mailto:${site.email}`}>
-        Email {site.email} ↗
+    <section class="section jobs reveal" id="jobs" data-jobs>
+      <h2 class="numbered-heading">Where I’ve Worked</h2>
+      <div class="jobs__inner">
+        <div class="jobs__tabs" role="tablist" aria-label="Experience tabs">
+          {experience.map((job, index) => (
+            <button
+              class:list={['jobs__tab', { 'is-active': index === 0 }]}
+              type="button"
+              role="tab"
+              data-job-tab
+              aria-selected={index === 0}
+              id={`job-tab-${index}`}
+              aria-controls={`job-panel-${index}`}
+              tabindex={index === 0 ? 0 : -1}
+            >
+              {job.company}
+            </button>
+          ))}
+          <span class="jobs__indicator" data-job-indicator aria-hidden="true"></span>
+        </div>
+        <div class="jobs__panel">
+          {experience.map((job, index) => (
+            <div
+              data-job-panel
+              id={`job-panel-${index}`}
+              role="tabpanel"
+              aria-labelledby={`job-tab-${index}`}
+              hidden={index !== 0}
+            >
+              <h3 class="jobs__title">
+                {job.title}
+                {job.url ? (
+                  <span class="jobs__company">
+                    {' '}
+                    @{' '}
+                    <a class="inline-link" href={job.url} target="_blank" rel="noopener noreferrer">
+                      {job.company}
+                    </a>
+                  </span>
+                ) : (
+                  <span class="jobs__company"> @ {job.company}</span>
+                )}
+              </h3>
+              <p class="jobs__range">{job.range}</p>
+              <ul>
+                {job.bullets.map((bullet) => (
+                  <li>{bullet}</li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <section class="section reveal" id="timeline">
+      <h2 class="numbered-heading">A trail of things happening</h2>
+      <p class="timeline__intro">
+        The résumé version is neat. This version is closer to how building actually happens: a line
+        of projects, people, small bets, and things that changed the next thing I made.
+      </p>
+      <div class="timeline__track">
+        {timeline.map((item) => (
+          <article class="timeline__item">
+            <span class="timeline__date">{item.date}</span>
+            <h3 class="timeline__title">{item.title}</h3>
+            <p class="timeline__meta">{item.meta}</p>
+            <p class="timeline__body">{item.body}</p>
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <section class="section reveal" id="projects">
+      <h2 class="numbered-heading">Some Things I’ve Built</h2>
+      <ul class="featured__grid">
+        {featuredProjects.map((project, index) => (
+          <FeaturedProject project={project} index={index} />
+        ))}
+      </ul>
+    </section>
+
+    <section class="section reveal" id="other-projects">
+      <h2 class="numbered-heading">Other Noteworthy Projects</h2>
+      <a class="archive-link" href="/archive/">
+        view the archive ↗
       </a>
-      <a class="btn" href="/contact/">
-        Contact page ↗
+      <ul class="projects-grid">
+        {otherProjects.map((project) => (
+          <ProjectCard project={project} />
+        ))}
+      </ul>
+    </section>
+
+    <section class="section reveal" id="writing">
+      <h2 class="numbered-heading">Some writing</h2>
+      <ul class="notes-list">
+        {notes.slice(0, 4).map((note) => (
+          <NoteRow note={note} />
+        ))}
+      </ul>
+      <a class="archive-link" href="/journal/">
+        view the journal ↗
       </a>
-    </div>
-  </section>
-</Shell>
+    </section>
+
+    <section class="section contact reveal" id="contact">
+      <p class="overline">04. What’s Next?</p>
+      <h2 class="contact__title">Get In Touch</h2>
+      <p class="contact__copy">
+        Have a hard problem, a strange idea, or something you want to build? Send me the useful
+        part.
+      </p>
+      <a class="big-button contact__email" href={`mailto:${site.email}`}>
+        Say Hello ↗
+      </a>
+      <form class="contact__form" data-contact-form>
+        <input
+          class="contact__input"
+          type="text"
+          name="name"
+          placeholder="Your name"
+          autocomplete="name"
+          required
+        />
+        <input
+          class="contact__input"
+          type="email"
+          name="email"
+          placeholder="you@example.com"
+          autocomplete="email"
+          required
+        />
+        <textarea
+          class="contact__input"
+          name="message"
+          rows="5"
+          placeholder="What are you building?"
+          required
+        ></textarea>
+        <button class="big-button" type="submit">
+          Compose email ↗
+        </button>
+        <p class="contact__form-note">No contact database. The form opens your email client.</p>
+      </form>
+    </section>
+  </main>
+</Layout>

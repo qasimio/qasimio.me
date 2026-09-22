@@ -1,0 +1,40 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Nav from '../../components/Nav.astro';
+import SideRails from '../../components/SideRails.astro';
+import { milestones } from '../../data/site';
+---
+
+<Layout title="Timeline — Qasim Sethar">
+  <Nav />
+  <SideRails />
+  <main class="site-content">
+    <section class="section hero" style="height:auto;min-height:55vh">
+      <div class="hero__content">
+        <p class="overline">Timeline</p>
+        <h2>What changed next.</h2>
+        <p>
+          A chronological record of the work, people, and decisions that changed the direction of
+          the next thing.
+        </p>
+      </div>
+    </section>
+    <section class="section">
+      <div class="timeline__track">
+        {milestones.map(([date, title, place, copy]) => (
+          <article class="timeline__item">
+            <span class="timeline__date">{date}</span>
+            <h3 class="timeline__title">{title}</h3>
+            <p class="timeline__place">{place}</p>
+            <p class="timeline__copy">{copy}</p>
+          </article>
+        ))}
+      </div>
+    </section>
+  </main>
+  <footer class="footer">
+    <div class="footer__credit">
+      <a href="/">← Back home</a>
+    </div>
+  </footer>
+</Layout>

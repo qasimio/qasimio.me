@@ -1,0 +1,21 @@
+---
+import { site } from '../data/site';
+---
+
+<aside class="side-rail side-rail--left" aria-label="Social links">
+  <ul>
+    {site.socials.map((item) => (
+      <li>
+        <a href={item.url} target="_blank" rel="noopener noreferrer" aria-label={item.name}>
+          <span aria-hidden="true">{item.short}</span>
+        </a>
+      </li>
+    ))}
+  </ul>
+</aside>
+
+<aside class="side-rail side-rail--right" aria-label="Email">
+  <a class="side-rail__email" href={`mailto:${site.email}`}>
+    {site.email}
+  </a>
+</aside>

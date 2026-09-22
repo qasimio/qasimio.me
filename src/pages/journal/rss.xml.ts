@@ -1,19 +1,16 @@
 import rss from '@astrojs/rss';
-import { getCollection } from 'astro:content';
-import { site } from '../../../data/site';
+import { notes } from '../../data/site';
 
 export async function GET(context) {
-  const notes = await getCollection('notes', ({ data }) => !data.draft);
   return rss({
-    title: `${site.name} — Journal`,
-    description: 'Short notes from Qasim Sethar.',
-    site: context.site,
-    items: notes
-      .sort((a, b) => b.data.publishedAt.getTime() - a.data.publishedAt.getTime())
-      .map((entry) => ({
-        title: entry.data.title,
-        pubDate: entry.data.publishedAt,
-        link: `/journal/notes/${entry.id}/`,
-      })),
+    title: 'Qasim Sethar — Journal',
+    description: 'Short notes from things Qasim built, learned, broke, and kept thinking about.',
+    site: context.site ?? 'https://qasimio.me',
+    items: notes.map((note) => ({
+      title: note.title,
+      description: note.excerpt,
+      pubDate: new Date(note.date),
+      link: note.href,
+    })),
   });
 }

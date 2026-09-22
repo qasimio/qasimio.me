@@ -1,0 +1,65 @@
+---
+import '../styles/global.css';
+import { ClientRouter } from 'astro:transitions';
+import { site } from '../data/site';
+import Footer from '../components/Footer.astro';
+
+const {
+  title = `${site.name} — Software Engineer`,
+  description = 'Qasim Sethar builds software, systems, and products.',
+  home = false,
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#0a192f" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={Astro.url.href} />
+    <meta property="og:image" content={new URL('/og.png', Astro.site).href} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={new URL('/og.png', Astro.site).href} />
+    <link rel="icon" href="/favicon.svg" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <link rel="canonical" href={Astro.url.href} />
+    <ClientRouter />
+    <script is:inline>
+      (() => {
+        document.documentElement.dataset.theme = 'dark';
+        document.documentElement.style.colorScheme = 'dark';
+      })();
+    </script>
+    <script
+      type="application/ld+json"
+      set:html={JSON.stringify({
+        '@context': 'https://schema.org',
+        '@type': 'Person',
+        name: 'Qasim Sethar',
+        url: 'https://qasimio.me',
+        sameAs: [
+          'https://github.com/qasimio',
+          'https://linkedin.com/in/qasimio',
+          'https://x.com/qasimiohq',
+          'https://www.youtube.com/@qasimiohq',
+        ],
+      })}
+    ></script>
+    <title>{title}</title>
+  </head>
+  <body class:list={{ 'is-loading': home }}>
+    <a class="skip-link" href="#content">
+      Skip to Content
+    </a>
+    <slot />
+    <Footer />
+    <script src="../scripts/site.ts"></script>
+  </body>
+</html>

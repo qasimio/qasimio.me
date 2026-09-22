@@ -1,94 +1,41 @@
 ---
-import Shell from '../../layouts/Shell.astro';
-import { getCollection } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+import Nav from '../../components/Nav.astro';
+import SideRails from '../../components/SideRails.astro';
 import NoteRow from '../../components/NoteRow.astro';
-const notes = (await getCollection('notes', ({ data }) => !data.draft)).sort(
-  (a, b) => b.data.publishedAt.getTime() - a.data.publishedAt.getTime(),
-);
-const essays = (await getCollection('essays', ({ data }) => !data.draft)).sort(
-  (a, b) => b.data.publishedAt.getTime() - a.data.publishedAt.getTime(),
-);
-const types = [...new Set(notes.map((n) => n.data.type))];
+import { notes } from '../../data/site';
 ---
 
-<Shell current="journal" title="Writing — Qasim Sethar">
-  <section class="page-section" style="padding-top:18px">
-    <span class="eyebrow">WRITING</span>
-    <h1 style="margin:14px 0 0;color:var(--white);font-size:clamp(54px,7vw,94px);line-height:.98;letter-spacing:-.06em;font-weight:700">
-      Things I don't want to forget.
-    </h1>
-    <p class="hero-copy">
-      Short notes from things I shipped, learned, broke, argued with, or could not stop thinking
-      about. Long-form appears when an idea earns the extra length.
-    </p>
-  </section>
-  <section class="page-section">
-    <div class="section-head">
-      <span class="section-num">01</span>
-      <span class="section-title">Notes</span>
-    </div>
-    <div class="filter-row" data-note-filters>
-      <button class="filter-btn" data-note-filter="all" aria-pressed="true">
-        All
-      </button>
-      {types.map((type) => (
-        <button class="filter-btn" data-note-filter={type} aria-pressed="false">
-          {type}
-        </button>
-      ))}
-    </div>
-    <div class="notes">
-      {notes.map((entry) => (
-        <NoteRow entry={entry} />
-      ))}
-    </div>
-  </section>
-  <section class="page-section">
-    <div class="section-head">
-      <span class="section-num">02</span>
-      <span class="section-title">Essays</span>
-    </div>
-    {essays.length ? (
-      <div class="notes">
-        {essays.map((entry) => (
-          <a class="note-row" href={`/journal/essays/${entry.id}/`}>
-            <time class="note-date">
-              {entry.data.publishedAt.toLocaleDateString('en-US', {
-                year: 'numeric',
-                month: 'short',
-                day: '2-digit',
-              })}
-            </time>
-            <span class="note-type">essay</span>
-            <span class="note-title">{entry.data.title}</span>
-            <span class="note-arrow">↗</span>
-          </a>
-        ))}
-      </div>
-    ) : (
-      <p class="journal-intro">
-        Nothing here yet. I am not inventing essays to fill a navigation item.
+<Layout
+  title="Journal — Qasim Sethar"
+  description="Short notes and longer writing by Qasim Sethar."
+>
+  <Nav />
+  <SideRails />
+  <main id="content" class="site-content">
+    <section class="section" style="padding-top: 180px;">
+      <p class="overline">Public notes</p>
+      <h1 class="hero__name" style="font-size: clamp(52px, 8vw, 82px);">
+        Things I wanted to keep.
+      </h1>
+      <p style="max-width:700px; margin-top:25px; font-size:20px;">
+        Short notes from things I shipped, learned, broke, argued with, or could not stop thinking
+        about. Long-form writing shows up when an idea earns the extra length.
       </p>
-    )}
-  </section>
-</Shell>
-<script is:inline>
-  const initNoteFilters = () => {
-    const root = document.querySelector('[data-note-filters]');
-    if (!root || root.dataset.bound) return;
-    root.dataset.bound = '1';
-    root.addEventListener('click', (e) => {
-      const btn = e.target.closest('[data-note-filter]');
-      if (!btn) return;
-      const value = btn.dataset.noteFilter;
-      root
-        .querySelectorAll('[data-note-filter]')
-        .forEach((i) => i.setAttribute('aria-pressed', String(i === btn)));
-      document.querySelectorAll('.notes .note-row').forEach((row) => {
-        row.hidden = value !== 'all' && row.dataset.noteType !== value;
-      });
-    });
-  };
-  initNoteFilters();
-  document.addEventListener('astro:page-load', initNoteFilters);
-</script>
+    </section>
+    <section class="section section--tight">
+      <h2 class="numbered-heading">Notes</h2>
+      <ul class="notes-list">
+        {notes.map((note) => (
+          <NoteRow note={note} />
+        ))}
+      </ul>
+    </section>
+    <section class="section section--tight">
+      <h2 class="numbered-heading">Essays</h2>
+      <p style="max-width:700px;">
+        No filler. Long-form writing appears when the idea survives a second reading.
+      </p>
+    </section>
+  </main>
+</Layout>

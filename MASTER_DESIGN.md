@@ -1,21 +1,24 @@
 # Master design direction
 
-This is intentionally a new implementation rather than a continuation of earlier portfolio concepts.
+This release intentionally follows the structure and motion language of Brittany Chiang v4:
 
-The visual and structural reference points are:
+- fixed top navigation with numbered anchors and a resume button
+- desktop left/right social/email rails
+- full-height staggered hero entrance
+- numbered section headings with rules
+- photo treatment with hover reveal
+- keyboard-accessible experience tabs
+- alternating featured project compositions
+- compact project card grid
+- centered contact section
+- restrained footer
+- animated loader on the initial home visit
+- small upward/fade motion on scroll
+- mobile slide-in navigation
 
-1. Brittany Chiang v4: persistent desktop identity rail; navy/green palette; large readable typography; direct navigation; experience/project/writing hierarchy; social/footer treatment.
-2. Jhey Tompkins: chronological public trail that mixes work, experiments, learning, and making instead of presenting only employment history.
+Qasim-specific layer:
 
-The site is multi-page:
-
-- `/` overview with About, proof, current work, timeline, projects, writing, professional work, contact
-- `/work/` complete work archive
-- `/work/[slug]/` case studies
-- `/journal/` Notes + Essays
-- `/journal/notes/[slug]/` individual notes
-- `/journal/essays/[slug]/` individual essays
-- `/about/` deeper person/profile page
-- `/contact/` direct contact
-
-The design language is restrained: dark navy, green accent, high-contrast light typography, Inter, horizontal rules, subtle shadows, quiet motion, responsive layout, and no decorative effects without a purpose.
+- a chronological build trail between experience and projects
+- Qasim's real projects, community work, open-source maintenance, and notes
+- Astro Content Collections instead of Gatsby/GraphQL
+- modern Astro page transitions while preserving the restrained v4 feel

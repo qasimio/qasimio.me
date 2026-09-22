@@ -14,20 +14,21 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v5
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 11.21.0
+          run_install: false
       - name: Setup Node
         uses: actions/setup-node@v5
         with:
           node-version: 24.21.0
-          cache: npm
-      - name: Enable Corepack
-        run: corepack enable
-      - name: Activate pnpm
-        run: corepack prepare pnpm@11.21.0 --activate
-      - name: Install dependencies
+          cache: pnpm
+      - name: Install
         run: pnpm install --frozen-lockfile
       - name: Check
         run: pnpm run check
-      - name: Format check
+      - name: Format
         run: pnpm run format:check
       - name: Build
         run: pnpm run build

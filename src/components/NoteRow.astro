@@ -1,17 +1,17 @@
 ---
-import type { CollectionEntry } from 'astro:content';
-const { entry } = Astro.props as { entry: CollectionEntry<'notes'> };
+const { note } = Astro.props;
 ---
 
-<a class="note-row reveal" href={`/journal/notes/${entry.id}/`} data-note-type={entry.data.type}>
-  <time class="note-date" datetime={entry.data.publishedAt.toISOString()}>
-    {entry.data.publishedAt.toLocaleDateString('en-US', {
-      month: 'short',
-      day: '2-digit',
-      year: 'numeric',
-    })}
-  </time>
-  <span class="note-type">{entry.data.type}</span>
-  <span class="note-title">{entry.data.title}</span>
-  <span class="note-arrow">↗</span>
-</a>
+<li class="note-row reveal">
+  <time datetime={note.date}>{note.date}</time>
+  <div>
+    <span class="note-row__tag">{note.tag}</span>
+    <h3>
+      <a href={note.href}>{note.title}</a>
+    </h3>
+    <p>{note.excerpt}</p>
+  </div>
+  <a class="note-row__arrow" href={note.href} aria-label={`Read ${note.title}`}>
+    ↗
+  </a>
+</li>

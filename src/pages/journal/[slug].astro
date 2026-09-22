@@ -1,0 +1,85 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Nav from '../../components/Nav.astro';
+import SideRails from '../../components/SideRails.astro';
+import { notes } from '../../data/site';
+
+export function getStaticPaths() {
+  return notes.map((note) => ({
+    params: { slug: note.href.split('/').filter(Boolean).pop() },
+    props: { note },
+  }));
+}
+
+const { note } = Astro.props;
+---
+
+<Layout title={`${note.title} — Qasim Sethar`} description={note.excerpt}>
+  <Nav />
+  <SideRails />
+  <main id="content" class="site-content">
+    <article class="section" style="padding-top: 180px; max-width: 800px;">
+      <p class="overline">
+        {note.tag} · {note.date}
+      </p>
+      <h1 style="color:var(--lightest-slate); font-size:clamp(42px,7vw,72px); margin:20px 0 25px;">
+        {note.title}
+      </h1>
+      <p style="font-size:22px; color:var(--light-slate); margin-bottom:50px;">{note.excerpt}</p>
+      <div class="note-body">
+        {note.href.includes('maintainer') && (
+          <>
+            <p>
+              I did not plan a career move called “maintainer.” I just kept fixing things in public
+              and eventually GitHub noticed.
+            </p>
+            <p>
+              The useful part is not the invite itself. It is the reminder that open source gets
+              interesting when there are actual people on the other side of the issue tracker.
+            </p>
+          </>
+        )}
+        {note.href.includes('foldr-crossed') && (
+          <>
+            <p>A hundred stars is not a business, but it is a useful signal.</p>
+            <p>
+              The bigger thing is that FOLDR stopped being a project that existed only on my
+              machine. Someone else installed it, hit an edge case I never thought about, and told
+              me about it.
+            </p>
+          </>
+        )}
+        {note.href.includes('slotfinder') && (
+          <>
+            <p>The timetable already had the answer.</p>
+            <p>
+              The problem was finding it. SlotFinder is a small piece of software whose main job is
+              to remove that friction.
+            </p>
+          </>
+        )}
+        {note.href.includes('me-vs-me') && (
+          <>
+            <p>I spend most of my time building software.</p>
+            <p>
+              This time I made a short film called <em>Me vs Me</em> about the ridiculous amount of
+              overthinking required to publish something you already finished.
+            </p>
+          </>
+        )}
+        {note.href.includes('keyboard-first') && (
+          <>
+            <p>
+              I use Arch for development and daily work. I use shortcuts constantly. I keep Vim
+              inside VS Code.
+            </p>
+            <p>
+              The point is not being a keyboard person. It is removing small bits of friction
+              between the problem in my head and the action I want the machine to take.
+            </p>
+          </>
+        )}
+      </div>
+    </article>
+  </main>
+</Layout>
