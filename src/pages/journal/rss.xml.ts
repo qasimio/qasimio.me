@@ -1,16 +1,17 @@
+import type { APIContext } from 'astro';
 import rss from '@astrojs/rss';
-import { notes } from '../../data/site';
+import { notes, site } from '../../data/site';
 
-export async function GET(context) {
+export function GET(context: APIContext) {
   return rss({
-    title: 'Qasim Sethar — Journal',
-    description: 'Short notes from things Qasim built, learned, broke, and kept thinking about.',
+    title: `${site.name} — Journal`,
+    description: 'Short notes from things Qasim Sethar is building, learning, and shipping.',
     site: context.site ?? 'https://qasimio.me',
     items: notes.map((note) => ({
       title: note.title,
       description: note.excerpt,
       pubDate: new Date(note.date),
-      link: note.href,
+      link: note.external ?? `/journal/${note.slug}/`,
     })),
   });
 }

@@ -3,21 +3,24 @@ import Layout from '../../layouts/Layout.astro';
 import Nav from '../../components/Nav.astro';
 import SideRails from '../../components/SideRails.astro';
 import ProjectCard from '../../components/ProjectCard.astro';
-import { featuredProjects, otherProjects } from '../../data/site';
+import { projects } from '../../data/site';
 ---
 
-<Layout title="Archive — Qasim Sethar" description="Projects and experiments by Qasim Sethar.">
+<Layout title="Work — Qasim Sethar" description="Selected work and experiments by Qasim Sethar.">
   <Nav />
   <SideRails />
   <main id="content" class="site-content">
-    <section class="section" style="padding-top: 180px; min-height: 70vh;">
-      <h1 class="numbered-heading">Archive</h1>
-      <p style="max-width: 700px; font-size: 20px; margin-bottom: 50px;">
-        A more complete list of projects, experiments, and useful accidents. The homepage keeps the
-        signal high. This is where the rest lives.
+    <section class="section section--first page-head">
+      <p class="overline">03. / WORK</p>
+      <h1>Things I’ve built.</h1>
+      <p>
+        Products, systems, open source, experiments, and one or two things that should have stayed
+        ideas.
       </p>
+    </section>
+    <section class="section section--tight">
       <ul class="projects-grid">
-        {[...featuredProjects, ...otherProjects].map((project) => (
+        {projects.map((project) => (
           <ProjectCard project={project} />
         ))}
       </ul>

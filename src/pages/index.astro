@@ -20,34 +20,45 @@ import {
 
 <Layout
   title="Qasim Sethar — Software Engineer"
-  description="Qasim Sethar builds software, systems, and products."
-  home
+  description="Qasim Sethar builds software, systems, products, and communities."
 >
   <Loader />
   <Nav />
   <SideRails />
-
   <main id="content" class="site-content">
-    <section class="section hero" id="hero">
+    <section class="section hero" id="top">
       <div class="hero__content">
-        <p class="hero__intro reveal">Hi, my name is</p>
-        <h1 class="hero__name reveal">Qasim Sethar.</h1>
-        <h2 class="hero__role reveal">I build things for the web.</h2>
-        <h3 class="hero__subrole reveal">And systems around them.</h3>
-        <p class="hero__description reveal">
+        <p class="hero__intro" data-reveal>
+          Hi, my name is
+        </p>
+        <h1 class="hero__name" data-reveal>
+          Qasim Sethar.
+        </h1>
+        <h2 class="hero__role" data-reveal>
+          I build things for the web.
+        </h2>
+        <h3 class="hero__subrole" data-reveal>
+          And systems around them.
+        </h3>
+        <p class="hero__description" data-reveal>
           I’m a computer science student and software engineer who likes building useful systems,
           shipping them, and learning what changes when someone else actually uses them.
         </p>
-        <a class="big-button hero__button reveal" href="#about">
-          Get to know me ↘
-        </a>
+        <div class="hero__actions" data-reveal>
+          <a class="big-button" href="#about">
+            Get to know me ↘
+          </a>
+          <a class="hero__secondary" href={site.github} target="_blank" rel="noopener noreferrer">
+            GitHub ↗
+          </a>
+        </div>
       </div>
     </section>
 
-    <section class="section reveal" id="about">
+    <section class="section" id="about">
       <h2 class="numbered-heading">About Me</h2>
       <div class="about__grid">
-        <div class="about__text">
+        <div class="about__text" data-reveal>
           <p>
             Hello! I’m Qasim. I spend a lot of my time making software and an almost equal amount of
             time figuring out why the software I just made is behaving strangely.
@@ -68,7 +79,7 @@ import {
             ))}
           </ul>
         </div>
-        <div class="about__photo reveal">
+        <div class="about__photo" data-reveal>
           <div class="about__photo-wrap">
             <img
               src="/identity/qasim.jpg"
@@ -78,14 +89,14 @@ import {
               loading="lazy"
             />
           </div>
-          <p class="about__caption">Qasim / qasimio · Sukkur, Pakistan</p>
+          <p class="about__caption">Qasim / qasimio · {site.location}</p>
         </div>
       </div>
     </section>
 
-    <section class="section jobs reveal" id="jobs" data-jobs>
+    <section class="section jobs" id="jobs" data-jobs>
       <h2 class="numbered-heading">Where I’ve Worked</h2>
-      <div class="jobs__inner">
+      <div class="jobs__inner" data-reveal>
         <div class="jobs__tabs" role="tablist" aria-label="Experience tabs">
           {experience.map((job, index) => (
             <button
@@ -113,18 +124,13 @@ import {
               hidden={index !== 0}
             >
               <h3 class="jobs__title">
-                {job.title}
-                {job.url ? (
-                  <span class="jobs__company">
-                    {' '}
-                    @{' '}
-                    <a class="inline-link" href={job.url} target="_blank" rel="noopener noreferrer">
-                      {job.company}
-                    </a>
-                  </span>
-                ) : (
-                  <span class="jobs__company"> @ {job.company}</span>
-                )}
+                {job.title}{' '}
+                <span class="jobs__company">
+                  @{' '}
+                  <a class="inline-link" href={job.url} target="_blank" rel="noopener noreferrer">
+                    {job.company}
+                  </a>
+                </span>
               </h3>
               <p class="jobs__range">{job.range}</p>
               <ul>
@@ -138,15 +144,15 @@ import {
       </div>
     </section>
 
-    <section class="section reveal" id="timeline">
+    <section class="section" id="timeline">
       <h2 class="numbered-heading">A trail of things happening</h2>
-      <p class="timeline__intro">
-        The résumé version is neat. This version is closer to how building actually happens: a line
-        of projects, people, small bets, and things that changed the next thing I made.
+      <p class="timeline__intro" data-reveal>
+        The neat version fits on a résumé. This version keeps the messy order: projects, people,
+        releases, experiments, and the odd decision that changed what I built next.
       </p>
       <div class="timeline__track">
         {timeline.map((item) => (
-          <article class="timeline__item">
+          <article class="timeline__item" data-reveal>
             <span class="timeline__date">{item.date}</span>
             <h3 class="timeline__title">{item.title}</h3>
             <p class="timeline__meta">{item.meta}</p>
@@ -154,18 +160,21 @@ import {
           </article>
         ))}
       </div>
+      <a class="archive-link" href="/timeline/">
+        Open the full timeline ↗
+      </a>
     </section>
 
-    <section class="section reveal" id="projects">
+    <section class="section" id="projects">
       <h2 class="numbered-heading">Some Things I’ve Built</h2>
       <ul class="featured__grid">
         {featuredProjects.map((project, index) => (
-          <FeaturedProject project={project} index={index} />
+          <FeaturedProject project={project} reverse={index === 1} />
         ))}
       </ul>
     </section>
 
-    <section class="section reveal" id="other-projects">
+    <section class="section" id="other-projects">
       <h2 class="numbered-heading">Other Noteworthy Projects</h2>
       <a class="archive-link" href="/archive/">
         view the archive ↗
@@ -177,10 +186,10 @@ import {
       </ul>
     </section>
 
-    <section class="section reveal" id="writing">
-      <h2 class="numbered-heading">Some writing</h2>
+    <section class="section" id="writing">
+      <h2 class="numbered-heading">Some things I wrote down</h2>
       <ul class="notes-list">
-        {notes.slice(0, 4).map((note) => (
+        {notes.slice(0, 5).map((note) => (
           <NoteRow note={note} />
         ))}
       </ul>
@@ -189,15 +198,15 @@ import {
       </a>
     </section>
 
-    <section class="section contact reveal" id="contact">
-      <p class="overline">04. What’s Next?</p>
-      <h2 class="contact__title">Get In Touch</h2>
+    <section class="section contact" id="contact">
+      <p class="overline">05. What’s Next?</p>
+      <h2 class="contact__title">Get In Touch.</h2>
       <p class="contact__copy">
-        Have a hard problem, a strange idea, or something you want to build? Send me the useful
-        part.
+        Have a hard problem, a strange idea, or something worth building? Send me the useful part.
       </p>
       <a class="big-button contact__email" href={`mailto:${site.email}`}>
-        Say Hello ↗
+        <Icons name="mail" size={17} />
+        &nbsp; {site.email}
       </a>
       <form class="contact__form" data-contact-form>
         <input
@@ -226,7 +235,7 @@ import {
         <button class="big-button" type="submit">
           Compose email ↗
         </button>
-        <p class="contact__form-note">No contact database. The form opens your email client.</p>
+        <p class="contact__form-note">No database. The form opens your email client.</p>
       </form>
     </section>
   </main>

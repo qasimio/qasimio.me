@@ -1,25 +1,40 @@
-import anime from 'animejs/lib/anime.es.js';
-import ScrollReveal from 'scrollreveal';
-
 const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+function initReveal() {
+  const items = Array.from(document.querySelectorAll<HTMLElement>('[data-reveal]'));
+  items.forEach((item) => item.classList.add('reveal-ready'));
+  if (reducedMotion || !('IntersectionObserver' in window)) {
+    items.forEach((item) => item.classList.add('is-visible'));
+    return;
+  }
+  const observer = new IntersectionObserver(
+    (entries, instance) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        const item = entry.target as HTMLElement;
+        item.classList.add('is-visible');
+        instance.unobserve(item);
+      });
+    },
+    { threshold: 0.08, rootMargin: '0px 0px -5% 0px' },
+  );
+  items.forEach((item) => observer.observe(item));
+}
 
 function initNav() {
   const nav = document.querySelector<HTMLElement>('[data-nav]');
-  if (!nav || nav.dataset.bound === 'true') return;
+  if (!nav || nav.dataset.bound) return;
   nav.dataset.bound = 'true';
-
   let lastY = window.scrollY;
   let ticking = false;
-
   const update = () => {
     const y = window.scrollY;
-    nav.classList.toggle('is-scrolled', y > 50);
-    nav.classList.toggle('is-hidden', y > 120 && y > lastY && y > 200);
-    if (y <= 50) nav.classList.remove('is-hidden');
+    nav.classList.toggle('is-scrolled', y > 40);
+    nav.classList.toggle('is-hidden', y > 120 && y > lastY);
+    if (y <= 40 || y < lastY) nav.classList.remove('is-hidden');
     lastY = y;
     ticking = false;
   };
-
   window.addEventListener(
     'scroll',
     () => {
@@ -35,60 +50,82 @@ function initNav() {
 function initMobileMenu() {
   const button = document.querySelector<HTMLButtonElement>('[data-mobile-menu]');
   const panel = document.querySelector<HTMLElement>('[data-mobile-panel]');
-  if (!button || !panel || button.dataset.bound === 'true') return;
+  if (!button || !panel || button.dataset.bound) return;
   button.dataset.bound = 'true';
-
-  const setOpen = (open: boolean) => {
+  const close = () => {
+    panel.classList.remove('is-open');
+    document.body.classList.remove('menu-open');
+    button.setAttribute('aria-expanded', 'false');
+    panel.setAttribute('aria-hidden', 'true');
+  };
+  button.addEventListener('click', () => {
+    const open = !panel.classList.contains('is-open');
     panel.classList.toggle('is-open', open);
     document.body.classList.toggle('menu-open', open);
     button.setAttribute('aria-expanded', String(open));
-    button.setAttribute('aria-label', open ? 'Close navigation' : 'Open navigation');
     panel.setAttribute('aria-hidden', String(!open));
-  };
-
-  button.addEventListener('click', () => setOpen(!panel.classList.contains('is-open')));
-  panel
-    .querySelectorAll('a')
-    .forEach((link) => link.addEventListener('click', () => setOpen(false)));
+  });
+  panel.querySelectorAll('a').forEach((link) => link.addEventListener('click', close));
   document.addEventListener('keydown', (event) => {
-    if (event.key === 'Escape') setOpen(false);
+    if (event.key === 'Escape') close();
   });
 }
 
-function initJobs() {
+function initScrollSpy() {
+  const navLinks = Array.from(document.querySelectorAll<HTMLAnchorElement>('[data-nav-link]'));
+  const sections = navLinks
+    .map((link) => document.getElementById(link.dataset.navLink ?? ''))
+    .filter((section): section is HTMLElement => Boolean(section));
+  if (!navLinks.length || !sections.length) return;
+
+  if ('IntersectionObserver' in window && !reducedMotion) {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          navLinks.forEach((link) =>
+            link.classList.toggle('is-active', link.dataset.navLink === entry.target.id),
+          );
+        });
+      },
+      { rootMargin: '-35% 0px -55% 0px', threshold: 0 },
+    );
+    sections.forEach((section) => observer.observe(section));
+  }
+}
+
+function initExperience() {
   const root = document.querySelector<HTMLElement>('[data-jobs]');
-  if (!root || root.dataset.bound === 'true') return;
+  if (!root || root.dataset.bound) return;
   root.dataset.bound = 'true';
   const tabs = Array.from(root.querySelectorAll<HTMLButtonElement>('[data-job-tab]'));
   const panels = Array.from(root.querySelectorAll<HTMLElement>('[data-job-panel]'));
   const indicator = root.querySelector<HTMLElement>('[data-job-indicator]');
   let active = 0;
-
-  const render = (next: number) => {
-    active = (next + tabs.length) % tabs.length;
+  const render = (index: number) => {
+    active = (index + tabs.length) % tabs.length;
     tabs.forEach((tab, i) => {
-      const current = i === active;
-      tab.classList.toggle('is-active', current);
-      tab.setAttribute('aria-selected', String(current));
-      tab.tabIndex = current ? 0 : -1;
+      const on = i === active;
+      tab.classList.toggle('is-active', on);
+      tab.tabIndex = on ? 0 : -1;
+      tab.setAttribute('aria-selected', String(on));
     });
     panels.forEach((panel, i) => {
-      const current = i === active;
-      panel.hidden = !current;
-      panel.setAttribute('aria-hidden', String(!current));
-      if (current && !reducedMotion) {
+      const on = i === active;
+      panel.hidden = !on;
+      panel.setAttribute('aria-hidden', String(!on));
+      if (on && !reducedMotion) {
         panel.animate(
           [
             { opacity: 0, transform: 'translateY(8px)' },
             { opacity: 1, transform: 'translateY(0)' },
           ],
-          { duration: 240, easing: 'cubic-bezier(0.645,0.045,0.355,1)' },
+          { duration: 260, easing: 'cubic-bezier(.645,.045,.355,1)' },
         );
       }
     });
     if (indicator) indicator.style.transform = `translateY(${active * 48}px)`;
   };
-
   tabs.forEach((tab, index) => {
     tab.addEventListener('click', () => render(index));
     tab.addEventListener('keydown', (event) => {
@@ -102,89 +139,58 @@ function initJobs() {
         render(active - 1);
         tabs[active]?.focus();
       }
+      if (event.key === 'Home') {
+        event.preventDefault();
+        render(0);
+        tabs[active]?.focus();
+      }
+      if (event.key === 'End') {
+        event.preventDefault();
+        render(tabs.length - 1);
+        tabs[active]?.focus();
+      }
     });
   });
   render(0);
 }
 
-function initReveal() {
-  if (reducedMotion) return;
-  const sr = ScrollReveal();
-  sr.clean('.reveal');
-  sr.reveal('.reveal', {
-    origin: 'bottom',
-    distance: '20px',
-    duration: 500,
-    delay: 80,
-    opacity: 0,
-    scale: 1,
-    easing: 'cubic-bezier(0.645, 0.045, 0.355, 1)',
-    mobile: true,
-    reset: false,
-    viewFactor: 0.12,
+function initTheme() {
+  const buttons = Array.from(document.querySelectorAll<HTMLButtonElement>('[data-theme-toggle]'));
+  if (!buttons.length || buttons[0].dataset.bound) return;
+  buttons.forEach((button) => {
+    button.dataset.bound = 'true';
   });
-}
-
-function initLoader() {
-  const loader = document.querySelector<HTMLElement>('[data-loader]');
-  if (!loader) return;
-  try {
-    if (sessionStorage.getItem('qasim-loader-seen')) {
-      loader.remove();
-      document.body.classList.remove('is-loading');
-      return;
-    }
-    sessionStorage.setItem('qasim-loader-seen', '1');
-  } catch {
-    // Keep the entrance if storage is unavailable.
-  }
-
-  if (reducedMotion) {
-    loader.remove();
-    document.body.classList.remove('is-loading');
-    return;
-  }
-
-  anime
-    .timeline({
-      complete: () => {
-        loader.remove();
-        document.body.classList.remove('is-loading');
-      },
-    })
-    .add({
-      targets: '[data-loader-mark]',
-      opacity: [0, 1],
-      scale: [0.7, 1],
-      duration: 500,
-      easing: 'easeOutQuart',
-    })
-    .add(
-      {
-        targets: '[data-loader-hex]',
-        opacity: [0.05, 1],
-        scale: [0.7, 1],
-        duration: 900,
-        easing: 'easeInOutQuart',
-      },
-      '-=350',
-    )
-    .add(
-      {
-        targets: '[data-loader-mark]',
-        opacity: 0,
-        scale: 0.08,
-        duration: 350,
-        easing: 'easeInOutQuart',
-      },
-      '+=300',
-    )
-    .add({ targets: loader, opacity: 0, duration: 250, easing: 'easeInOutQuart' }, '-=50');
+  const apply = (theme: 'dark' | 'light') => {
+    document.documentElement.dataset.theme = theme;
+    document.documentElement.style.colorScheme = theme;
+    buttons.forEach((button) => {
+      button.setAttribute('aria-pressed', String(theme === 'light'));
+      button.setAttribute(
+        'aria-label',
+        theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode',
+      );
+      const icon = button.querySelector('svg');
+      if (icon)
+        icon.innerHTML =
+          theme === 'dark'
+            ? '<circle cx=\"12\" cy=\"12\" r=\"4\" stroke=\"currentColor\" stroke-width=\"1.8\"/><path d=\"M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4\" stroke=\"currentColor\" stroke-width=\"1.8\" stroke-linecap=\"round\"/>'
+            : '<path d=\"M20 15.2A8 8 0 0 1 8.8 4 8 8 0 1 0 20 15.2Z\" stroke=\"currentColor\" stroke-width=\"1.8\" stroke-linejoin=\"round\"/>';
+    });
+    try {
+      localStorage.setItem('qasim-theme', theme);
+    } catch {}
+  };
+  apply(document.documentElement.dataset.theme === 'light' ? 'light' : 'dark');
+  buttons.forEach((button) =>
+    button.addEventListener('click', () =>
+      apply(document.documentElement.dataset.theme === 'light' ? 'dark' : 'light'),
+    ),
+  );
 }
 
 function initContact() {
   const form = document.querySelector<HTMLFormElement>('[data-contact-form]');
-  if (!form || form.dataset.bound === 'true') return;
+  if (!form || form.dataset.bound) return;
   form.dataset.bound = 'true';
   form.addEventListener('submit', (event) => {
     event.preventDefault();
@@ -200,11 +206,12 @@ function initContact() {
 
 function boot() {
   initNav();
+  initScrollSpy();
   initMobileMenu();
-  initJobs();
+  initExperience();
+  initTheme();
   initContact();
   initReveal();
-  initLoader();
 }
 
 boot();

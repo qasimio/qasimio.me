@@ -3,4 +3,6 @@ dist
 .astro
 .vercel
 reference
-public
+public/resume.pdf
+public/identity/*.png
+public/identity/*.jpg

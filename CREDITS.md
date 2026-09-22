@@ -1,8 +1,8 @@
-# Credits
+# Design reference
 
-The design reference for this version is Brittany Chiang's v4 personal website and its open-source repository:
+This site is an independently written Astro implementation inspired by Brittany Chiang's open-source v4 personal site:
+
 https://github.com/bchiang7/v4
+https://v4.brittanychiang.com/
 
-The source repository is MIT licensed and explicitly requests attribution when reused.
-
-The implementation in this project was written independently for Astro. Original Brittany Chiang font files and original site assets are not redistributed.
+The original repository is MIT licensed and its README permits forks with attribution. This project does not redistribute Brittany Chiang's font files, source files, or image assets. The implementation and content in this repository are Qasim Sethar's.

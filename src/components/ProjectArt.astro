@@ -1,28 +1,108 @@
 ---
-const { kind, label } = Astro.props;
+const { kind, title } = Astro.props;
 ---
 
-<div
-  class:list={['project-art', `project-art--${kind}`]}
-  aria-label={`${label} project visual`}
-  role="img"
->
-  <div class="project-art__window">
-    <div class="project-art__bar">
-      <span class="project-art__dot"></span>
-      <span class="project-art__dot"></span>
-      <span class="project-art__dot"></span>
+<div class:list={['project-art', `project-art--${kind}`]} aria-label={`${title} visual`}>
+  {kind === 'engram' && (
+    <div class="art-engram">
+      <span class="art-node art-node--core">E</span>
+      <span>memory</span>
+      <span>evidence</span>
+      <span>workspace</span>
+      <span>agent</span>
+      <i></i>
     </div>
-    <div class="project-art__body">
-      <div class="project-art__label">{label} / system</div>
-      <div class="project-art__line w1"></div>
-      <div class="project-art__line w2"></div>
-      <div class="project-art__line w3"></div>
-      <div class="project-art__chips">
-        <span class="project-art__chip">VERIFY</span>
-        <span class="project-art__chip">RETRIEVE</span>
-        <span class="project-art__chip">SHIP</span>
+  )}
+  {kind === 'operon' && (
+    <div class="art-operon">
+      <div class="art-window">
+        <div class="art-window__bar">
+          <span></span>
+          <span></span>
+          <span></span>
+          <b>OPERON / VERIFY</b>
+        </div>
+        <code>$ rename_symbol("old_name")</code>
+        <div class="art-checks">
+          <span>
+            <small>01 / TEST</small>verified
+          </span>
+          <span>
+            <small>02 / DIFF</small>snapshot
+          </span>
+          <span>
+            <small>03 / FINAL</small>approval
+          </span>
+        </div>
       </div>
     </div>
-  </div>
+  )}
+  {kind === 'foldr' && (
+    <div class="art-foldr">
+      <div class="art-window">
+        <div class="art-window__bar">
+          <span></span>
+          <span></span>
+          <span></span>
+          <b>FOLDR / PREVIEW</b>
+        </div>
+        <div class="art-list">
+          <span>
+            screenshots <b>READY</b>
+          </span>
+          <span>
+            documents <b>READY</b>
+          </span>
+          <span>
+            invoices <b>READY</b>
+          </span>
+          <span>
+            duplicates <b>REVIEW</b>
+          </span>
+        </div>
+        <div class="art-status">
+          12 planned operations <b>UNDO READY</b>
+        </div>
+      </div>
+    </div>
+  )}
+  {kind === 'slotfinder' && (
+    <div class="art-grid">
+      <span>MON</span>
+      <span>TUE</span>
+      <span>WED</span>
+      <span>THU</span>
+      <span>FRI</span>
+      <b>10:30</b>
+      <b>CS-312</b>
+      <b>DBMS</b>
+      <b>13:00</b>
+    </div>
+  )}
+  {kind === 'launchpad' && (
+    <div class="art-launch">
+      <div>SHOWCASE</div>
+      <strong>PROJECTS</strong>
+      <span>people → work → feedback</span>
+    </div>
+  )}
+  {kind === 'devshelf' && (
+    <div class="art-search">
+      <code>search: distributed systems</code>
+      <span>Distributed Systems — 12 results</span>
+      <span>Operating Systems — 8 results</span>
+      <span>Database Systems — 5 results</span>
+    </div>
+  )}
+  {kind === 'mqnotebook' && (
+    <div class="art-doc">
+      <div class="art-doc__page"></div>
+      <div class="art-doc__panel">
+        <span>OCR</span>
+        <span>CHUNK</span>
+        <span>RETRIEVE</span>
+        <span>ANSWER</span>
+      </div>
+    </div>
+  )}
 </div>

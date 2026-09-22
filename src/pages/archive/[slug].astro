@@ -2,155 +2,75 @@
 import Layout from '../../layouts/Layout.astro';
 import Nav from '../../components/Nav.astro';
 import SideRails from '../../components/SideRails.astro';
-import { featuredProjects, otherProjects } from '../../data/site';
-
-const projects = [
-  ...featuredProjects.map((project) => ({ ...project, featured: true })),
-  ...otherProjects.map((project) => ({ ...project, featured: false })),
-];
-
+import ProjectArt from '../../components/ProjectArt.astro';
+import Icons from '../../components/Icons.astro';
+import { projects } from '../../data/site';
 export function getStaticPaths() {
-  return projects.map((project) => ({
-    params: { slug: project.slug },
-    props: { project },
-  }));
+  return projects.map((project) => ({ params: { slug: project.slug }, props: { project } }));
 }
-
 const { project } = Astro.props;
-
-const detail = {
-  engram: {
-    why: 'I wanted a system where an assistant could use information that actually belonged to the person and workspace it was operating in.',
-    built:
-      'Document ingestion, asynchronous workers, hybrid retrieval, reranking, workspace isolation, grounded synthesis, and persistent context.',
-    hard: 'The difficult part was controlling what the model could claim when the evidence was incomplete. A useful answer is not the same thing as a confident answer.',
-    learned:
-      'A retrieval system becomes a product problem the moment people rely on it. Evidence, tenancy, failure modes, and UX matter as much as the model.',
-  },
-  operon: {
-    why: 'Coding agents are very good at describing what they intended to do. I wanted one whose environment could prove what actually changed.',
-    built:
-      'A repository symbol graph, AST operations, filesystem verification, patch application, and human approval gates around an autonomous loop.',
-    hard: 'An agent can report success while the filesystem disagrees. Verification therefore has to happen outside the model.',
-    learned:
-      'The useful agent design decisions were often the ones that reduced the amount of trust given to the agent.',
-  },
-  foldr: {
-    why: 'I got tired of repeating the same file cleanup work.',
-    built:
-      'A cross-platform CLI for categorization, previewing filesystem changes, background watching, protected paths, duplicate handling, and undo.',
-    hard: 'Automation around the filesystem cannot be casually destructive. Reversibility became a core feature, not a nice extra.',
-    learned:
-      'The first real users change the definition of “done.” Packaging, edge cases, documentation, and recovery paths matter.',
-  },
-  'slot-finder': {
-    why: 'Finding one class inside the university timetable meant opening too many pages and scanning too much information.',
-    built:
-      'A small search surface for timetable information so a student can get to the relevant slot directly.',
-    hard: 'The product is intentionally narrow. The hard part was deciding what not to build.',
-    learned:
-      'Not every useful product needs to be complicated. Sometimes the best feature is removing five annoying steps.',
-  },
-  'siba-launchpad': {
-    why: 'Student projects tended to disappear after grading even when they were worth showing.',
-    built:
-      'A project community around showcasing work, finding collaborators, asking technical questions, and continuing after the semester.',
-    hard: 'Community work has a different failure mode from code: people have to care enough to participate.',
-    learned:
-      'Building around people changes the feedback loop. A useful platform is only useful when people actually come back.',
-  },
-  devshelf: {
-    why: 'I wanted to understand search without outsourcing the interesting parts to an external indexing engine.',
-    built:
-      'A vertical search engine in Java using a positional inverted index, offline indexing, and prefix matching.',
-    hard: 'Understanding the machinery forced me to think about tokenization, indexing, lookup cost, and data structures instead of only APIs.',
-    learned:
-      'First-principles projects are valuable when they change how you approach the next production problem.',
-  },
-  mqnotebook: {
-    why: 'Real documents are messy. Scanned PDFs, slides, spreadsheets, OCR, and file locks do not care how clean a demo looked.',
-    built:
-      'A local-first document retrieval system with OCR extraction and retrieval/reranking for awkward enterprise-style files.',
-    hard: 'The ingestion layer became the actual product surface. Garbage-in still ruins retrieval, even when the model is excellent.',
-    learned:
-      'RAG quality is often an ingestion and evidence problem long before it becomes a prompt problem.',
-  },
-};
-
-const content = detail[project.slug] ?? {
-  why: 'I wanted to understand the problem by building it.',
-  built: project.description,
-  hard: 'The hard part was making the idea survive real constraints instead of remaining a demo.',
-  learned:
-    'Building is an iterative process. The useful part is what changes after the first version meets reality.',
-};
 ---
 
 <Layout title={`${project.title} — Qasim Sethar`} description={project.description}>
   <Nav />
   <SideRails />
   <main id="content" class="site-content">
-    <section class="section" style="padding-top: 180px;">
-      <p class="overline">{project.category}</p>
-      <h1 style="color: var(--lightest-slate); font-size: clamp(52px, 9vw, 90px); margin-bottom: 20px;">
-        {project.title}
-      </h1>
-      <p style="max-width: 760px; font-size: clamp(20px, 2.4vw, 26px);">{project.description}</p>
-      <div style="display:flex; flex-wrap:wrap; gap:15px; margin-top:30px;">
+    <section class="section section--first case">
+      <p class="overline">03. / WORK / {project.category}</p>
+      <h1>{project.title}</h1>
+      <p class="case__lead">{project.description}</p>
+      <div class="case__actions">
         {project.github && (
           <a class="big-button" href={project.github} target="_blank" rel="noopener noreferrer">
-            GitHub ↗
+            <Icons name="github" size={18} />
+            &nbsp; GitHub
           </a>
         )}
-        {project.external && (
-          <a class="big-button" href={project.external} target="_blank" rel="noopener noreferrer">
-            Open ↗
+        {project.live && (
+          <a class="big-button" href={project.live} target="_blank" rel="noopener noreferrer">
+            <Icons name="external" size={18} />
+            &nbsp; Open
           </a>
         )}
       </div>
+      <div class="case__visual">
+        <ProjectArt kind={project.visual} title={project.title} />
+      </div>
     </section>
-
-    <section class="section" style="padding-top: 40px;">
-      <div class={`project-visual project-visual--${project.slug}`} style="min-height:500px;">
-        <div class="project-visual__chrome">
-          <i></i>
-          <i></i>
-          <i></i>
-          <span>{project.title.toUpperCase()}</span>
+    <section class="section case__body">
+      <div class="case__meta">
+        <span>{project.year}</span>
+        <span>{project.role}</span>
+        <span>{project.category}</span>
+      </div>
+      <div class="case__content">
+        <div>
+          <p class="overline">The problem</p>
+          <h2>Why I built it.</h2>
+          <p>{project.problem}</p>
         </div>
-        <div class="visual-terminal" style="inset: 90px 70px;">
-          <code>{project.title.toLowerCase()}.build()</code>
-          <span>problem → constraints → system</span>
-          <span>verify ✓</span>
-          <span>ship ✓</span>
-          <span>learn ↗</span>
+        <div>
+          <p class="overline">The build</p>
+          <h2>What actually went into it.</h2>
+          <p>{project.built}</p>
+        </div>
+        <div>
+          <p class="overline">The hard part</p>
+          <h2>Where it got interesting.</h2>
+          <p>{project.hard}</p>
+        </div>
+        <blockquote>{project.quote}</blockquote>
+        <div>
+          <p class="overline">What stuck</p>
+          <h2>What I learned.</h2>
+          <p>{project.learned}</p>
         </div>
       </div>
     </section>
-
-    <section class="section" style="max-width:800px;">
-      <h2 class="numbered-heading">Why I built it</h2>
-      <p>{content.why}</p>
-      <h2 class="numbered-heading" style="margin-top:80px;">
-        What I built
-      </h2>
-      <p>{content.built}</p>
-      <h2 class="numbered-heading" style="margin-top:80px;">
-        The hard part
-      </h2>
-      <p>{content.hard}</p>
-      <h2 class="numbered-heading" style="margin-top:80px;">
-        What I learned
-      </h2>
-      <p>{content.learned}</p>
-      <h2 class="numbered-heading" style="margin-top:80px;">
-        Stack
-      </h2>
-      <ul class="about__skills">
-        {project.tech.map((tech) => (
-          <li>{tech}</li>
-        ))}
-      </ul>
+    <section class="section case__next">
+      <a class="archive-link" href="/archive/">
+        ← All work
+      </a>
     </section>
   </main>
 </Layout>

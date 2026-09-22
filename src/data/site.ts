@@ -1,233 +1,365 @@
+export type SocialIcon =
+  'github' | 'linkedin' | 'x' | 'youtube' | 'devto' | 'medium' | 'patreon' | 'mail';
+
 export const site = {
   name: 'Qasim Sethar',
   handle: 'qasimio',
   email: 'hello@qasimio.me',
   location: 'Sukkur, Pakistan',
+  github: 'https://github.com/qasimio',
+  linkedin: 'https://linkedin.com/in/qasimio',
+  x: 'https://x.com/qasimiohq',
+  youtube: 'https://www.youtube.com/@qasimiohq',
   resume: '/resume.pdf',
   socials: [
-    { name: 'GitHub', short: 'GH', url: 'https://github.com/qasimio' },
-    { name: 'LinkedIn', short: 'LI', url: 'https://linkedin.com/in/qasimio' },
-    { name: 'X', short: 'X', url: 'https://x.com/qasimiohq' },
-    { name: 'YouTube', short: 'YT', url: 'https://www.youtube.com/@qasimiohq' },
+    { name: 'GitHub', icon: 'github' as SocialIcon, url: 'https://github.com/qasimio' },
+    { name: 'LinkedIn', icon: 'linkedin' as SocialIcon, url: 'https://linkedin.com/in/qasimio' },
+    { name: 'X', icon: 'x' as SocialIcon, url: 'https://x.com/qasimiohq' },
+    { name: 'YouTube', icon: 'youtube' as SocialIcon, url: 'https://www.youtube.com/@qasimiohq' },
   ],
 };
 
+export const highlights = [
+  { value: '100+', label: 'FOLDR stars', href: 'https://github.com/foldrhq/foldr' },
+  { value: '7.3k+', label: 'FOLDR downloads', href: 'https://pepy.tech/projects/foldr' },
+  { value: '60+', label: 'projects reviewed' },
+  { value: '35+', label: 'people guided' },
+  { value: '24h', label: "Sibathon '26" },
+  { value: '2', label: 'GitHub organizations' },
+];
+
 export const skills = [
+  'TypeScript',
   'Python',
   'Java',
-  'C++',
-  'SQL',
-  'TypeScript',
-  'RAG & retrieval',
-  'Agent systems',
   'PostgreSQL',
+  'Search & retrieval',
+  'AI systems',
   'Shell scripting',
-  'Linux',
+  'Distributed systems',
 ];
 
 export const experience = [
   {
     company: 'FlyRank',
-    title: 'Backend / AI Engineer',
-    range: 'Remote · recent',
-    url: 'https://www.flyrank.ai/',
+    title: 'Backend AI Engineer',
+    range: '2026',
+    url: 'https://flyrank.ai/',
     bullets: [
-      'Worked on backend and AI engineering in a production-oriented environment.',
-      'Focused on the software around data, models, APIs, and reliable application behavior.',
+      'Worked on backend systems around production-oriented AI workflows.',
+      'Built APIs and infrastructure where reliability mattered more than demo polish.',
+      'Worked with retrieval, data pipelines, and service boundaries rather than only model calls.',
     ],
   },
   {
     company: 'Arch Technologies',
     title: 'Machine Learning Engineering',
-    range: 'Remote · recent',
-    url: '',
+    range: '2026',
+    url: 'https://archtechnologies.dev/',
     bullets: [
-      'Worked on model fine-tuning, inference prototypes, preprocessing, and ML engineering workflows.',
-      'Moved model work beyond notebooks into software that could actually run inside a product.',
+      'Explored practical machine learning engineering and applied inference work.',
+      'Worked close to the infrastructure and data side of ML systems.',
     ],
   },
   {
-    company: 'SIBA CS Society',
+    company: 'CS Society · SIBA',
     title: 'Executive Member',
-    range: 'Oct 2025 — Oct 2026 · Sukkur IBA University',
-    url: '',
+    range: 'Oct 2025 — Present',
+    url: 'https://www.sukkur-iba.edu.pk/',
     bullets: [
-      'Helped organize Sibathon ’26, a 24-hour student hackathon where AI was allowed.',
-      'Worked around students, projects, logistics, and the parts of building that happen outside the editor.',
+      "Helped organize Sibathon '26, a 24-hour student hackathon where AI was allowed and creativity mattered.",
+      'Reviewed student projects and helped people get from an idea or half-built project to something usable.',
+      'Helped create technical spaces outside ordinary coursework.',
     ],
   },
 ];
 
 export const timeline = [
   {
-    date: '2026',
-    title: 'FOLDR crossed 100 stars',
-    meta: 'Open source',
-    body: 'A small project became something other people installed and kept around.',
-  },
-  {
-    date: '2026',
-    title: 'Joined GitHub’s Maintainer Community',
-    meta: 'Open source',
-    body: 'An invitation that came after spending more time maintaining and contributing in public.',
-  },
-  {
-    date: '2026',
-    title: 'Shipped SlotFinder',
-    meta: 'Product',
-    body: 'A small utility for finding classes without opening a pile of timetable pages.',
-  },
-  {
-    date: '2026',
-    title: 'Organized Sibathon ’26',
-    meta: 'Community',
-    body: 'Helped run a 24-hour student hackathon through the CS Society at SIBA.',
-  },
-  {
-    date: '2025–26',
-    title: 'Built SIBA Launchpad',
-    meta: 'Community',
-    body: 'Created a project community so student work could be shown, found, and discussed.',
+    date: '2024 →',
+    title: 'Arch became home',
+    meta: 'Daily development environment',
+    body: 'I moved my main development workflow to Arch and never really looked back. The terminal, keyboard and editor became part of the way I think about work.',
   },
   {
     date: '2025',
-    title: 'Built DevShelf from first principles',
-    meta: 'Search',
-    body: 'Built a Java search engine to understand indexing and retrieval instead of hiding the interesting parts behind an external engine.',
+    title: 'Started building beyond coursework',
+    meta: 'Search · documents · systems',
+    body: 'DevShelf and MQNotebook were experiments in understanding search and document intelligence rather than just using somebody else’s abstraction.',
+  },
+  {
+    date: '2025 →',
+    title: 'SIBA Launchpad',
+    meta: 'Community · projects · people',
+    body: 'Started building a community around student work because too many projects disappear after grading.',
+  },
+  {
+    date: '2026',
+    title: 'FOLDR escaped the repository',
+    meta: 'Open source · real users',
+    body: 'FOLDR became a public package that other people could install and use. That changed the kind of problems I cared about.',
+  },
+  {
+    date: '2026',
+    title: "Sibathon '26",
+    meta: '24-hour hackathon',
+    body: 'Helped organize a 24-hour student hackathon through the CS Society. Shipping under a clock is a different species of pressure.',
+  },
+  {
+    date: '2026',
+    title: 'GitHub Maintainer Community',
+    meta: 'Open source',
+    body: 'Invited into GitHub’s Maintainer Community after spending a lot of time building, maintaining and contributing in public.',
+  },
+  {
+    date: '2026',
+    title: 'SlotFinder',
+    meta: 'Small problem · real usefulness',
+    body: 'Built a tiny timetable tool because opening a pile of pages just to find one class felt like a software problem hiding in plain sight.',
+  },
+  {
+    date: 'Now',
+    title: 'Building deeper',
+    meta: 'Engram · Operon · whatever comes next',
+    body: 'The current direction is systems that are harder to fake: better evidence, stronger tooling, and products that survive contact with real users.',
   },
 ];
 
-export const featuredProjects = [
+export type Project = {
+  slug: string;
+  title: string;
+  description: string;
+  category: string;
+  year: string;
+  role: string;
+  live?: string;
+  github?: string;
+  featured?: boolean;
+  tags: string[];
+  stats?: { value: string; label: string }[];
+  problem: string;
+  built: string;
+  hard: string;
+  learned: string;
+  quote: string;
+  visual: 'engram' | 'operon' | 'foldr' | 'slotfinder' | 'launchpad' | 'devshelf' | 'mqnotebook';
+};
+
+export const projects: Project[] = [
   {
     slug: 'engram',
     title: 'Engram',
-    eyebrow: 'Knowledge system',
     description:
-      'A persistent knowledge system for turning documents and conversations into retrievable context. I built the ingestion, retrieval, memory, workspace isolation, and grounded-answer layers around the model.',
-    tech: ['FastAPI', 'PostgreSQL', 'pgvector', 'Redis', 'Celery', 'Next.js'],
-    github: 'https://github.com/qasimio/Engram',
-    external: '',
+      'A knowledge and memory system built around grounded retrieval, persistent context, and useful evidence.',
+    category: 'AI SYSTEM',
+    year: '2026',
+    role: 'Builder',
+    featured: true,
+    github: 'https://github.com/qasimio/engram',
+    tags: ['FastAPI', 'PostgreSQL', 'RAG', 'Agents'],
+    stats: [{ value: 'in development', label: 'status' }],
+    problem:
+      'Memory-heavy AI systems tend to blur retrieval, context and generation into one opaque pipeline. When the answer is wrong, it becomes difficult to understand where the failure started.',
+    built:
+      'Engram separates ingestion, retrieval, context assembly and synthesis so evidence can be inspected before it reaches the model. The system is designed around workspaces, grounded retrieval and persistent context rather than chat history alone.',
+    hard: 'The difficult part is not calling a model. It is keeping the system honest when multiple representations of the same information exist and different retrieval paths disagree.',
+    learned:
+      'Useful AI infrastructure needs explicit boundaries. The model should be a consumer of evidence, not the source of truth about the evidence.',
+    quote: 'The interesting problem starts after the model answers.',
+    visual: 'engram',
   },
   {
     slug: 'operon',
     title: 'Operon',
-    eyebrow: 'Autonomous coding',
     description:
-      'A terminal-native coding agent designed around verification. Repository structure, AST operations, filesystem checks, and approval gates are used to make the model prove what it actually changed.',
-    tech: ['Python', 'AST', 'Textual', 'ReAct', 'LLM'],
-    github: 'https://github.com/qasimio/Operon',
-    external: '',
+      'A terminal-native coding tool built around deterministic verification instead of trusting an agent’s explanation of what changed.',
+    category: 'OPEN SOURCE',
+    year: '2026',
+    role: 'Builder / Maintainer',
+    featured: true,
+    github: 'https://github.com/qasimio/operon',
+    tags: ['Python', 'AST', 'CLI', 'Automation'],
+    stats: [{ value: 'in development', label: 'status' }],
+    problem:
+      'Coding agents can describe a change convincingly without proving that the repository is actually in the state they claim.',
+    built:
+      'Operon treats filesystem state, symbols, diffs and verification as first-class objects. The goal is not a chatty coding assistant. It is a tool that can show its work and fail loudly when reality disagrees.',
+    hard: 'The challenge is designing a workflow where automation stays useful without being granted blind authority over a repository.',
+    learned: 'The stronger the automation, the more important the evidence layer becomes.',
+    quote: 'An agent saying “done” is not a test result.',
+    visual: 'operon',
   },
   {
     slug: 'foldr',
     title: 'FOLDR',
-    eyebrow: 'Open source',
     description:
-      'A cross-platform file automation CLI built around preview, protected paths, background watching, and undo. It is the project where shipping stopped being private.',
-    tech: ['Python', 'CLI', 'watchdog', 'PyPI', 'Open source'],
-    github: 'https://github.com/qasimio/foldr',
-    external: 'https://pypi.org/project/foldr/',
+      'A reversible file-organization tool that plans changes before making them and gives users a way back.',
+    category: 'OPEN SOURCE',
+    year: '2026',
+    role: 'Creator / Maintainer',
+    featured: true,
+    github: 'https://github.com/foldrhq/foldr',
+    live: 'https://docs.qasimio.me/docs/foldr/start-here',
+    tags: ['Python', 'CLI', 'Open Source', 'Automation'],
+    stats: [
+      { value: '100+', label: 'GitHub stars' },
+      { value: '7.3k+', label: 'downloads' },
+    ],
+    problem:
+      'File organization is repetitive enough to automate and dangerous enough to regret automating badly.',
+    built:
+      'FOLDR scans directories, proposes operations, supports preview and undo, and treats reversibility as part of the product instead of an emergency feature.',
+    hard: 'The hard part is the trust boundary. A tool that can move files needs to be useful while making its intentions visible before it touches anything.',
+    learned: 'People adopt automation faster when they can predict it and undo it.',
+    quote: 'The safest automation is the one that tells you what it plans to do first.',
+    visual: 'foldr',
   },
-];
-
-export const otherProjects = [
   {
     slug: 'slot-finder',
     title: 'SlotFinder',
     description:
-      'A timetable utility for Sukkur IBA built because finding one class should not require opening the whole timetable.',
-    tech: ['Next.js', 'FastAPI', 'PDF extraction'],
-    github: 'https://github.com/AbdulGhaffarcs/slot-finder',
-    external: 'https://sibatt.vercel.app',
+      'A small timetable utility built to remove a surprisingly annoying piece of student friction.',
+    category: 'PRODUCT',
+    year: '2026',
+    role: 'Builder',
+    live: 'https://sibatt.vercel.app',
+    tags: ['Next.js', 'TypeScript', 'SIBA'],
+    problem:
+      'Finding one class in the university timetable meant opening too many pages and remembering too much of the page structure.',
+    built:
+      'SlotFinder compresses that lookup into one interface so a student can search the class and get on with the actual day.',
+    hard: 'The engineering problem was small. The product problem was noticing that the friction was worth removing at all.',
+    learned:
+      'Not every useful project needs an impressive architecture. Some just need to save someone five annoying minutes.',
+    quote: 'Small software can still remove real friction.',
+    visual: 'slotfinder',
   },
   {
     slug: 'siba-launchpad',
     title: 'SIBA Launchpad',
     description:
-      'A project community for making student software visible and giving builders a place to find collaborators and feedback.',
-    tech: ['Community', 'GitHub', 'Events'],
+      'A project community built around making student software visible outside the classroom.',
+    category: 'COMMUNITY',
+    year: '2025 →',
+    role: 'Creator / Maintainer',
+    live: 'https://iba-launchpad.vercel.app',
     github: 'https://github.com/iba-launchpad',
-    external: 'https://iba-launchpad.vercel.app',
+    tags: ['Community', 'Open Source', 'Sukkur IBA'],
+    problem: 'Most student projects disappear as soon as the grade is recorded.',
+    built:
+      'Launchpad gives students a place to showcase deployed or nearly-ready work and a shared Github home for the ecosystem.',
+    hard: 'A community has a people problem before it has a software problem. Getting students to post their work requires lowering the fear of being judged.',
+    learned: 'The best community tooling reduces social friction, not just technical friction.',
+    quote: 'A project is more useful when another person can find it.',
+    visual: 'launchpad',
   },
   {
     slug: 'devshelf',
     title: 'DevShelf',
     description:
-      'A vertical search engine built from first principles in Java to understand indexing, retrieval, and prefix matching.',
-    tech: ['Java', 'Information Retrieval', 'Data Structures'],
+      'A search engine built in Java from first principles to understand what actually happens underneath search.',
+    category: 'SYSTEM',
+    year: '2025',
+    role: 'Builder',
     github: 'https://github.com/qasimio/DevShelf',
-    external: '',
+    tags: ['Java', 'Search', 'Inverted Index'],
+    problem:
+      'I wanted to understand retrieval mechanisms instead of only consuming search frameworks.',
+    built:
+      'Built indexing and query paths from scratch with an inverted index, prefix matching and local persistence.',
+    hard: 'The challenge was making the core data structures do the work rather than hiding behind a library.',
+    learned:
+      'Understanding the primitive system makes higher-level systems much easier to reason about.',
+    quote: 'Sometimes the fastest route to understanding is to remove the abstraction.',
+    visual: 'devshelf',
   },
   {
     slug: 'mqnotebook',
     title: 'MQNotebook',
     description:
-      'A local-first document retrieval system for messy PDFs, OCR-heavy files, presentations, and spreadsheets.',
-    tech: ['Python', 'RAG', 'OCR', 'LlamaIndex'],
+      'A local document retrieval experiment for scanned PDFs and messy course material.',
+    category: 'EXPERIMENT',
+    year: '2025',
+    role: 'Builder',
     github: 'https://github.com/qasimio/MQNotebook',
-    external: '',
-  },
-  {
-    slug: 'reworkly',
-    title: 'Reworkly',
-    description:
-      'A workspace restoration idea in development. The goal is to restore the context of what you were doing instead of making you reconstruct it from scratch.',
-    tech: ['In development', 'Product', 'Automation'],
-    github: '',
-    external: '',
-  },
-  {
-    slug: 'mq-banking-core',
-    title: 'MQ Banking Core',
-    description:
-      'A transactional C++ project focused on file I/O, balances, and rigid state integrity.',
-    tech: ['C++', 'Data structures', 'File I/O'],
-    github: 'https://github.com/qasimio/MQ-Bank',
-    external: '',
+    tags: ['Python', 'OCR', 'RAG'],
+    problem: 'Real documents are rarely clean enough for toy retrieval examples.',
+    built:
+      'Explored OCR, document extraction and retrieval over local course material rather than assuming perfect text.',
+    hard: 'The hard part was getting usable information out of ugly source documents before retrieval even began.',
+    learned: 'RAG quality often starts before the embedding model enters the room.',
+    quote: 'Garbage in is still garbage, even when you vectorize it.',
+    visual: 'mqnotebook',
   },
 ];
 
-export const notes = [
+export const featuredProjects = projects.filter((project) => project.featured);
+export const otherProjects = projects.filter((project) => !project.featured);
+
+export type Note = {
+  slug: string;
+  date: string;
+  kind: 'achievement' | 'release' | 'build' | 'thought' | 'people';
+  title: string;
+  excerpt: string;
+  tags: string[];
+  external?: string;
+};
+
+export const notes: Note[] = [
   {
+    slug: 'maintainer-community',
     date: 'Sep 17, 2026',
-    tag: 'Open source',
-    title: 'I got invited to GitHub’s Maintainer Community.',
+    kind: 'people',
+    title: "I got invited to GitHub's Maintainer Community.",
     excerpt:
-      'That one felt different. Mostly because it arrived after doing the boring part: maintaining software in public.',
-    href: '/journal/invited-to-github-maintainer-community/',
+      'A small line in my inbox, but a useful one. Public maintenance turns out to create its own weird kind of momentum.',
+    tags: ['github', 'open-source', 'maintainers'],
   },
   {
+    slug: 'foldr-100-stars',
     date: 'Sep 16, 2026',
-    tag: 'Shipping',
+    kind: 'achievement',
     title: 'FOLDR crossed 100 stars.',
     excerpt:
-      'People keep installing something I made because they have better things to do than sort files manually.',
-    href: '/journal/foldr-crossed-100-stars/',
+      'The repository is now useful to people I have never met. That still feels stranger than the number itself.',
+    tags: ['foldr', 'open-source'],
   },
   {
+    slug: 'slotfinder',
     date: 'Sep 15, 2026',
-    tag: 'Product',
+    kind: 'release',
     title: 'I launched SlotFinder because the timetable was a pain.',
     excerpt:
-      'The information already existed. The annoying part was getting to the one answer you needed.',
-    href: '/journal/launched-slotfinder/',
+      'Opening a pile of pages just to find one class is a small problem. Small problems still deserve software.',
+    tags: ['siba', 'shipping'],
   },
   {
+    slug: 'me-vs-me',
     date: 'Sep 12, 2026',
-    tag: 'Making',
+    kind: 'thought',
     title: 'This time I made something that wasn’t software.',
     excerpt:
-      'I made a short film called Me vs Me. Turns out publishing a video can require more nerve than publishing code.',
-    href: '/journal/me-vs-me/',
+      'I spent my time overthinking whether a short film was worth publishing. So I made the film about that feeling.',
+    tags: ['film', 'making'],
+    external: 'https://www.youtube.com/@qasimiohq',
   },
   {
+    slug: 'building-with-people',
+    date: 'Sep 10, 2026',
+    kind: 'people',
+    title: 'I keep learning that building is not a solo activity.',
+    excerpt:
+      'Launchpad, project reviews, hackathons and maintenance keep dragging me back to the same conclusion: useful software lives inside a social system.',
+    tags: ['community', 'mentoring'],
+  },
+  {
+    slug: 'keyboard-first',
     date: 'Sep 08, 2026',
-    tag: 'Workflow',
+    kind: 'thought',
     title: 'I still do most things with a keyboard.',
     excerpt:
-      'Arch, shell work, VS Code, Vim. The point is not being a keyboard person. It is removing tiny bits of friction all day.',
-    href: '/journal/keyboard-first/',
+      'Arch, Vim inside VS Code, shell shortcuts, browser shortcuts. It is probably a workflow preference that got out of hand.',
+    tags: ['linux', 'arch', 'workflow'],
   },
 ];
-
-export const writing = [];

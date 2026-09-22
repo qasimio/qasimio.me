@@ -1,24 +1,18 @@
-# Master design direction
+# qasimio.me — Design master
 
-This release intentionally follows the structure and motion language of Brittany Chiang v4:
+This implementation intentionally follows the information architecture and interaction language of Brittany Chiang's v4 personal site, while using Qasim Sethar's own content, assets, project material, and links.
 
-- fixed top navigation with numbered anchors and a resume button
-- desktop left/right social/email rails
-- full-height staggered hero entrance
-- numbered section headings with rules
-- photo treatment with hover reveal
-- keyboard-accessible experience tabs
-- alternating featured project compositions
-- compact project card grid
-- centered contact section
-- restrained footer
-- animated loader on the initial home visit
-- small upward/fade motion on scroll
-- mobile slide-in navigation
+Reference:
 
-Qasim-specific layer:
+- https://v4.brittanychiang.com/
+- https://github.com/bchiang7/v4
 
-- a chronological build trail between experience and projects
-- Qasim's real projects, community work, open-source maintenance, and notes
-- Astro Content Collections instead of Gatsby/GraphQL
-- modern Astro page transitions while preserving the restrained v4 feel
+Key decisions:
+
+- Desktop: fixed top navigation, left social rail, right email rail, centered content column.
+- Home: hero → about → tabbed experience → chronological builder trail → featured projects → noteworthy projects → writing → contact.
+- Mobile: fixed top nav with sliding menu; rails collapse away.
+- Motion: entrance/scroll reveals, loader, tab transitions, nav hide/show, hover motion, and native Astro page transitions.
+- Robustness: content is visible by default. JavaScript adds animation classes only; a client-side failure cannot make the entire page disappear.
+- Icons: social links are inline SVG icons, never text abbreviations.
+- Content: the repository data file is the source of truth for current project, timeline, experience, and journal metadata.

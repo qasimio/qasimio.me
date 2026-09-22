@@ -1,74 +1,53 @@
 ---
-const { project, index } = Astro.props;
+import type { Project } from '../data/site';
+import Icons from './Icons.astro';
+import ProjectArt from './ProjectArt.astro';
+const { project, reverse = false } = Astro.props as { project: Project; reverse?: boolean };
 ---
 
-<li class:list={['featured-project', { 'featured-project--reverse': index % 2 === 1 }]}>
-  <div class="featured-project__image reveal">
-    <div class={`project-visual project-visual--${project.slug}`} aria-hidden="true">
-      <div class="project-visual__chrome">
-        <i></i>
-        <i></i>
-        <i></i>
-        <span>{project.title.toUpperCase()}</span>
-      </div>
-      {project.slug === 'engram' && (
-        <div class="visual-graph">
-          <b>E</b>
-          <i></i>
-          <i></i>
-          <i></i>
-          <em>memory</em>
-          <em>retrieval</em>
-          <em>evidence</em>
-        </div>
-      )}
-      {project.slug === 'operon' && (
-        <div class="visual-terminal">
-          <code>verify(change)</code>
-          <span>✓ filesystem match</span>
-          <span>✓ syntax valid</span>
-          <span>✓ approval required</span>
-        </div>
-      )}
-      {project.slug === 'foldr' && (
-        <div class="visual-files">
-          <span>documents/</span>
-          <span>screenshots/</span>
-          <span>invoices/</span>
-          <span>duplicates/</span>
-          <strong>UNDO READY</strong>
-        </div>
-      )}
-    </div>
+<article class:list={['featured-project', { 'featured-project--reverse': reverse }]}>
+  <div class="featured-project__image" data-reveal>
+    <a href={`/archive/${project.slug}/`} aria-label={`Open ${project.title}`}>
+      <ProjectArt kind={project.visual} title={project.title} />
+    </a>
   </div>
-  <div class="featured-project__content reveal">
-    <p class="featured-project__overline">{project.eyebrow}</p>
+  <div class="featured-project__content" data-reveal>
+    <p class="featured-project__overline">Featured project · {project.year}</p>
     <h3>
       <a href={`/archive/${project.slug}/`}>{project.title}</a>
     </h3>
     <div class="featured-project__description">
       <p>{project.description}</p>
     </div>
-    <ul class="featured-project__tech" aria-label={`${project.title} technologies`}>
-      {project.tech.map((tech) => (
-        <li>{tech}</li>
+    <ul class="featured-project__tags">
+      {project.tags.map((tag) => (
+        <li>{tag}</li>
       ))}
     </ul>
     <div class="featured-project__links">
-      <a
-        href={project.github}
-        target="_blank"
-        rel="noopener noreferrer"
-        aria-label={`${project.title} on GitHub`}
-      >
-        ↗ GitHub
-      </a>
-      <a href={`/archive/${project.slug}/`}>Read case study ↗</a>
-      {project.external && (
-        <a href={project.external} target="_blank" rel="noopener noreferrer">
-          Live ↗
+      {project.github && (
+        <a
+          href={project.github}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label={`${project.title} on GitHub`}
+        >
+          <Icons name="github" size={20} />
         </a>
       )}
+      {project.live && (
+        <a
+          href={project.live}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label={`${project.title} live site`}
+        >
+          <Icons name="external" size={21} />
+        </a>
+      )}
+      <a class="featured-project__read" href={`/archive/${project.slug}/`}>
+        Case study <Icons name="arrow" size={18} />
+      </a>
     </div>
   </div>
-</li>
+</article>

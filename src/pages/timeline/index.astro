@@ -2,39 +2,35 @@
 import Layout from '../../layouts/Layout.astro';
 import Nav from '../../components/Nav.astro';
 import SideRails from '../../components/SideRails.astro';
-import { milestones } from '../../data/site';
+import { timeline } from '../../data/site';
 ---
 
-<Layout title="Timeline — Qasim Sethar">
+<Layout
+  title="Timeline — Qasim Sethar"
+  description="A chronological trail of projects, people, and work by Qasim Sethar."
+>
   <Nav />
   <SideRails />
-  <main class="site-content">
-    <section class="section hero" style="height:auto;min-height:55vh">
-      <div class="hero__content">
-        <p class="overline">Timeline</p>
-        <h2>What changed next.</h2>
-        <p>
-          A chronological record of the work, people, and decisions that changed the direction of
-          the next thing.
-        </p>
-      </div>
+  <main id="content" class="site-content">
+    <section class="section section--first page-head">
+      <p class="overline">05. / TIMELINE</p>
+      <h1>A trail, not a résumé.</h1>
+      <p>
+        The useful version of a career is not only where you worked. It is what changed because you
+        kept building.
+      </p>
     </section>
     <section class="section">
       <div class="timeline__track">
-        {milestones.map(([date, title, place, copy]) => (
-          <article class="timeline__item">
-            <span class="timeline__date">{date}</span>
-            <h3 class="timeline__title">{title}</h3>
-            <p class="timeline__place">{place}</p>
-            <p class="timeline__copy">{copy}</p>
+        {timeline.map((item) => (
+          <article class="timeline__item" data-reveal>
+            <span class="timeline__date">{item.date}</span>
+            <h2 class="timeline__title">{item.title}</h2>
+            <p class="timeline__meta">{item.meta}</p>
+            <p class="timeline__body">{item.body}</p>
           </article>
         ))}
       </div>
     </section>
   </main>
-  <footer class="footer">
-    <div class="footer__credit">
-      <a href="/">← Back home</a>
-    </div>
-  </footer>
 </Layout>

@@ -5,12 +5,8 @@ import tailwindcss from '@tailwindcss/vite';
 
 export default defineConfig({
   site: 'https://qasimio.me',
-  prefetch: {
-    defaultStrategy: 'hover',
-    prefetchAll: false,
-  },
-  integrations: [mdx(), sitemap()],
   vite: {
     plugins: [tailwindcss()],
   },
+  integrations: [mdx(), sitemap()],
 });

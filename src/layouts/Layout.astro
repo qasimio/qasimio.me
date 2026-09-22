@@ -3,11 +3,9 @@ import '../styles/global.css';
 import { ClientRouter } from 'astro:transitions';
 import { site } from '../data/site';
 import Footer from '../components/Footer.astro';
-
 const {
   title = `${site.name} — Software Engineer`,
-  description = 'Qasim Sethar builds software, systems, and products.',
-  home = false,
+  description = 'Qasim Sethar builds software, systems, products, and communities.',
 } = Astro.props;
 ---
 
@@ -32,29 +30,29 @@ const {
     <link rel="canonical" href={Astro.url.href} />
     <ClientRouter />
     <script is:inline>
-      (() => {
+      try {
+        const saved = localStorage.getItem('qasim-theme');
+        const theme = saved === 'light' ? 'light' : 'dark';
+        document.documentElement.dataset.theme = theme;
+        document.documentElement.style.colorScheme = theme;
+      } catch {
         document.documentElement.dataset.theme = 'dark';
         document.documentElement.style.colorScheme = 'dark';
-      })();
+      }
     </script>
     <script
       type="application/ld+json"
       set:html={JSON.stringify({
         '@context': 'https://schema.org',
         '@type': 'Person',
-        name: 'Qasim Sethar',
+        name: site.name,
         url: 'https://qasimio.me',
-        sameAs: [
-          'https://github.com/qasimio',
-          'https://linkedin.com/in/qasimio',
-          'https://x.com/qasimiohq',
-          'https://www.youtube.com/@qasimiohq',
-        ],
+        sameAs: [site.github, site.linkedin, site.x, site.youtube],
       })}
     ></script>
     <title>{title}</title>
   </head>
-  <body class:list={{ 'is-loading': home }}>
+  <body>
     <a class="skip-link" href="#content">
       Skip to Content
     </a>

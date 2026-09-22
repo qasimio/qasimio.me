@@ -1,17 +1,23 @@
 ---
-const { note } = Astro.props;
+import type { Note } from '../data/site';
+import Icons from './Icons.astro';
+const { note } = Astro.props as { note: Note };
 ---
 
-<li class="note-row reveal">
+<li class="note-row" data-reveal>
   <time datetime={note.date}>{note.date}</time>
-  <div>
-    <span class="note-row__tag">{note.tag}</span>
+  <div class="note-row__content">
+    <span class="note-row__kind">{note.kind}</span>
     <h3>
-      <a href={note.href}>{note.title}</a>
+      <a href={note.external ?? `/journal/${note.slug}/`}>{note.title}</a>
     </h3>
     <p>{note.excerpt}</p>
   </div>
-  <a class="note-row__arrow" href={note.href} aria-label={`Read ${note.title}`}>
-    ↗
+  <a
+    class="note-row__arrow"
+    href={note.external ?? `/journal/${note.slug}/`}
+    aria-label={`Open ${note.title}`}
+  >
+    <Icons name={note.external ? 'external' : 'arrow'} size={17} />
   </a>
 </li>

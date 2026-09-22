@@ -1,57 +1,79 @@
-<header class="nav" data-nav>
-  <div class="nav__inner">
-    <a class="nav__logo" href="/" aria-label="Qasim Sethar home">
-      <img src="/identity/mq-mark.png" alt="MQ" width="44" height="44" />
-      <span class="nav__logo-back" aria-hidden="true"></span>
-    </a>
+---
+import { site } from '../data/site';
+import Icons from './Icons.astro';
+---
 
-    <nav class="nav__links" aria-label="Primary navigation">
-      <a data-index="01" href="/#about">
+<header class="site-nav" data-nav>
+  <div class="nav-shell">
+    <a class="nav-brand" href="/#top" aria-label="Qasim Sethar home">
+      <span class="nav-brand__mark">MQ</span>
+      <span class="nav-brand__name">Qasim Sethar.</span>
+      <span class="nav-brand__handle">/ qasimio</span>
+    </a>
+    <nav class="nav-links" aria-label="Primary navigation">
+      <a href="/#about" data-nav-link="about" data-index="01.">
         About
       </a>
-      <a data-index="02" href="/#jobs">
+      <a href="/#jobs" data-nav-link="jobs" data-index="02.">
         Experience
       </a>
-      <a data-index="03" href="/#projects">
+      <a href="/#projects" data-nav-link="projects" data-index="03.">
         Work
       </a>
-      <a data-index="04" href="/#contact">
+      <a href="/#contact" data-nav-link="contact" data-index="04.">
         Contact
       </a>
-      <a class="nav__resume" href="/resume.pdf" target="_blank" rel="noopener noreferrer">
+      <button
+        class="nav-theme"
+        type="button"
+        data-theme-toggle
+        aria-pressed="false"
+        aria-label="Switch theme"
+      >
+        <Icons name="sun" size={17} />
+        <span class="sr-only">Switch theme</span>
+      </button>
+      <a class="nav-resume" href={site.resume} target="_blank" rel="noopener noreferrer">
         Resume
       </a>
     </nav>
-
     <button
-      class="nav__menu"
+      class="nav-menu"
       type="button"
-      data-mobile-menu
       aria-expanded="false"
       aria-controls="mobile-menu"
-      aria-label="Open navigation"
+      data-mobile-menu
     >
-      <span></span>
-      <span></span>
-      <span></span>
+      <Icons name="menu" size={23} />
+      <span class="sr-only">Open navigation</span>
     </button>
   </div>
-
-  <div id="mobile-menu" class="mobile-menu" data-mobile-panel aria-hidden="true">
-    <nav aria-label="Mobile navigation">
-      <a href="/#about">01. About</a>
-      <a href="/#jobs">02. Experience</a>
-      <a href="/#projects">03. Work</a>
-      <a href="/journal/">04. Journal</a>
-      <a href="/#contact">05. Contact</a>
-      <a
-        class="big-button mobile-menu__resume"
-        href="/resume.pdf"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        Resume
-      </a>
-    </nav>
-  </div>
 </header>
+<div class="mobile-menu" id="mobile-menu" data-mobile-panel aria-hidden="true">
+  <nav aria-label="Mobile navigation">
+    <a href="/#about">
+      <span>01.</span> About
+    </a>
+    <a href="/#jobs">
+      <span>02.</span> Experience
+    </a>
+    <a href="/#projects">
+      <span>03.</span> Work
+    </a>
+    <a href="/#contact">
+      <span>04.</span> Contact
+    </a>
+    <button
+      class="nav-theme"
+      type="button"
+      data-theme-toggle
+      aria-pressed="false"
+      aria-label="Switch theme"
+    >
+      <Icons name="sun" size={17} />
+    </button>
+    <a class="nav-resume" href={site.resume} target="_blank" rel="noopener noreferrer">
+      Resume
+    </a>
+  </nav>
+</div>

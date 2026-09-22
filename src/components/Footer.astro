@@ -5,25 +5,37 @@ import Icons from './Icons.astro';
 
 <footer class="footer">
   <div class="footer__inner">
-    <a class="footer__brand" href="/">
-      Qasim Sethar.
-    </a>
-    <p>Built, maintained, and still being changed.</p>
-    <div class="footer__socials">
-      {site.socials.map((item) => (
-        <a href={item.url} target="_blank" rel="noopener noreferrer" aria-label={item.name}>
-          <Icons name={item.name.toLowerCase() === 'x' ? 'x' : item.name.toLowerCase()} size={20} />
+    <div class="footer__top">
+      <div>
+        <a class="footer__brand" href="/#top">
+          Qasim Sethar.
         </a>
-      ))}
-      <a href={`mailto:${site.email}`} aria-label="Email">
-        @
+        <p>Building, shipping, learning, repeating.</p>
+      </div>
+      <div class="footer__group">
+        <span class="footer__label">Navigate</span>
+        <a href="/#about">About ↗</a>
+        <a href="/#jobs">Experience ↗</a>
+        <a href="/#projects">Work ↗</a>
+        <a href="/#contact">Contact ↗</a>
+      </div>
+      <div class="footer__group">
+        <span class="footer__label">Elsewhere</span>
+        <div class="footer__social-icons">
+          {site.socials.map((item) => (
+            <a href={item.url} target="_blank" rel="noopener noreferrer" aria-label={item.name}>
+              <Icons name={item.icon} size={18} />
+            </a>
+          ))}
+        </div>
+      </div>
+      <a class="footer__mail" href={`mailto:${site.email}`}>
+        <Icons name="mail" size={18} /> {site.email}
       </a>
     </div>
-  </div>
-  <div class="footer__credit">
-    <span>Designed &amp; built by Qasim Sethar</span>
-    <a href="https://github.com/bchiang7/v4" target="_blank" rel="noopener noreferrer">
-      Inspired by Brittany Chiang v4 ↗
-    </a>
+    <div class="footer__bottom">
+      <span>© 2026 Qasim Sethar</span>
+      <span>Independent · Open source · Human-readable</span>
+    </div>
   </div>
 </footer>
